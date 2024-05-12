@@ -7,18 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AMS.Infrastructure\AMS.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Commons\Bases\" />
     <Folder Include="Commons\Behavoiur\" />
     <Folder Include="Commons\Exceptions\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Interfaces\Persistence\" />
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="Mappings\" />
     <Folder Include="UseCases\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AMS.Domain\AMS.Domain.csproj" />
   </ItemGroup>
 
 </Project>
