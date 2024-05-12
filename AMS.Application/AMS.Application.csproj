@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AMS.Infrastructure\AMS.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commons\Bases\" />
+    <Folder Include="Commons\Behavoiur\" />
+    <Folder Include="Commons\Exceptions\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Interfaces\Persistence\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="UseCases\" />
+  </ItemGroup>
+
+</Project>
