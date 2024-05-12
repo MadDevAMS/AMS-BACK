@@ -7,15 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commons\Bases\" />
-    <Folder Include="Commons\Behavoiur\" />
-    <Folder Include="Commons\Exceptions\" />
     <Folder Include="Mappings\" />
-    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\Entidad\Command\" />
+    <Folder Include="UseCases\Entidad\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AMS.Domain\AMS.Domain.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+		<PackageReference Include="FluentValidation" Version="11.9.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
+		<PackageReference Include="MediatR" Version="12.2.0" />
+	</ItemGroup>
 
 </Project>

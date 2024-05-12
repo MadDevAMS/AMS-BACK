@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AMS.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240512043031_Initial_Migration")]
-    partial class Initial_Migration
+    [Migration("20240512193003_Initial_Migrations")]
+    partial class Initial_Migrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,75 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AMS.Domain.Entities.Entidad", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("EntidadId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RUC")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RazonSocial")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Entidad");
+                });
 
             modelBuilder.Entity("AMS.Domain.Entities.Group", b =>
                 {
@@ -320,6 +389,9 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long>("IdEntidad")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -333,6 +405,8 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdEntidad");
 
                     b.ToTable("Users");
                 });
@@ -388,6 +462,21 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AMS.Domain.Entities.User", b =>
+                {
+                    b.HasOne("AMS.Domain.Entities.Entidad", "Entidad")
+                        .WithMany("Users")
+                        .HasForeignKey("IdEntidad")
+                        .IsRequired();
+
+                    b.Navigation("Entidad");
+                });
+
+            modelBuilder.Entity("AMS.Domain.Entities.Entidad", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.Group", b =>

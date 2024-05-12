@@ -6,11 +6,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AMS.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migration : Migration
+    public partial class Initial_Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Entidad",
+                columns: table => new
+                {
+                    EntidadId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RazonSocial = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RUC = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Entidad", x => x.EntidadId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Groups",
                 columns: table => new
@@ -82,6 +108,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdEntidad = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuditCreateUser = table.Column<int>(type: "int", nullable: false),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -93,6 +120,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Users_Entidad_IdEntidad",
+                        column: x => x.IdEntidad,
+                        principalTable: "Entidad",
+                        principalColumn: "EntidadId");
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +251,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 name: "IX_RoleUsers_UserId",
                 table: "RoleUsers",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_IdEntidad",
+                table: "Users",
+                column: "IdEntidad");
         }
 
         /// <inheritdoc />
@@ -244,6 +281,9 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Entidad");
         }
     }
 }

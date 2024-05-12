@@ -1,8 +1,12 @@
-﻿using AMS.Application.Interfaces.Persistence;
+﻿using AMS.Application.Commons.Interfaces;
+using AMS.Application.Interfaces.Persistence;
 using AMS.Application.Interfaces.Services;
+using AMS.Infrastructure.Authentication.Jwt;
+using AMS.Infrastructure.Authentication.Permissions;
 using AMS.Infrastructure.Persistence.Context;
 using AMS.Infrastructure.Services;
 using AMS.Infrastructure.Services.S3;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,11 +27,10 @@ namespace AMS.Infrastructure
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<IS3Files, S3Files>();
-            //services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-            //services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-            //services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-            //services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
-            //services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+            services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
             return services;
         }

@@ -24,9 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Authentication\Jwt\" />
-	  <Folder Include="Authentication\Permissions\" />
-	  <Folder Include="Commons\Commons\" />
+	  <Folder Include="Persistence\Migrations\" />
 	</ItemGroup>
 
 	<ItemGroup>
