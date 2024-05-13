@@ -2,8 +2,8 @@
 {
     public interface IUnitOfWork : IDisposable
     {
+        IEntidadRepository EntidadRepository { get; }
         IUserRepository UserRepository { get; }
-        IRoleRepository RoleRepository { get; }
         IPermissionRepository PermissionRepository { get; }
         IGroupRepository GroupRepository { get; }
         Task SaveChanges();

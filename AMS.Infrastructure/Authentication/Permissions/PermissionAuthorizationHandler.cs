@@ -1,7 +1,7 @@
-﻿using AMS.Infrastructure.Commons.Commons;
+﻿using System.Security.Claims;
+using AMS.Infrastructure.Commons.Commons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace AMS.Infrastructure.Authentication.Permissions
 {
@@ -17,7 +17,7 @@ namespace AMS.Infrastructure.Authentication.Permissions
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
             PermissionRequirement requirement)
         {
-            string? memberId = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            string? memberId = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             if (!Guid.TryParse(memberId, out Guid parsedMemberId))
             {
                 return;

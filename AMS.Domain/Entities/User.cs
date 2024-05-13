@@ -4,7 +4,7 @@
     {
         public User()
         {
-            RoleUsers = new HashSet<RoleUser>();
+            GroupPermission = new HashSet<GroupPermission>();
             GroupUsers = new HashSet<GroupUsers>();
         }
 
@@ -14,7 +14,7 @@
         public string Password { get; set; } = null!;
         public long IdEntidad { get; set; }
         public virtual Entidad Entidad { get; set; }
-        public virtual ICollection<RoleUser> RoleUsers { get; set; }
+        public virtual ICollection<GroupPermission> GroupPermission { get; set; }
         public virtual ICollection<GroupUsers> GroupUsers { get; set; }
     }
 }

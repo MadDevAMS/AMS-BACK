@@ -16,8 +16,8 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
                 .WithOne(gu => gu.Group)
                 .HasForeignKey(gu => gu.Groupid);
 
-            builder.Property(x => x.Description)
-                .HasMaxLength(100);
+            builder.Property(x => x.Name)
+                .HasMaxLength(150);
         }
     }
 }

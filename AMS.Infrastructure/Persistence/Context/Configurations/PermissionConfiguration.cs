@@ -12,8 +12,8 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
             builder.Property(x => x.Id)
                 .HasColumnName("PermissionId");
 
-            builder.Property(x => x.Description)
-                .HasMaxLength(100);
+            builder.Property(x => x.Name)
+                .HasMaxLength(150);
         }
     }
 }
