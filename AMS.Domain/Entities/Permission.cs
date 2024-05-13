@@ -4,10 +4,11 @@
     {
         public Permission()
         {
-            RolePermissions = new HashSet<RolePermission>();
+            GroupPermission = new HashSet<GroupPermission>();
         }
 
+        public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public virtual ICollection<RolePermission> RolePermissions { get; set; }
+        public virtual ICollection<GroupPermission> GroupPermission { get; set; }
     }
 }

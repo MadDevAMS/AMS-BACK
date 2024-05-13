@@ -2,6 +2,11 @@
 {
     public class Entidad : BaseEntity
     {
+        public Entidad()
+        {
+            Users = new HashSet<User>(); ;
+        }
+
         public string Nombre { get; set; } = null!;
         public string RazonSocial { get; set; } = null!;
         public string RUC { get; set; } = null!;
@@ -9,5 +14,6 @@
         public string Telefono { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Direccion { get; set; } = null!;
+        public ICollection<User> Users { get; set; }
     }
 }

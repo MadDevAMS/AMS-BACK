@@ -1,10 +1,10 @@
 ﻿namespace AMS.Domain.Entities
 {
-    public class RolePermission : BaseEntity
+    public class GroupPermission : BaseEntity
     {
-        public long RoleId { get; set; }
+        public long GroupId { get; set; }
         public long PermissionId { get; set; }
-        public virtual Role Role { get; set; } = null!;
+        public virtual Group Group { get; set; } = null!;
         public virtual Permission Permission { get; set; } = null!;
     }
 }

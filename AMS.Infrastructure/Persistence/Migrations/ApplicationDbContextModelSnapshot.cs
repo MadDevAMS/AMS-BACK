@@ -22,6 +22,75 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AMS.Domain.Entities.Entidad", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("EntidadId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RUC")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RazonSocial")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Entidad");
+                });
+
             modelBuilder.Entity("AMS.Domain.Entities.Group", b =>
                 {
                     b.Property<long>("Id")
@@ -51,15 +120,64 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("AMS.Domain.Entities.GroupPermission", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("RolePermissionId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("AuditCreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AuditCreateUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditDeleteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditDeleteUser")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AuditUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AuditUpdateUser")
+                        .HasColumnType("int");
+
+                    b.Property<long>("GroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PermissionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("GroupPermission");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.GroupUsers", b =>
@@ -92,8 +210,8 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<long>("Groupid")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -136,148 +254,19 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("AMS.Domain.Entities.Role", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("RoleId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AuditCreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditDeleteDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<long>("IdEntidad")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("AMS.Domain.Entities.RolePermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("RolePermissionId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AuditCreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditDeleteDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RolePermissions");
-                });
-
-            modelBuilder.Entity("AMS.Domain.Entities.RoleUser", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("RoleUserId");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("AuditCreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditDeleteDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("AuditUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RoleUsers");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.User", b =>
@@ -317,6 +306,9 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<long>("IdEntidad")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -326,12 +318,31 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdEntidad");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AMS.Domain.Entities.GroupPermission", b =>
+                {
+                    b.HasOne("AMS.Domain.Entities.Group", "Group")
+                        .WithMany("GroupPermission")
+                        .HasForeignKey("GroupId")
+                        .IsRequired();
+
+                    b.HasOne("AMS.Domain.Entities.Permission", "Permission")
+                        .WithMany("GroupPermission")
+                        .HasForeignKey("PermissionId")
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Permission");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.GroupUsers", b =>
@@ -339,13 +350,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.HasOne("AMS.Domain.Entities.Group", "Group")
                         .WithMany("GroupUsers")
                         .HasForeignKey("Groupid")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AMS.Domain.Entities.User", "User")
                         .WithMany("GroupUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Group");
@@ -353,62 +362,36 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AMS.Domain.Entities.RolePermission", b =>
+            modelBuilder.Entity("AMS.Domain.Entities.User", b =>
                 {
-                    b.HasOne("AMS.Domain.Entities.Permission", "Permission")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId")
+                    b.HasOne("AMS.Domain.Entities.Entidad", "Entidad")
+                        .WithMany("Users")
+                        .HasForeignKey("IdEntidad")
                         .IsRequired();
 
-                    b.HasOne("AMS.Domain.Entities.Role", "Role")
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("RoleId")
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
+                    b.Navigation("Entidad");
                 });
 
-            modelBuilder.Entity("AMS.Domain.Entities.RoleUser", b =>
+            modelBuilder.Entity("AMS.Domain.Entities.Entidad", b =>
                 {
-                    b.HasOne("AMS.Domain.Entities.Role", "Role")
-                        .WithMany("RoleUsers")
-                        .HasForeignKey("RoleId")
-                        .IsRequired();
-
-                    b.HasOne("AMS.Domain.Entities.User", "User")
-                        .WithMany("RoleUsers")
-                        .HasForeignKey("UserId")
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.Group", b =>
                 {
+                    b.Navigation("GroupPermission");
+
                     b.Navigation("GroupUsers");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.Permission", b =>
                 {
-                    b.Navigation("RolePermissions");
-                });
-
-            modelBuilder.Entity("AMS.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("RolePermissions");
-
-                    b.Navigation("RoleUsers");
+                    b.Navigation("GroupPermission");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.User", b =>
                 {
                     b.Navigation("GroupUsers");
-
-                    b.Navigation("RoleUsers");
                 });
 #pragma warning restore 612, 618
         }

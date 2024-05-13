@@ -16,6 +16,11 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
                 .WithOne(gu => gu.User)
                 .HasForeignKey(gu => gu.UserId);
 
+            builder.HasOne(u => u.Entidad)
+                .WithMany(e => e.Users)
+                .HasForeignKey(e => e.IdEntidad)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
             builder.Property(x => x.FirstName)
                 .HasMaxLength(50);
 
