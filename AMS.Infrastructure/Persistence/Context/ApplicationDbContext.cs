@@ -9,9 +9,10 @@ namespace AMS.Infrastructure.Persistence.Context
         public DbSet<Entidad> Entidad { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<GroupPermission> RolePermissions { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupUsers> GroupUsers { get; set; }
+        public DbSet<GroupPermission> GroupPermission { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
