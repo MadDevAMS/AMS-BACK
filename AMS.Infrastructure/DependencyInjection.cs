@@ -16,7 +16,7 @@ namespace AMS.Infrastructure
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-            IConfiguration configuration)
+            ConfigurationManager configuration)
         {
             var assembly = typeof(ApplicationDbContext).Assembly.FullName;
 
@@ -26,11 +26,12 @@ namespace AMS.Infrastructure
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddSingleton<IS3Files, S3Files>();
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+            services.AddSingleton<JwtSettings>();
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+            services.AddSingleton<IS3Files, S3Files>();
 
             return services;
         }

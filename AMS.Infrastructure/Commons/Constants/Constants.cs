@@ -9,4 +9,9 @@
     {
         public const string Permissions = "Permissions";
     }
+
+    internal static class Utils
+    {
+        public const int ESTADO_ACTIVO = 1;
+    }
 }
