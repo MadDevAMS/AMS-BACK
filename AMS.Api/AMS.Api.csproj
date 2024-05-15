@@ -21,8 +21,4 @@
 		<ProjectReference Include="..\AMS.Infrastructure\AMS.Infrastructure.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Controllers\" />
-	</ItemGroup>
-
 </Project>
