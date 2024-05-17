@@ -17,7 +17,9 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
 
             RuleFor(x => x.Email)
                 .EmailAddress()
-                .WithMessage(MessageValidator.BAD_EMAIL);
+                .WithMessage(MessageValidator.BAD_EMAIL)
+                .NotNull().WithMessage(MessageValidator.NOT_NULL)
+                .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY); ;
 
             RuleFor(x => x.Password)
                .NotEmpty().WithMessage(MessageValidator.NOT_NULL)
