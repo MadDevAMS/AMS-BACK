@@ -4,6 +4,7 @@ using System.Text;
 using AMS.Application.Commons.Interfaces;
 using AMS.Application.Dtos.User;
 using AMS.Infrastructure.Commons.Commons;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AMS.Infrastructure.Authentication.Jwt
@@ -12,9 +13,9 @@ namespace AMS.Infrastructure.Authentication.Jwt
     {
         private readonly JwtSettings _jwtSettings;
 
-        public JwtTokenGenerator(JwtSettings jwtSettings)
+        public JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
         {
-            _jwtSettings = jwtSettings;
+            _jwtSettings = jwtSettings.Value;
         }
 
         public string GenerateToken(UserDetailResponseDto user)
