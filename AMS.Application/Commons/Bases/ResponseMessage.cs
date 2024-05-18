@@ -3,6 +3,7 @@
     internal static class ResponseMessage
     {
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
+        public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
     }
 
     internal static class MessageValidator
