@@ -2,6 +2,7 @@
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.User;
 using AMS.Application.UseCases.User.Command.CreateUser;
+using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +11,9 @@ namespace AMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
-
-        public UserController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        private readonly IMediator _mediator = mediator;
 
         [HttpPost]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
@@ -25,6 +21,14 @@ namespace AMS.Api.Controllers
         {
             var repsonse = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, repsonse);
+        }
+
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> LoginUser([FromBody] LoginCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
         [HttpGet]

@@ -26,15 +26,20 @@ namespace AMS.Infrastructure.Authentication.Jwt
                    SecurityAlgorithms.HmacSha256
             );
 
-
             var claims = new List<Claim>
             {
+                new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
                 new(JwtRegisteredClaimNames.GivenName, user.Name),
+                new(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new(CustomClaims.Entidad, user.IdEntidad.ToString()),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            claims.AddRange(user.PermissionIds.Select(idPermissions =>
+            claims.AddRange(user.Permissions.Select(idPermissions =>
                 new Claim(CustomClaims.Permissions, idPermissions.ToString())));
+
+            claims.AddRange(user.GroupNames.Select(groups =>
+                new Claim(CustomClaims.Groups, groups)));
 
             var securityToken = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,

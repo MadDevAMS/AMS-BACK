@@ -1,4 +1,5 @@
-﻿using System.Linq.Dynamic.Core;
+﻿using AMS.Application.Dtos.User;
+using System.Linq.Dynamic.Core;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Groups;
 using AMS.Application.Dtos.Roles;
@@ -96,6 +97,31 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return await _context.Users.Where(u => u.Email.Equals(email))
                 .Select(u => u.Id)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<UserDetailResponseDto> UserByEmailAsync(string email)
+        {
+            var userDetails = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Email.Equals(email) && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
+                .Select(u => new UserDetailResponseDto()
+                {
+                    Name = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Password = u.Password,
+                    IdEntidad = u.IdEntidad,
+                    Permissions = u.GroupUsers
+                        .SelectMany(ru => ru.Group.GroupPermission)
+                        .Select(rp => rp.Permission.Name)
+                        .Distinct()
+                        .ToList(),
+                    GroupNames = u.GroupUsers
+                        .Select(gu => gu.Group.Description)
+                        .ToList()
+                }).FirstOrDefaultAsync();
+
+            return userDetails!;
         }
     }
 }
