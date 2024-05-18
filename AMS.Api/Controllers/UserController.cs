@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.UseCases.User.Command.CreateUser;
+using AMS.Application.UseCases.User.Command.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,14 @@ namespace AMS.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
+        {
+            var repsonse = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, repsonse);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommnad cmd)
         {
             var repsonse = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, repsonse);

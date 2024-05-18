@@ -6,5 +6,6 @@ namespace AMS.Application.Interfaces.Persistence
     {
         Task CreateAsync(User user);
         Task<long> UserExistAsync(string email);
+        Task UpdateAsync(User user, bool updateState);
     }
 }
