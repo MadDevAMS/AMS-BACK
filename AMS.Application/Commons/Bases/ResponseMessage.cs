@@ -2,6 +2,7 @@
 {
     internal static class ResponseMessage
     {
+        public const string QUERY_SUCCESS = "Consulta Exitosa";
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
     }
 

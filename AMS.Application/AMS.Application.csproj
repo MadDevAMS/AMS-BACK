@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="UseCases\Entidades\Command\" />
     <Folder Include="UseCases\Entidades\Queries\" />
-    <Folder Include="UseCases\User\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

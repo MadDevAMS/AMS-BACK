@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
+using AMS.Application.Dtos.User;
 using AMS.Application.UseCases.User.Command.CreateUser;
+using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,5 +26,14 @@ namespace AMS.Api.Controllers
             var repsonse = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, repsonse);
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(BaseResponse<IEnumerable<ListUsersResponseDto>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ListUsers([FromQuery] ListUsersEntidadQuery qry)
+        {
+            var repsonse = await _mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, repsonse);
+        }
+
     }
 }
