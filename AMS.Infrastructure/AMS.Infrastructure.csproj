@@ -17,22 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="13.0.1" />
-		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
-		<PackageReference Include="FluentValidation" Version="11.9.1" />
-		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
-		<PackageReference Include="MediatR" Version="12.2.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Persistence\Migrations\" />
-	  <Folder Include="Authentication\Jwt\" />
-	  <Folder Include="Authentication\Permissions\" />
-	  <Folder Include="Commons\Commons\" />
-	  <Folder Include="Persistence\Migrations\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\AMS.Application\AMS.Application.csproj" />
 	</ItemGroup>
 
