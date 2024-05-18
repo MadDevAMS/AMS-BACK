@@ -1,4 +1,5 @@
-﻿using AMS.Domain.Entities;
+﻿using AMS.Application.Dtos.User;
+using AMS.Domain.Entities;
 
 namespace AMS.Application.Interfaces.Persistence
 {
@@ -6,5 +7,6 @@ namespace AMS.Application.Interfaces.Persistence
     {
         Task CreateAsync(User user);
         Task<long> UserExistAsync(string email);
+        Task<UserDetailResponseDto> UserByEmailAsync(string email);
     }
 }
