@@ -17,8 +17,8 @@ namespace AMS.Api.Controllers
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
-            var repsonse = await _mediator.Send(cmd);
-            return StatusCode(StatusCodes.Status200OK, repsonse);
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
         [HttpPost("login")]
