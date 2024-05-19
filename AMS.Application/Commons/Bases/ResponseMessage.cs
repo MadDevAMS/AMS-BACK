@@ -4,6 +4,7 @@
     {
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
+        public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
     }
 
     internal static class MessageValidator
@@ -13,6 +14,8 @@
         public const string NOT_EMPTY = "El campo no puede estar vacio.";
         public const string PASSWORD_LEGHT = "La contraseña debe tener al menos 8 caracteres.";
         public const string PASSWORD_SPECIAL_CHARACTER = "La contraseña debe contener al menos un carácter especial.";
+        public const string RUC_LEGHT = "El RUC debe tener 11 digitos";
+
     }
 
     internal static class ExceptionMessage
