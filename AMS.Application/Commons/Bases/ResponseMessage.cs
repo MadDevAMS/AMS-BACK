@@ -5,6 +5,7 @@
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
+        public const string TOKEN_SUCCESS = "Token generado correctamente";
     }
 
     internal static class MessageValidator
@@ -21,5 +22,6 @@
     internal static class ExceptionMessage
     {
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
+        public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
     }
 }

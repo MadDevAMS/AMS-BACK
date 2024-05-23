@@ -1,7 +1,6 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Entidad;
 using AMS.Application.Interfaces.Persistence;
-using AMS.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using BC = BCrypt.Net.BCrypt;
