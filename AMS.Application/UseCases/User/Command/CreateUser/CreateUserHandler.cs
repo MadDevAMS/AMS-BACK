@@ -25,9 +25,17 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
 
                 var userExist = await _unitOfWork.UserRepository.UserExistAsync(request.Email);
 
-                if(userExist > 0)
+                if (userExist > 0)
                 {
-                    throw new Exception(ExceptionMessage.USER_EXISTS);
+                    response.IsSuccess = false;
+                    response.Message = ExceptionMessage.USER_EXISTS;
+                    return response;
+                }
+                if (!request.Password.Equals(request.ConfirmPassword))
+                {
+                    response.IsSuccess = false;
+                    response.Message = ExceptionMessage.CONFIRM_PASSWORD;
+                    return response;
                 }
 
                 var user = _mapper.Map<Domain.Entities.User>(request);

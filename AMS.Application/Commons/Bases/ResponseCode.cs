@@ -5,5 +5,6 @@
         OK = 200,
         EROOR = 404,
         FORBIDDEN = 403,
+        CONFLICT = 409
     }
 }

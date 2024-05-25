@@ -18,5 +18,6 @@
     internal static class ExceptionMessage
     {
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
+        public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
     }
 }
