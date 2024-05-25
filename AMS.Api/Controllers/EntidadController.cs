@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
+using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
 using AMS.Application.UseCases.Entidades.Command.UpdateEntidad;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -26,5 +27,12 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CreateEntidad([FromBody] CreateEntidadCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
     }
 }

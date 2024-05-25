@@ -20,7 +20,7 @@ namespace AMS.Application.UseCases.Entidades.Command.UpdateEntidad
                 var entidad = _mapper.Map<Entidad>(request);
                 await _unitOfWork.EntidadRepository.UpdateAsync(entidad);
 
-                response.IsSuccess = true;
+                response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.ENTIDAD_SUCCESS_UPDATE;
             }
             catch (Exception ex)

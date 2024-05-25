@@ -117,7 +117,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         .Distinct()
                         .ToList(),
                     GroupNames = u.GroupUsers
-                        .Select(gu => gu.Group.Description)
+                        .Select(gu => gu.Group.Name)
                         .ToList()
                 }).FirstOrDefaultAsync();
 
