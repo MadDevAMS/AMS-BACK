@@ -27,13 +27,13 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
 
                 if (userExist > 0)
                 {
-                    response.IsSuccess = false;
+                    response.Status = (int)ResponseCode.CONFLICT;
                     response.Message = ExceptionMessage.USER_EXISTS;
                     return response;
                 }
                 if (!request.Password.Equals(request.ConfirmPassword))
                 {
-                    response.IsSuccess = false;
+                    response.Status = (int)ResponseCode.CONFLICT;
                     response.Message = ExceptionMessage.CONFIRM_PASSWORD;
                     return response;
                 }
@@ -42,7 +42,7 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
                 user.Password = BC.HashPassword(user.Password);
                 await _unitOfWork.UserRepository.CreateAsync(user);
 
-                response.IsSuccess = true;
+                response.Status = (int)ResponseCode.CREATED;
                 response.Message = ResponseMessage.USER_SUCCESS_REGISTER;
             }
             catch (Exception e)

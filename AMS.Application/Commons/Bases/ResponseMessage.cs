@@ -18,7 +18,8 @@
         public const string RUC_LEGHT = "El RUC debe tener 11 digitos";
         public const string TELEFONO_LEGHT_MAX = "El telefono debe tener como maximo 10 digitos";
         public const string TELEFONO_LEGHT_MIN = "El telefono debe tener como minimo 9 digitos";
-
+        public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
+        public const string RAZON_SOCIAL_INVALID = "La Razon social no es valida";
     }
 
     internal static class ExceptionMessage

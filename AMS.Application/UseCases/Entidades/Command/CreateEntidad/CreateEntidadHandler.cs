@@ -20,15 +20,15 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
             {
                 if (!request.Password.Equals(request.ConfirmPassword))
                 {
-                    response.IsSuccess = false;
-                    response.Message = "Las contraseñas no coinciden";
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = MessageValidator.CONFIRM_PASSWORD;
                     return response;
                 }
 
                 if (!Constans.RazonesSociales.Contains(request.RazonSocial))
                 {
-                    response.IsSuccess = false;
-                    response.Message = "La Razon social no es valida";
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = MessageValidator.RAZON_SOCIAL_INVALID;
                     return response;
                 }
 
@@ -36,7 +36,7 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
                 entidadDto.Password = BC.HashPassword(entidadDto.Password);
                 await _unitOfWork.EntidadRepository.CreateAsync(entidadDto);
 
-                response.IsSuccess = true;
+                response.Status = (int)ResponseCode.CREATED;
                 response.Message = ResponseMessage.ENTIDAD_SUCCESS_CREATE;
             }
             catch (Exception ex)
