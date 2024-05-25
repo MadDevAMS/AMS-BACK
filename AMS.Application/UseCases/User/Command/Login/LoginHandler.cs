@@ -20,16 +20,16 @@ namespace AMS.Application.UseCases.User.Command.Login
                 var user = await _unitOfWork.UserRepository.UserByEmailAsync(request.Email);
                 if (user == null)
                 {
-                    response.IsSuccess = false;
-                    response.Message = "El usuario y/o contrasena es incorrecto.";
+                    response.Status = (int)ResponseCode.NOT_FOUND;
+                    response.Message = ExceptionMessage.INVALID_CREDENTIALS;
                     return response;
                 }
 
                 if (BC.Verify(request.Password, hash: user.Password))
                 {
-                    response.IsSuccess = true;
+                    response.Status = (int)ResponseCode.CONFLICT;
                     response.Data = _jwtTokenGenerator.GenerateToken(user);
-                    response.Message = "Token generado correctamente";
+                    response.Message = ResponseMessage.TOKEN_SUCCESS;
                 }
             }
             catch (Exception ex)

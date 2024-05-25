@@ -25,16 +25,24 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
 
                 var userExist = await _unitOfWork.UserRepository.UserExistAsync(request.Email);
 
-                if(userExist > 0)
+                if (userExist > 0)
                 {
-                    throw new Exception(ExceptionMessage.USER_EXISTS);
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = ExceptionMessage.USER_EXISTS;
+                    return response;
+                }
+                if (!request.Password.Equals(request.ConfirmPassword))
+                {
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = ExceptionMessage.CONFIRM_PASSWORD;
+                    return response;
                 }
 
                 var user = _mapper.Map<Domain.Entities.User>(request);
                 user.Password = BC.HashPassword(user.Password);
                 await _unitOfWork.UserRepository.CreateAsync(user);
 
-                response.IsSuccess = true;
+                response.Status = (int)ResponseCode.CREATED;
                 response.Message = ResponseMessage.USER_SUCCESS_REGISTER;
             }
             catch (Exception e)
