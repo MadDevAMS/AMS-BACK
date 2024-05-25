@@ -131,7 +131,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         name: "FK_GroupPermission_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "GroupName");
+                        principalColumn: "GroupId");
                     table.ForeignKey(
                         name: "FK_GroupPermission_Permissions_PermissionId",
                         column: x => x.PermissionId,
@@ -162,7 +162,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         name: "FK_GroupUsers_Groups_Groupid",
                         column: x => x.Groupid,
                         principalTable: "Groups",
-                        principalColumn: "GroupName");
+                        principalColumn: "GroupId");
                     table.ForeignKey(
                         name: "FK_GroupUsers_Users_UserId",
                         column: x => x.UserId,

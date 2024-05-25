@@ -21,7 +21,7 @@ namespace AMS.Application.UseCases.User.Command.Login
                 if (user == null)
                 {
                     response.IsSuccess = false;
-                    response.Message = "El usuario y/o contrasena es incorrecto.";
+                    response.Message = ExceptionMessage.INVALID_CREDENTIALS;
                     return response;
                 }
 
@@ -29,7 +29,7 @@ namespace AMS.Application.UseCases.User.Command.Login
                 {
                     response.IsSuccess = true;
                     response.Data = _jwtTokenGenerator.GenerateToken(user);
-                    response.Message = "Token generado correctamente";
+                    response.Message = ResponseMessage.TOKEN_SUCCESS;
                 }
             }
             catch (Exception ex)

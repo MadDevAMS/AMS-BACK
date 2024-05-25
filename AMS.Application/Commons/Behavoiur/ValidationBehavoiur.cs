@@ -21,11 +21,14 @@ namespace AMS.Application.Commons.Behavoiur
             var failures = validationResults
                 .Where(x => x.Errors.Count != 0)
                 .SelectMany(x => x.Errors)
-                .Select(x => new BaseError()
+                .GroupBy(e => e.PropertyName)
+                .Select(g => new BaseError
                 {
-                    PropertyName = x.PropertyName,
-                    ErrorMessage = x.ErrorMessage
-                }).ToList();
+                    PropertyName = g.Key,
+                    ErrorMessage = g.Select(e => e.ErrorMessage).ToList()
+                })
+                .ToList();
+
 
             if (failures.Count != 0)
             {
