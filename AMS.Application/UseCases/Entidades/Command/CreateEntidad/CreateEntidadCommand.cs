@@ -15,5 +15,6 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
         public string LastName { get; set; } = null!;
         public string UserEmail { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public string ConfirmPassword { get; set; } = null!;
     }
 }

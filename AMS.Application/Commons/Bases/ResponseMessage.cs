@@ -16,6 +16,8 @@
         public const string PASSWORD_LEGHT = "La contraseña debe tener al menos 8 caracteres.";
         public const string PASSWORD_SPECIAL_CHARACTER = "La contraseña debe contener al menos un carácter especial.";
         public const string RUC_LEGHT = "El RUC debe tener 11 digitos";
+        public const string TELEFONO_LEGHT_MAX = "El telefono debe tener como maximo 10 digitos";
+        public const string TELEFONO_LEGHT_MIN = "El telefono debe tener como minimo 9 digitos";
 
     }
 

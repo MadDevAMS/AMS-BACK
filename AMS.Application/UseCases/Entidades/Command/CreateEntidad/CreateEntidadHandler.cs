@@ -18,6 +18,20 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
 
             try
             {
+                if (!request.Password.Equals(request.ConfirmPassword))
+                {
+                    response.IsSuccess = false;
+                    response.Message = "Las contraseñas no coinciden";
+                    return response;
+                }
+
+                if (!Constans.RazonesSociales.Contains(request.RazonSocial))
+                {
+                    response.IsSuccess = false;
+                    response.Message = "La Razon social no es valida";
+                    return response;
+                }
+
                 var entidadDto = _mapper.Map<EntidadRegistroDto>(request);
                 entidadDto.Password = BC.HashPassword(entidadDto.Password);
                 await _unitOfWork.EntidadRepository.CreateAsync(entidadDto);
