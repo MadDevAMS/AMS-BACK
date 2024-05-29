@@ -1,4 +1,4 @@
-﻿namespace AMS.Application.Commons.Bases
+﻿namespace AMS.Application.Commons.Utils
 {
     internal static class ResponseMessage
     {
@@ -6,7 +6,7 @@
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
-        public const string TOKEN_SUCCESS = "Token generado correctamente";
+        public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
     }
 
     internal static class MessageValidator
@@ -28,5 +28,11 @@
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
         public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
+    };
+
+    public static class MiddlewareMessage
+    {
+        public const string NOT_AUTHORIZATION = "No cuenta con los permisos necesarios comunicate con el administrador.";
+        public const string ERRORS_REQUEST = "Errores de validacion";
     }
 }

@@ -38,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<CustomAuthorizationMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

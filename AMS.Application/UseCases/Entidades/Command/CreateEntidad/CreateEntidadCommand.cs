@@ -10,7 +10,6 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
         public string RUC { get; set; } = null!;
         public string Telefono { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string Direccion { get; set; } = null!;
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string UserEmail { get; set; } = null!;

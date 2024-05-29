@@ -16,7 +16,7 @@
     {
         public const int ESTADO_ACTIVO = 1;
         public const long GROUP_ADMIN_ID = 1;
-        public const string DEFAULT_IMAGE = "";
+        public const string EMPTY_STRING = "";
 
     }
 }

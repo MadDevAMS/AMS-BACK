@@ -1,4 +1,4 @@
-﻿namespace AMS.Application.Commons.Bases
+﻿namespace AMS.Application.Commons.Utils
 {
     internal static class Constans
     {

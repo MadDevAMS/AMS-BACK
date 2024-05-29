@@ -1,5 +1,6 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Interfaces;
+using AMS.Application.Commons.Utils;
 using AMS.Application.Interfaces.Persistence;
 using MediatR;
 using BC = BCrypt.Net.BCrypt;
@@ -27,10 +28,15 @@ namespace AMS.Application.UseCases.User.Command.Login
 
                 if (BC.Verify(request.Password, hash: user.Password))
                 {
-                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Status = (int)ResponseCode.OK;
                     response.Data = _jwtTokenGenerator.GenerateToken(user);
-                    response.Message = ResponseMessage.TOKEN_SUCCESS;
+                    response.Message = ResponseMessage.LOGIN_SUCCESS;
+                    return response;
                 }
+
+                response.Status = (int)ResponseCode.CONFLICT;
+                response.Message = ExceptionMessage.INVALID_CREDENTIALS;
+
             }
             catch (Exception ex)
             {

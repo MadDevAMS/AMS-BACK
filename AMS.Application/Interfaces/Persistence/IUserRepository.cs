@@ -1,4 +1,4 @@
-﻿using AMS.Application.Dtos.User;
+﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.User;
 using AMS.Domain.Entities;
@@ -10,6 +10,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task CreateAsync(User user);
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
-        Task<List<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
+        Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
     }
 }
