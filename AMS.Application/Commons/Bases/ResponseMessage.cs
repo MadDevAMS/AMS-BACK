@@ -6,6 +6,7 @@
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
         public const string TOKEN_SUCCESS = "Token generado correctamente";
+        public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
     }
 
     internal static class MessageValidator

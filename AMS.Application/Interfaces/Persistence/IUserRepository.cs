@@ -8,5 +8,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task CreateAsync(User user);
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
+        Task DeleteAsync(long id);
     }
 }

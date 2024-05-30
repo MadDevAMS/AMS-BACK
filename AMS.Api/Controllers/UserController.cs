@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.UseCases.User.Command.CreateUser;
+using AMS.Application.UseCases.User.Command.DeleteUser;
 using AMS.Application.UseCases.User.Command.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ namespace AMS.Api.Controllers
         [HttpPost("login")]
         [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> LoginUser([FromBody] LoginCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserCommand cmd)
         {
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
