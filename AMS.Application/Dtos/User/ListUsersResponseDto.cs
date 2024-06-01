@@ -1,6 +1,6 @@
 ﻿using AMS.Application.Dtos.Groups;
 
-namespace AMS.Application.Dtos.User
+namespace AMS.Application.Dtos.Permissions
 {
     public class ListUsersResponseDto
     {

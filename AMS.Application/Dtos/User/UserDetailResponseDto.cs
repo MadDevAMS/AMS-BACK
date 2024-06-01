@@ -1,4 +1,4 @@
-﻿namespace AMS.Application.Dtos.User
+﻿namespace AMS.Application.Dtos.Permissions
 {
     public class UserDetailResponseDto
     {

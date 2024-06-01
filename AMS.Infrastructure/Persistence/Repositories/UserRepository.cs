@@ -2,7 +2,7 @@
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Groups;
-using AMS.Application.Dtos.User;
+using AMS.Application.Dtos.Permissions;
 using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;

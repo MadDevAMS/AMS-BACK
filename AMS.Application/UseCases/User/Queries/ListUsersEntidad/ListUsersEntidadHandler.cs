@@ -1,7 +1,7 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Utils;
 using AMS.Application.Dtos.Filters;
-using AMS.Application.Dtos.User;
+using AMS.Application.Dtos.Permissions;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
 using MediatR;

@@ -1,6 +1,6 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
-using AMS.Application.Dtos.User;
+using AMS.Application.Dtos.Permissions;
 using AMS.Domain.Entities;
 
 namespace AMS.Application.Interfaces.Persistence

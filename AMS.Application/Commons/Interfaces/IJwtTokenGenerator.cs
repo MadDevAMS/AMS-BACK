@@ -1,4 +1,4 @@
-﻿using AMS.Application.Dtos.User;
+﻿using AMS.Application.Dtos.Permissions;
 
 namespace AMS.Application.Commons.Interfaces
 {

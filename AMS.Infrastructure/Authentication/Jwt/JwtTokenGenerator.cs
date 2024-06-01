@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using AMS.Application.Commons.Interfaces;
-using AMS.Application.Dtos.User;
+using AMS.Application.Dtos.Permissions;
 using AMS.Infrastructure.Commons.Commons;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
