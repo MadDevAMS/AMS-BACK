@@ -10,7 +10,7 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
-                .HasColumnName("GroupName");
+                .HasColumnName("GroupId");
 
             builder.HasMany(g => g.GroupUsers)
                 .WithOne(gu => gu.Group)
