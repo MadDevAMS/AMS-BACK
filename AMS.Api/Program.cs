@@ -13,6 +13,7 @@ builder.Services
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioning();
 builder.Services.AddSwagger();
 
 builder.Services.AddCors(options =>

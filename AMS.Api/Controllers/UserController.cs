@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class UserController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 
-        [HttpPost]
+        [HttpPost("users"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
@@ -21,7 +22,7 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> LoginUser([FromBody] LoginCommand cmd)
         {
