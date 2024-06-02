@@ -13,7 +13,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
         public async Task UpdateAsync(GroupsDto group)
         {
             var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId) ?? throw new Exception("Group not found");
-            var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.Groupid == group.GroupId).ToListAsync();
+            var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.GroupId == group.GroupId).ToListAsync();
             var currentGroupPermissions = await _context.GroupPermission.Where(gu => gu.GroupId == group.GroupId).ToListAsync();
 
             entityUpdate.Name = group.Name;
@@ -25,7 +25,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             var usersToDelete = currentGroupUsers.Where(cgu => !group.Users.Contains(cgu.UserId)).ToList();
             var usersToAdd = group.Users.Where(u => !currentGroupUsers.Any(cgu => cgu.UserId == u)).Select(u => new GroupUsers
             {
-                Groupid = group.GroupId,
+                GroupId = group.GroupId,
                 UserId = u,
                 State = 1,
                 AuditCreateUser = 1,

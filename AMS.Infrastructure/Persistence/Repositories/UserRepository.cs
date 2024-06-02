@@ -43,7 +43,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 State = u.State,
                 Group = u.GroupUsers.Select(g => new GroupListResponseDto
                 {
-                    Id = g.Groupid,
+                    Id = g.GroupId,
                     Name = g.Group.Name,
                 }).ToList()
             })
