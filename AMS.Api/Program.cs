@@ -13,6 +13,7 @@ builder.Services
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioning();
 builder.Services.AddSwagger();
 
 builder.Services.AddCors(options =>
@@ -37,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CustomAuthorizationMiddleware>();
 
 app.UseHttpsRedirection();
 

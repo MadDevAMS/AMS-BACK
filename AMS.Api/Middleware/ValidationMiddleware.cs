@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Exceptions;
+using AMS.Application.Commons.Utils;
 
 namespace AMS.Api.Middleware
 {
@@ -24,7 +25,8 @@ namespace AMS.Api.Middleware
                 context.Response.ContentType = "application/json";
                 await JsonSerializer.SerializeAsync(context.Response.Body, new BaseResponse<object>
                 {
-                    Message = "Errores de validacion",
+                    Status = StatusCodes.Status400BadRequest,
+                    Message = MiddlewareMessage.ERRORS_REQUEST,
                     Errors = ex.Errors!
                 });
             }

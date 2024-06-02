@@ -1,4 +1,4 @@
-﻿using AMS.Application.Commons.Bases;
+﻿using AMS.Application.Commons.Utils;
 using FluentValidation;
 
 namespace AMS.Application.UseCases.User.Command.CreateUser

@@ -23,8 +23,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     RUC = entidadDto.RUC,
                     Telefono = entidadDto.Telefono,
                     Email = entidadDto.Email,
-                    Direccion = entidadDto.Direccion,
-                    Image = Utils.DEFAULT_IMAGE,
+                    Direccion = Utils.EMPTY_STRING,
+                    Image = Utils.EMPTY_STRING,
                     State = Utils.ESTADO_ACTIVO,
                     AuditCreateUser = Utils.ESTADO_ACTIVO,
                     AuditCreateDate = DateTime.Now,
@@ -79,7 +79,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entity.Email = entidad.Email;
             entity.Direccion = entidad.Direccion;
             entity.Telefono = entidad.Telefono;
-            entity.AuditUpdateUser= Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

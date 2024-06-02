@@ -1,4 +1,8 @@
-﻿using AMS.Application.Dtos.User;
+﻿using System.Linq.Dynamic.Core;
+using AMS.Application.Commons.Bases;
+using AMS.Application.Dtos.Filters;
+using AMS.Application.Dtos.Groups;
+using AMS.Application.Dtos.User;
 using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;
@@ -20,6 +24,47 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter)
+        {
+            var query = _context.Users.Where(u => u.IdEntidad == filter.IdEntidad
+                    && (u.FirstName.Contains(filter.UserName) || filter.UserName == Utils.EMPTY_STRING)
+                    && (u.Email.Contains(filter.UserEmail) || filter.UserEmail == Utils.EMPTY_STRING)
+                    && (u.State == filter.State || filter.State == -1));
+
+            var totalRecords = await query.Select(u => u.Id).CountAsync();
+
+            var users = await query.Select(u => new ListUsersResponseDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                State = u.State,
+                Group = u.GroupUsers.Select(g => new GroupListResponseDto
+                {
+                    Id = g.Groupid,
+                    Name = g.Group.Name,
+                }).ToList()
+            })
+            .OrderBy(u => u.FirstName)
+            .Skip((filter.NumPage - 1) * filter.Records)
+            .Take(filter.Records)
+            .ToListAsync();
+
+            var result = new PaginatorResponse<ListUsersResponseDto>
+            {
+                Data = users,
+                TotalRecords = totalRecords,
+                CurrentPage = filter.NumPage,
+                PageSize = filter.Records,
+                TotalPages = (int)Math.Ceiling(totalRecords / (double)filter.Records)
+            };
+
+            return result;
+        }
+
+
 
         public async Task<long> UserExistAsync(string email)
         {
@@ -51,6 +96,16 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 }).FirstOrDefaultAsync();
 
             return userDetails!;
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            var entity = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id))!;
+
+            entity.AuditDeleteUser = 1;
+            entity.AuditDeleteDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
         }
     }
 }
