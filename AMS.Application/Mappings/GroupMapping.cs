@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using AMS.Application.UseCases.Group.Command.CreateGroup;
+using AMS.Application.UseCases.Group.Command.UpdateGruop;
+using AMS.Domain.Entities;
+using AMS.Application.UseCases.Group.Command.DeleteGruop;
+using AMS.Application.Dtos.Groups;
 
-namespace AMS.Application.Mappings
+namespace AMS.Application.Mappings;
+
+public class GroupMapping : Profile
 {
-    internal class GroupMapping
+    public GroupMapping()
     {
+        CreateMap<CreateGroupCommand, GroupsDto>();
     }
 }
