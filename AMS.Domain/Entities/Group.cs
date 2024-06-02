@@ -8,6 +8,8 @@
             GroupUsers = new HashSet<GroupUsers>();
         }
 
+        public long GroupId { get; set; }
+
         public string Name { get; set; } = null!;
         public string Description { get; set; }
         public ICollection<GroupPermission> GroupPermission { get; set; }
