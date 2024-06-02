@@ -9,6 +9,7 @@
         public const string TOKEN_SUCCESS = "Token generado correctamente";
         public const string GROUP_UPDATE_SUCCESS = "El grupo se actualizo correctamente";
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
+        public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
     }
 
     internal static class MessageValidator

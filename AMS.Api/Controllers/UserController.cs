@@ -2,6 +2,7 @@
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.User;
 using AMS.Application.UseCases.User.Command.CreateUser;
+using AMS.Application.UseCases.User.Command.DeleteUser;
 using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Infrastructure.Authentication.Permissions;
@@ -61,5 +62,12 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, repsonse);
         }
 
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
     }
 }
