@@ -8,11 +8,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task CreateAsync(GroupsDto group);
 
         // ---------------------------------
-        Task CreateWithUserAsync(Group group);
-        Task UpdateAsync(Group group);
-        Task DeleteAsync(long groupId);
-
-        // ---------------------------------
 
         Task<long> GroupExistsAsync(string groupName, long idEntidad);
     }
