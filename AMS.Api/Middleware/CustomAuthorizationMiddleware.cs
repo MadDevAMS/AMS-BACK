@@ -20,10 +20,11 @@ namespace AMS.Api.Middleware
             if (context.Response.StatusCode == StatusCodes.Status403Forbidden && !context.Response.HasStarted)
             {
                 context.Response.ContentType = "application/json";
-                var response = new BaseResponse<string>();
-
-                response.Status = StatusCodes.Status403Forbidden;
-                response.Message = MiddlewareMessage.NOT_AUTHORIZATION;
+                BaseResponse<string> response = new()
+                {
+                    Status = StatusCodes.Status403Forbidden,
+                    Message = MiddlewareMessage.NOT_AUTHORIZATION
+                };
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             }
