@@ -3,13 +3,14 @@ using AMS.Application.Commons.Bases;
 using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
 using AMS.Application.UseCases.Entidades.Command.UpdateEntidad;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.Api.Controllers
 {
-
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class EntidadController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,7 +20,8 @@ namespace AMS.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut]
+        [HttpPut("entidades"), MapToApiVersion("1.0")]
+        [Authorize]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateEntidad([FromBody] UpdateEntidadCommand cmd)
         {
@@ -27,7 +29,7 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPost]
+        [HttpPost("entidades"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateEntidad([FromBody] CreateEntidadCommand cmd)
         {

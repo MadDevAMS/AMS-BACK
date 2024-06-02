@@ -6,6 +6,8 @@
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
+        public const string TOKEN_SUCCESS = "Token generado correctamente";
+        public const string GROUP_UPDATE_SUCCESS = "El grupo se actualizo correctamente";
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
     }
 
