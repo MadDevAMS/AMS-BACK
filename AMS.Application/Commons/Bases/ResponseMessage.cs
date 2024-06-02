@@ -6,6 +6,10 @@
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
         public const string TOKEN_SUCCESS = "Token generado correctamente";
+
+        public const string GRUPOS_SUCCESS_CREATED = "El registro del grupos se ha completado";
+
+
     }
 
     internal static class MessageValidator
@@ -20,6 +24,9 @@
         public const string TELEFONO_LEGHT_MIN = "El telefono debe tener como minimo 9 digitos";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
         public const string RAZON_SOCIAL_INVALID = "La Razon social no es valida";
+
+        public const string DESCRIPTION_LENGHT = "La descripcion debe tener entre 1 a 100 palabras";
+
     }
 
     internal static class ExceptionMessage
