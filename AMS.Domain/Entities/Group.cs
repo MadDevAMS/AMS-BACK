@@ -10,6 +10,7 @@
 
         public string Name { get; set; } = null!;
         public string Description { get; set; }
+        public long IdEntidad { get; set; }
         public ICollection<GroupPermission> GroupPermission { get; set; }
         public ICollection<GroupUsers> GroupUsers { get; set; }
 

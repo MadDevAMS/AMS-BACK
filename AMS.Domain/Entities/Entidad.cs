@@ -4,7 +4,9 @@
     {
         public Entidad()
         {
-            Users = new HashSet<User>(); ;
+            Users = new HashSet<User>();
+            Groups = new HashSet<Group>();
+            Areas = new HashSet<Area>();
         }
 
         public string Nombre { get; set; } = null!;
@@ -15,5 +17,7 @@
         public string Email { get; set; } = null!;
         public string Direccion { get; set; } = null!;
         public ICollection<User> Users { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<Area> Areas { get; set; }
     }
 }
