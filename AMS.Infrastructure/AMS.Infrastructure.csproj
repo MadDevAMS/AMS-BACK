@@ -20,4 +20,8 @@
 	  <ProjectReference Include="..\AMS.Application\AMS.Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Persistence\Migrations\" />
+	</ItemGroup>
+
 </Project>
