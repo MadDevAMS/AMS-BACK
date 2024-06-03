@@ -12,7 +12,11 @@ namespace AMS.Infrastructure.Persistence.Context
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupUsers> GroupUsers { get; set; }
         public DbSet<GroupPermission> GroupPermission { get; set; }
-
+        public DbSet<Area> Area { get; set; }
+        public DbSet<Maquina> Maquina { get; set; }
+        public DbSet<Componente> Componente { get; set; }
+        public DbSet<PuntoMonitoreo> PuntoMonitoreos { get; set; }
+        public DbSet<Metrica> Metrica { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

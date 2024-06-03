@@ -25,7 +25,7 @@ namespace AMS.Application.UseCases.Groups.UpdateGroup
 
                 response.Status = (int)ResponseCode.OK;
                 response.Data = group;
-                response.Message = ResponseMessage.GROUP_UPDATE_SUCCESS;
+                response.Message = ResponseMessage.GROUP_SUCCESS_UPDATE;
             }
             catch (Exception ex)
             {
