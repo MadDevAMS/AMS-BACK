@@ -6,6 +6,7 @@
         IUserRepository UserRepository { get; }
         IPermissionRepository PermissionRepository { get; }
         IGroupRepository GroupRepository { get; }
+        IGroupPermissionRepository GroupPermissionRepository { get; }
         Task SaveChanges();
     }
 }

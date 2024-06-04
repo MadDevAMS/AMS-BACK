@@ -17,13 +17,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
     {
         private readonly ApplicationDbContext _context = context;
         
-        public async Task AssignPermissiontoGroupAsync(AddPermissionsToGroupDto addPermissionsToGroupDto)
+        public async Task CreateGroupPermissionsAsync(GroupPermissionRegistroDto groupPermissionResponseDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
             try {
                 var groupId = await _context.Groups
-                     .Where(g => g.Id == addPermissionsToGroupDto.GroupId)
+                     .Where(g => g.Id == GroupPermissionRegistroDto.GroupId)
                      .FirstOrDefaultAsync();
 
                 if (groupId == null)
@@ -32,7 +32,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 }
 
                 var permissisionId = await _context.Permissions
-                    .Where(p => addPermissionsToGroupDto.PermissionId.Contains(p.Id))
+                    .Where(p => groupPermissionResponseDto.PermissionId.Contains(p.Id))
                     .ToListAsync();
 
                 if (!permissisionId.Any())

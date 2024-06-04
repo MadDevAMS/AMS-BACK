@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace AMS.Application.Dtos.GroupPermission
 {
-    public class AddPermissionsToGroupDto
+    public class GroupPermissionRegistroDto
     {
-        public long GroupId { get; set; }
-        public long GroupPermissionId { get; set; }
+        public List<long> GroupId { get; set; } = new List<long>();   
         public List<long> PermissionId { get; set; } = new List<long>();
     }
 }

@@ -10,6 +10,6 @@ namespace AMS.Application.Interfaces.Persistence
 {
     public interface IGroupPermissionRepository
     {
-        Task AssignPermissiontoGroupAsync(AddPermissionsToGroupDto addPermissionsToGroupDto);
+        Task CreateGroupPermissionsAsync(GroupPermissionRegistroDto groupPermissionResponseDto);
     }
 }

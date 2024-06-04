@@ -7,6 +7,8 @@
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
+        public const string GROUP_PERMISSION_CREATE = "Se asigno un permiso al grupo seleccionado";
+        public const string INVALID_GROUP_OR_PERMISSION = "El grupo o permiso especificado no existe";
     }
 
     internal static class MessageValidator
