@@ -5,6 +5,7 @@ namespace AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoM
 {
     public class CreatePuntoMonitoreoCommand : IRequest<BaseResponse<bool>>
     {
+        public long IdComponente { get; set; }
         public string Description { get; set; } = null!;
         public string Detail { get; set; } = null!;
         public string DireccionMedicion { get; set; } = null!;

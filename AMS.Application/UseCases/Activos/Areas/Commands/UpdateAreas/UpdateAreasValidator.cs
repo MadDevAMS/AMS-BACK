@@ -1,11 +1,11 @@
 ﻿using AMS.Application.Commons.Utils;
 using FluentValidation;
 
-namespace AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina
+namespace AMS.Application.UseCases.Activos.Areas.Commands.UpdateAreas
 {
-    public class UpdateMaquinaValidator : AbstractValidator<UpdateMaquinaCommand>
+    public class UpdateAreasValidator : AbstractValidator<UpdateAreasCommand>
     {
-        public UpdateMaquinaValidator()
+        public UpdateAreasValidator()
         {
             RuleFor(x => x.Description)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)
@@ -14,11 +14,6 @@ namespace AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina
             RuleFor(x => x.Name)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
-
-            RuleFor(x => x.TipoMaquina)
-                .NotNull().WithMessage(MessageValidator.NOT_NULL)
-                .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
-
         }
     }
 }

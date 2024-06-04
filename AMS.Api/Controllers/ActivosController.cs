@@ -1,9 +1,18 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Activos;
+using AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas;
+using AMS.Application.UseCases.Activos.Areas.Commands.DeleteAreas;
+using AMS.Application.UseCases.Activos.Areas.Commands.UpdateAreas;
+using AMS.Application.UseCases.Activos.Areas.Queries.GetAreas;
 using AMS.Application.UseCases.Activos.Componentes.Commands.CreateComponente;
+using AMS.Application.UseCases.Activos.Componentes.Commands.DeleteComponente;
 using AMS.Application.UseCases.Activos.Componentes.Commands.UpdateComponente;
 using AMS.Application.UseCases.Activos.Componentes.Queries.GetComponente;
+using AMS.Application.UseCases.Activos.Maquinas.Commands.CreateMaquina;
+using AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina;
+using AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina;
+using AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina;
 using AMS.Application.UseCases.Activos.Metricas.Commands.CreateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.DeleteMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas;
@@ -32,8 +41,9 @@ namespace AMS.Api.Controllers
 
         [HttpGet("metricas"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<MetricasResponseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetMetricaById([FromQuery] MetricaByIdQuery qry)
+        public async Task<IActionResult> GetMetricaById([FromQuery] long idMetrica)
         {
+            var qry = new MetricaByIdQuery() { Id = idMetrica };
             var response = await mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }
@@ -56,7 +66,7 @@ namespace AMS.Api.Controllers
 
         [HttpDelete("metricas"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteMetrica([FromBody] DeleteMetricaCommand cmd)
+        public async Task<IActionResult> DeleteMetrica([FromQuery] DeleteMetricaCommand cmd)
         {
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
@@ -64,8 +74,9 @@ namespace AMS.Api.Controllers
 
         [HttpGet("puntosMonitoreo"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<PuntoMonitoreoResponseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetPuntoMonitoreoById([FromQuery] GetPuntoMonitoreoByIdQuery qry)
+        public async Task<IActionResult> GetPuntoMonitoreoById([FromQuery] long idPunto)
         {
+            var qry = new GetPuntoMonitoreoByIdQuery() { Id = idPunto };
             var response = await mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }
@@ -88,7 +99,7 @@ namespace AMS.Api.Controllers
 
         [HttpDelete("puntosMonitoreo"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeletePuntoMonitoreo([FromBody] DeletePuntoMonitoreoCommand cmd)
+        public async Task<IActionResult> DeletePuntoMonitoreo([FromQuery] DeletePuntoMonitoreoCommand cmd)
         {
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
@@ -96,8 +107,9 @@ namespace AMS.Api.Controllers
 
         [HttpGet("componentes"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<ComponenteResponseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetComponenteById([FromQuery] GetComponenteQuery qry)
+        public async Task<IActionResult> GetComponenteById([FromQuery] long idComponente)
         {
+            var qry = new GetComponenteQuery { Id = idComponente };
             var response = await mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }
@@ -120,8 +132,75 @@ namespace AMS.Api.Controllers
 
         [HttpDelete("componentes"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteComponente([FromBody] DeleteMetricaCommand cmd)
+        public async Task<IActionResult> DeleteComponente([FromQuery] DeleteComponenteCommand cmd)
         {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpGet("maquinas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<MaquinaResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetMaquinaById([FromQuery] long idMaquina)
+        {
+            var qry = new GetMaquinaQuery() { Id = idMaquina };
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("maquinas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CreateMaquina([FromBody] CreateMaquinaCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPut("maquinas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateMaquina([FromBody] UpdateMaquinaCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpDelete("maquinas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteMaquina([FromQuery] DeleteMaquinaCommmand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpGet("areas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<MaquinaResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAreaById([FromQuery] long idArea)
+        {
+            var qry = new GetAreasQuery() { Id = idArea };
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("areas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> CreateArea([FromBody] CreateAreasCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPut("areas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateArea([FromBody] UpdateAreasCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpDelete("areas"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteArea([FromQuery] long idArea)
+        {
+            var cmd = new DeleteAreasCommand() { Id = idArea };
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
         }

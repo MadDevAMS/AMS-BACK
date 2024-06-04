@@ -5,23 +5,24 @@ using AMS.Domain.Entities;
 using AutoMapper;
 using MediatR;
 
-namespace AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina
+namespace AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas
 {
-    public class UpdateMaquinaHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateMaquinaCommand, BaseResponse<bool>>
+    public class CreateAreasHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<CreateAreasCommand, BaseResponse<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<BaseResponse<bool>> Handle(UpdateMaquinaCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<bool>> Handle(CreateAreasCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<bool>();
 
             try
             {
-                var maquina = _mapper.Map<Maquina>(request);
-                await _unitOfWork.ActivosRepository.UpdateMaquinaAsync(maquina);
+                var area = _mapper.Map<Area>(request);
+                await _unitOfWork.ActivosRepository.CreateAreaAsync(area);
+
                 response.Status = (int)ResponseCode.OK;
-                response.Message = ResponseActivosMessage.MAQUINA_SUCCESS_UPDATE;
+                response.Message = ResponseActivosMessage.AREA_SUCCESS_REGISTER;
             }
             catch (Exception ex)
             {

@@ -12,6 +12,16 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         private readonly ApplicationDbContext _context = context;
 
+        public async Task CreateAreaAsync(Area area)
+        {
+            area.State = Utils.ESTADO_ACTIVO;
+            area.AuditCreateDate = DateTime.Now;
+            area.AuditCreateUser = 1;
+
+            await _context.AddRangeAsync(area);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task CreateComponenteAsync(Componente componente)
         {
             componente.State = Utils.ESTADO_ACTIVO;
@@ -45,10 +55,20 @@ namespace AMS.Infrastructure.Persistence.Repositories
         public async Task CreatePuntoMonitoreoAsync(PuntoMonitoreo punto)
         {
             punto.State = Utils.ESTADO_ACTIVO;
-            punto.AuditCreateUser = 1;
+            punto.AuditCreateUser = Utils.ESTADO_ACTIVO;
             punto.AuditCreateDate = DateTime.Now;
 
             await _context.AddAsync(punto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAreaAsync(long idArea)
+        {
+            var entity = (await _context.Area.FirstOrDefaultAsync(c => c.Id == idArea))!;
+
+            entity.AuditDeleteUser = 1;
+            entity.AuditDeleteDate = DateTime.Now;
+
             await _context.SaveChangesAsync();
         }
 
@@ -84,12 +104,26 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task DeletePuntoMonitoreoAsync(long idPunto)
         {
-            var entity = (await _context.PuntoMonitoreos.FirstOrDefaultAsync(p => p.Id == idPunto))!;
+            var entity = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == idPunto))!;
 
             entity.AuditDeleteUser = 1;
             entity.AuditDeleteDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<AreaResponseDto> GetAreaByIdAsync(long idArea)
+        {
+            var entity = (await _context.Area.FirstOrDefaultAsync(c => c.Id == idArea))!;
+
+            var response = new AreaResponseDto()
+            {
+                Name = entity.Name,
+                Description = entity.Description,
+
+            };
+
+            return response;
         }
 
         public async Task<ComponenteResponseDto> GetComponenteByIdAsync(long idComponente)
@@ -98,6 +132,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var response = new ComponenteResponseDto()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 Potencia = entity.Potencia,
@@ -139,7 +174,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task<PuntoMonitoreoResponseDto> GetPuntoMonitoreoByIdAsync(long idPunto)
         {
-            var entity = (await _context.PuntoMonitoreos.FirstOrDefaultAsync(p => p.Id == idPunto))!;
+            var entity = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == idPunto))!;
 
             var response = new PuntoMonitoreoResponseDto()
             {
@@ -152,6 +187,18 @@ namespace AMS.Infrastructure.Persistence.Repositories
             };
 
             return response;
+        }
+
+        public async Task UpdateAreaAsync(Area area)
+        {
+            var entity = (await _context.Area.FirstOrDefaultAsync(m => m.Id == area.Id))!;
+
+            entity.Name = area.Name;
+            entity.Description = area.Description;
+            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateComponenteAsync(Componente componente)
@@ -168,9 +215,18 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateMaquinaAsync(Maquina maquina)
+        public async Task UpdateMaquinaAsync(Maquina maquina)
         {
-            throw new NotImplementedException();
+            var entity = (await _context.Maquina.FirstOrDefaultAsync(m => m.Id == maquina.Id))!;
+
+            entity.Name = maquina.Name;
+            entity.Description = maquina.Description;
+            entity.TipoMaquina = maquina.TipoMaquina;
+            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
         }
 
         public async Task UpdateMetricasAsync(Metrica metrica)
@@ -188,7 +244,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task UpdatePuntoMonitorioAsync(PuntoMonitoreo punto)
         {
-            var entityUpdate = (await _context.PuntoMonitoreos.FirstOrDefaultAsync(p => p.Id == punto.Id))!;
+            var entityUpdate = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == punto.Id))!;
 
             entityUpdate.Description = punto.Description;
             entityUpdate.Detail = punto.Detail;
