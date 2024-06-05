@@ -41,7 +41,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 name: "Groups",
                 columns: table => new
                 {
-                    GroupName = table.Column<long>(type: "bigint", nullable: false)
+                    GroupId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -55,7 +55,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.GroupName);
+                    table.PrimaryKey("PK_Groups", x => x.GroupId);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,7 +112,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 name: "GroupPermission",
                 columns: table => new
                 {
-                    RolePermissionId = table.Column<long>(type: "bigint", nullable: false)
+                    GroupPermissionId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<long>(type: "bigint", nullable: false),
                     PermissionId = table.Column<long>(type: "bigint", nullable: false),
@@ -126,7 +126,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupPermission", x => x.RolePermissionId);
+                    table.PrimaryKey("PK_GroupPermission", x => x.GroupPermissionId);
                     table.ForeignKey(
                         name: "FK_GroupPermission_Groups_GroupId",
                         column: x => x.GroupId,
@@ -146,7 +146,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     GroupUsersId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    Groupid = table.Column<long>(type: "bigint", nullable: false),
+                    GroupId = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
                     AuditCreateUser = table.Column<int>(type: "int", nullable: false),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -160,7 +160,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     table.PrimaryKey("PK_GroupUsers", x => x.GroupUsersId);
                     table.ForeignKey(
                         name: "FK_GroupUsers_Groups_Groupid",
-                        column: x => x.Groupid,
+                        column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "GroupId");
                     table.ForeignKey(
@@ -181,9 +181,9 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupUsers_Groupid",
+                name: "IX_GroupUsers_GroupId",
                 table: "GroupUsers",
-                column: "Groupid");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupUsers_UserId",

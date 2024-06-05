@@ -6,9 +6,10 @@
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
+        public const string TOKEN_SUCCESS = "Token generado correctamente";
+        public const string GROUP_UPDATE_SUCCESS = "El grupo se actualizo correctamente";
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
-        public const string GROUP_PERMISSION_CREATE = "Se asigno un permiso al grupo seleccionado";
-        public const string INVALID_GROUP_OR_PERMISSION = "El grupo o permiso especificado no existe";
+        public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
     }
 
     internal static class MessageValidator

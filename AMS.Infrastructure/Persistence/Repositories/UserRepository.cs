@@ -43,7 +43,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 State = u.State,
                 Group = u.GroupUsers.Select(g => new GroupListResponseDto
                 {
-                    Id = g.Groupid,
+                    Id = g.GroupId,
                     Name = g.Group.Name,
                 }).ToList()
             })
@@ -98,5 +98,14 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return userDetails!;
         }
 
+        public async Task DeleteAsync(long id)
+        {
+            var entity = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id))!;
+
+            entity.AuditDeleteUser = 1;
+            entity.AuditDeleteDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

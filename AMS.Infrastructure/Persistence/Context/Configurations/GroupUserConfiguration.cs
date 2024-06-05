@@ -14,7 +14,7 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
 
             builder.HasOne(g => g.Group)
                 .WithMany(p => p.GroupUsers)
-                .HasForeignKey(r => r.Groupid)
+                .HasForeignKey(r => r.GroupId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(r => r.User)

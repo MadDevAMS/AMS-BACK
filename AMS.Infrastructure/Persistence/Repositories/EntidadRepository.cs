@@ -49,7 +49,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
                 var groupUser = new GroupUsers()
                 {
-                    Groupid = groupAdminId,
+                    GroupId = groupAdminId,
                     User = user,
                     State = Utils.ESTADO_ACTIVO,
                     AuditCreateUser = Utils.ESTADO_ACTIVO,

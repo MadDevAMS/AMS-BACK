@@ -21,7 +21,7 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
             {
                 if (!request.Password.Equals(request.ConfirmPassword))
                 {
-                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Status = (int)ResponseCode.ACCEPTED;
                     response.Message = MessageValidator.CONFIRM_PASSWORD;
                     return response;
                 }

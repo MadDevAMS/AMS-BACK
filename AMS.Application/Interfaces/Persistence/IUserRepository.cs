@@ -11,5 +11,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
         Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
+        Task DeleteAsync(long id);
     }
 }
