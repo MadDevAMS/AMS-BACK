@@ -22,7 +22,7 @@ namespace AMS.Application.UseCases.GroupPermission.Command.CreateGroupPermission
             var response = new BaseResponse<bool>();
 
             try {
-
+                // 
                 if (request.GroupId == null || request.GroupId.Count == 0 || request.PermissionId == null || request.PermissionId.Count == 0) 
                 {
                     response.Status = (int)ResponseCode.BAD_REQUEST;
@@ -32,7 +32,7 @@ namespace AMS.Application.UseCases.GroupPermission.Command.CreateGroupPermission
                 }
 
                 var validGroupIds = new List<long>();
-
+                // Entonces lo que recomiendas es buscar por nombre del grupo y por el nombre del permiso 
                 foreach (var groupId in request.GroupId)
                 {
                     var group = await _unitOfWork.GroupRepository.GetByiIdAsync(groupId);
@@ -41,6 +41,7 @@ namespace AMS.Application.UseCases.GroupPermission.Command.CreateGroupPermission
                     }
                 }
 
+                // Quitar lo redundante
                 var validPermissionIds = new List<long>(); 
 
                 foreach (var permissionId in request.PermissionId) 
