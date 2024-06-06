@@ -2,7 +2,7 @@
 {
     public class ComponenteResponseDto
     {
-        public long Id { get; set; }  
+        public long IdComponente { get; set; }  
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int Potencia { get; set; }

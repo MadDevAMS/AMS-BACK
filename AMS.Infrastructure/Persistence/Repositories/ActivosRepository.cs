@@ -1,16 +1,150 @@
-﻿using AMS.Application.Dtos.Activos;
+﻿using AMS.Application.Commons.Bases;
+using AMS.Application.Commons.Utils;
+using AMS.Application.Dtos.Activos;
 using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;
 using AMS.Infrastructure.Persistence.Context;
+using AMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Infrastructure.Persistence.Repositories
 {
-    public class ActivosRepository(ApplicationDbContext context) : IActivosRepository
+    public class ActivosRepository(ApplicationDbContext context) : BaseRepository(context), IActivosRepository
     {
+        public async Task<BaseResponse<FolderResponseDto>> GetFolderById(long idEntidad)
+        {
+            var parameters = new Dapper.DynamicParameters();
+            parameters.Add("idEntidad", idEntidad);
+            var data = await GetAllAsync<FolderProcedureDto>(StoreProcedures.SP_GET_FOLDER_BY_ENTIDAD, parameters);
 
-        private readonly ApplicationDbContext _context = context;
+            var folderResponse = MapToFolderResponseDto(data);
+
+            return new BaseResponse<FolderResponseDto>
+            {
+                Data = folderResponse,
+            };
+        }
+
+        private FolderResponseDto MapToFolderResponseDto(IEnumerable<FolderProcedureDto> data)
+        {
+            var folderResponse = new FolderResponseDto
+            {
+                EntidadId = data.First().EntidadId,
+                EntidadName = data.First().EntidadName,
+                Areas = new List<AreaDto>()
+            };
+
+            var areaDict = new Dictionary<long, AreaDto>();
+            var maquinaDict = new Dictionary<long, MaquinaDto>();
+            var componenteDict = new Dictionary<long, ComponenteDto>();
+            var puntoMonitoreoDict = new Dictionary<long, PuntoMonitoreoDto>();
+
+            foreach (var item in data)
+            {
+                if (item.AreaId.HasValue)
+                {
+                    if (!areaDict.ContainsKey(item.AreaId.Value))
+                    {
+                        var area = new AreaDto
+                        {
+                            AreaId = item.AreaId.Value,
+                            AreaName = item.AreaName,
+                            SubAreas = new List<AreaDto>(),
+                            Maquinas = new List<MaquinaDto>()
+                        };
+
+                        if (item.ParentId.HasValue && areaDict.ContainsKey(item.ParentId.Value))
+                        {
+                            areaDict[item.ParentId.Value].SubAreas.Add(area);
+                        }
+                        else
+                        {
+                            folderResponse.Areas.Add(area);
+                        }
+
+                        areaDict[item.AreaId.Value] = area;
+                    }
+                }
+
+                if (item.MaquinaId.HasValue)
+                {
+                    if (!maquinaDict.ContainsKey(item.MaquinaId.Value))
+                    {
+                        var maquina = new MaquinaDto
+                        {
+                            MaquinaId = item.MaquinaId.Value,
+                            MaquinaName = item.MaquinaName,
+                            Componentes = new List<ComponenteDto>()
+                        };
+
+                        if (item.AreaId.HasValue)
+                        {
+                            areaDict[item.AreaId.Value].Maquinas.Add(maquina);
+                        }
+
+                        maquinaDict[item.MaquinaId.Value] = maquina;
+                    }
+                }
+
+                if (item.ComponenteId.HasValue)
+                {
+                    if (!componenteDict.ContainsKey(item.ComponenteId.Value))
+                    {
+                        var componente = new ComponenteDto
+                        {
+                            ComponenteId = item.ComponenteId.Value,
+                            ComponenteName = item.ComponenteName,
+                            PuntosMoniteros = new List<PuntoMonitoreoDto>()
+                        };
+
+                        if (item.MaquinaId.HasValue)
+                        {
+                            maquinaDict[item.MaquinaId.Value].Componentes.Add(componente);
+                        }
+
+                        componenteDict[item.ComponenteId.Value] = componente;
+                    }
+                }
+
+                if (item.PuntoMonitoreoId.HasValue)
+                {
+                    if (!puntoMonitoreoDict.ContainsKey(item.PuntoMonitoreoId.Value))
+                    {
+                        var puntoMonitoreo = new PuntoMonitoreoDto
+                        {
+                            PuntoMonitoreoId = item.PuntoMonitoreoId.Value,
+                            PuntoMonitoreoName = item.PuntoMonitoreoName,
+                            Metricas = new List<MetricaDto>()
+                        };
+
+                        if (item.ComponenteId.HasValue)
+                        {
+                            componenteDict[item.ComponenteId.Value].PuntosMoniteros.Add(puntoMonitoreo);
+                        }
+
+                        puntoMonitoreoDict[item.PuntoMonitoreoId.Value] = puntoMonitoreo;
+                    }
+                }
+
+                if (item.MetricaId.HasValue)
+                {
+                    var metrica = new MetricaDto
+                    {
+                        MetricaId = item.MetricaId.Value,
+                        MetricaName = item.MetricaName
+                    };
+
+                    if (item.PuntoMonitoreoId.HasValue)
+                    {
+                        puntoMonitoreoDict[item.PuntoMonitoreoId.Value].Metricas.Add(metrica);
+                    }
+                }
+            }
+
+            return folderResponse;
+        }
+
 
         public async Task CreateAreaAsync(Area area)
         {
@@ -132,7 +266,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var response = new ComponenteResponseDto()
             {
-                Id = entity.Id,
+                IdComponente = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 Potencia = entity.Potencia,
@@ -149,6 +283,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var response = new MaquinaResponseDto()
             {
+                IdMaquina = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 TipoMaquina = entity.TipoMaquina,
@@ -163,7 +298,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var metricaDto = new MetricasResponseDto()
             {
-                IdPuntoMonitoreo = entity.Id,
+                IdMetrica = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 Tipo = entity.Tipo,
@@ -178,7 +313,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var response = new PuntoMonitoreoResponseDto()
             {
-                Id = entity.Id,
+                IdPuntoMonitoreo = entity.Id,
                 Description = entity.Description,
                 Detail = entity.Detail,
                 DireccionMedicion = entity.DireccionMedicion,

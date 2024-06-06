@@ -9,6 +9,7 @@ using AMS.Application.UseCases.Activos.Componentes.Commands.CreateComponente;
 using AMS.Application.UseCases.Activos.Componentes.Commands.DeleteComponente;
 using AMS.Application.UseCases.Activos.Componentes.Commands.UpdateComponente;
 using AMS.Application.UseCases.Activos.Componentes.Queries.GetComponente;
+using AMS.Application.UseCases.Activos.Folder.Queries.GetFolderEntidad;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.CreateMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina;
@@ -37,6 +38,15 @@ namespace AMS.Api.Controllers
         public ActivosController(IMediator mediator)
         {
             this.mediator = mediator;
+        }
+
+        [HttpGet("folder")]
+        [ProducesResponseType(typeof(BaseResponse<MetricasResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetFolderEntidad()
+        {
+            var qry = new GetFolderEntidadQuery();
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
         [HttpGet("metricas"), MapToApiVersion("1.0")]

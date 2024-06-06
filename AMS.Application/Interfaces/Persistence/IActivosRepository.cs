@@ -1,10 +1,12 @@
-﻿using AMS.Application.Dtos.Activos;
+﻿using AMS.Application.Commons.Bases;
+using AMS.Application.Dtos.Activos;
 using AMS.Domain.Entities;
 
 namespace AMS.Application.Interfaces.Persistence
 {
     public interface IActivosRepository
     {
+        Task<BaseResponse<FolderResponseDto>> GetFolderById(long idEntidad);
         Task<MetricasResponseDto> GetMetricaByIdAsync(long idMetrica);
         Task CreateMetricasAsync(Metrica metrica);
         Task UpdateMetricasAsync(Metrica metrica);
