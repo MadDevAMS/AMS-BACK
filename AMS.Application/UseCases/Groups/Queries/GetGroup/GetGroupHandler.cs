@@ -22,7 +22,7 @@ namespace AMS.Application.UseCases.Groups.Queries.GetGroup
                 if (group == null) 
                 {
                     response.Status = (int)ResponseCode.NOT_FOUND;
-                    response.Message = ResponseMessage.RESOURCE_NOT_FOUND;
+                    response.Message = ExceptionMessage.RESOURCE_NOT_FOUND;
                 } else
                 {
                     response.Data = group;

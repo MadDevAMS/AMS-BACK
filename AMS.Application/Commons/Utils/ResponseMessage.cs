@@ -17,9 +17,6 @@
         public const string GROUP_SUCCESS_CREATE = "El grupo se creo correctamente";
         public const string GROUP_SUCCESS_UPDATE = "El grupo se actualizo correctamente";
         public const string GROUP_SUCCESS_DELETE = "El grupo se elimino correctamente";
-        public const string RESOURCE_NOT_FOUND = "Este recurso no ha sido encontrado";
-
-        public const string ERROR_PARSE = "Ha ocurrido un error al intentar parsear un dato";
     }
 
     internal static class ResponseActivosMessage
@@ -66,6 +63,8 @@
         public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
         public const string NOT_USER_ADMIN = "No es administrador";
+        public const string ERROR_PARSE = "Ha ocurrido un error al intentar parsear un dato";
+        public const string RESOURCE_NOT_FOUND = "Este recurso no ha sido encontrado";
     };
 
     public static class MiddlewareMessage
