@@ -49,7 +49,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         var area = new AreaDto
                         {
                             AreaId = item.AreaId.Value,
-                            AreaName = item.AreaName,
+                            AreaName = item.AreaName!,
                             SubAreas = new List<AreaDto>(),
                             Maquinas = new List<MaquinaDto>()
                         };
@@ -74,7 +74,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         var maquina = new MaquinaDto
                         {
                             MaquinaId = item.MaquinaId.Value,
-                            MaquinaName = item.MaquinaName,
+                            MaquinaName = item.MaquinaName!,
                             Componentes = new List<ComponenteDto>()
                         };
 
@@ -94,7 +94,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         var componente = new ComponenteDto
                         {
                             ComponenteId = item.ComponenteId.Value,
-                            ComponenteName = item.ComponenteName,
+                            ComponenteName = item.ComponenteName!,
                             PuntosMoniteros = new List<PuntoMonitoreoDto>()
                         };
 
@@ -114,7 +114,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         var puntoMonitoreo = new PuntoMonitoreoDto
                         {
                             PuntoMonitoreoId = item.PuntoMonitoreoId.Value,
-                            PuntoMonitoreoName = item.PuntoMonitoreoName,
+                            PuntoMonitoreoName = item.PuntoMonitoreoName!,
                             Metricas = new List<MetricaDto>()
                         };
 
