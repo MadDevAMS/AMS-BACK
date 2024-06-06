@@ -14,7 +14,7 @@
 
         public const string TOKEN_SUCCESS = "Token generado correctamente";
 
-        public const string GROUP_UPDATE_CREATE = "El grupo se creo correctamente";
+        public const string GROUP_SUCCESS_CREATE = "El grupo se creo correctamente";
         public const string GROUP_SUCCESS_UPDATE = "El grupo se actualizo correctamente";
         public const string GROUP_SUCCESS_DELETE = "El grupo se elimino correctamente";
     }

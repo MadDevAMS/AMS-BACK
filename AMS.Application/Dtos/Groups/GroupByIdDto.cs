@@ -1,10 +1,6 @@
-﻿using AMS.Application.Commons.Bases;
-using AMS.Application.Dtos.Groups;
-using MediatR;
-
-namespace AMS.Application.UseCases.Groups.UpdateGroups
+﻿namespace AMS.Application.Dtos.Groups
 {
-    public class UpdateGroupCommand : IRequest<BaseResponse<GroupsDto>>
+    public class GroupByIdDto
     {
         public long GroupId { get; set; }
         public string Name { get; set; } = null!;
