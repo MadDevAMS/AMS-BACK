@@ -2,17 +2,16 @@
 using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Persistence.Context;
+using AMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Infrastructure.Persistence.Repositories
 {
-    public class GroupRepository(ApplicationDbContext context) : IGroupRepository
+    public class GroupRepository(ApplicationDbContext context) : BaseRepository(context), IGroupRepository
     {
-        private readonly ApplicationDbContext _context = context;
-
         public async Task UpdateAsync(GroupsDto group)
         {
-            var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId) ?? throw new Exception("Group not found");
+            var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId);
             var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.GroupId == group.GroupId).ToListAsync();
             var currentGroupPermissions = await _context.GroupPermission.Where(gu => gu.GroupId == group.GroupId).ToListAsync();
 

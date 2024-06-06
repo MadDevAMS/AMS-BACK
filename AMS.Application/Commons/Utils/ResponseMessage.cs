@@ -3,13 +3,44 @@
     internal static class ResponseMessage
     {
         public const string QUERY_SUCCESS = "Consulta Exitosa";
-        public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
-        public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
-        public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
-        public const string TOKEN_SUCCESS = "Token generado correctamente";
-        public const string GROUP_UPDATE_SUCCESS = "El grupo se actualizo correctamente";
+
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
+
+        public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
         public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
+
+        public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";
+        public const string ENTIDAD_SUCCESS_UPDATE = "La Entidad se actualizo exitosamente";
+
+        public const string TOKEN_SUCCESS = "Token generado correctamente";
+
+        public const string GROUP_UPDATE_CREATE = "El grupo se creo correctamente";
+        public const string GROUP_SUCCESS_UPDATE = "El grupo se actualizo correctamente";
+        public const string GROUP_SUCCESS_DELETE = "El grupo se elimino correctamente";
+    }
+
+    internal static class ResponseActivosMessage
+    {
+        public const string METRICA_SUCCESS_REGISTER = "La Metrica se registro correctamente";
+        public const string METRICA_SUCCESS_UPDATE = "La Metrica se actualizo correctamente";
+        public const string METRICA_SUCCESS_DELETE = "La Metrica se elimino correctamente";
+
+        public const string PUNTO_SUCCESS_REGISTER = "El Punto de Monitoreo se registro correctamente";
+        public const string PUNTO_SUCCESS_UPDATE = "El Punto de Monitoreo se actualizo correctamente";
+        public const string PUNTO_SUCCESS_DELETE = "El Punto de Monitoreo se elimino correctamente";
+
+        public const string AREA_SUCCESS_REGISTER = "El Area se registro correctamente";
+        public const string AREA_SUCCESS_UPDATE = "El Area se actualizo correctamente";
+        public const string AREA_SUCCESS_DELETE = "El Area se elimino correctamente";
+
+        public const string COMPONENTE_SUCCESS_REGISTER = "El Componente se registro correctamente";
+        public const string COMPONENTE_SUCCESS_UPDATE = "El Componente se actualizo correctamente";
+        public const string COMPONENTE_SUCCESS_DELETE = "El Componente se elimino correctamente";
+
+        public const string MAQUINA_SUCCESS_REGISTER = "La Maquina se registro correctamente";
+        public const string MAQUINA_SUCCESS_UPDATE = "La Maquina se actualizo correctamente";
+        public const string MAQUINA_SUCCESS_DELETE = "La Maquina se elimino correctamente";
+
     }
 
     internal static class MessageValidator

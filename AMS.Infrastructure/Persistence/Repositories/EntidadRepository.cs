@@ -3,14 +3,13 @@ using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;
 using AMS.Infrastructure.Persistence.Context;
+using AMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Infrastructure.Persistence.Repositories
 {
-    public class EntidadRepository(ApplicationDbContext context) : IEntidadRepository
+    public class EntidadRepository(ApplicationDbContext context) : BaseRepository(context), IEntidadRepository
     {
-        private readonly ApplicationDbContext _context = context;
-
         public async Task CreateAsync(EntidadRegistroDto entidadDto)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();

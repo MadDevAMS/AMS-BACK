@@ -8,9 +8,9 @@
         }
 
         public long IdArea { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string TipoMaquina { get; set; }
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string TipoMaquina { get; set; } = null!;
         public ICollection<Componente> Componentes { get; set; }
         public virtual Area Area { get; set; }
     }

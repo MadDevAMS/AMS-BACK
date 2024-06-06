@@ -4,8 +4,8 @@
     {
         IEntidadRepository EntidadRepository { get; }
         IUserRepository UserRepository { get; }
-        IPermissionRepository PermissionRepository { get; }
         IGroupRepository GroupRepository { get; }
+        IActivosRepository ActivosRepository { get; }
         Task SaveChanges();
     }
 }

@@ -7,14 +7,13 @@ using AMS.Application.Interfaces.Persistence;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;
 using AMS.Infrastructure.Persistence.Context;
+using AMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Infrastructure.Persistence.Repositories
 {
-    public class UserRepository(ApplicationDbContext context) : IUserRepository
+    public class UserRepository(ApplicationDbContext context) : BaseRepository(context), IUserRepository
     {
-        private readonly ApplicationDbContext _context = context;
-
         public async Task CreateAsync(User user)
         {
             user.State = Utils.ESTADO_ACTIVO;
@@ -30,7 +29,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
             var query = _context.Users.Where(u => u.IdEntidad == filter.IdEntidad
                     && (u.FirstName.Contains(filter.UserName) || filter.UserName == Utils.EMPTY_STRING)
                     && (u.Email.Contains(filter.UserEmail) || filter.UserEmail == Utils.EMPTY_STRING)
-                    && (u.State == filter.State || filter.State == -1));
+                    && (u.State == filter.State || filter.State == -1)
+                    && (u.AuditDeleteUser == null && u.AuditDeleteDate == null));
 
             var totalRecords = await query.Select(u => u.Id).CountAsync();
 

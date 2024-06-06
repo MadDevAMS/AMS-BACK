@@ -231,9 +231,6 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("EntidadId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("IdEntidad")
                         .HasColumnType("bigint");
 
@@ -247,7 +244,7 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntidadId");
+                    b.HasIndex("IdEntidad");
 
                     b.ToTable("Groups");
                 });
@@ -636,9 +633,12 @@ namespace AMS.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("AMS.Domain.Entities.Group", b =>
                 {
-                    b.HasOne("AMS.Domain.Entities.Entidad", null)
+                    b.HasOne("AMS.Domain.Entities.Entidad", "Entidad")
                         .WithMany("Groups")
-                        .HasForeignKey("EntidadId");
+                        .HasForeignKey("IdEntidad")
+                        .IsRequired();
+
+                    b.Navigation("Entidad");
                 });
 
             modelBuilder.Entity("AMS.Domain.Entities.GroupPermission", b =>
