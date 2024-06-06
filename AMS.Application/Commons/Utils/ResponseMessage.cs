@@ -64,6 +64,7 @@
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
         public const string ERROR_PARSE = "Ha ocurrido un error al intentar parsear un dato";
         public const string RESOURCE_NOT_FOUND = "Este recurso no ha sido encontrado";
+        public const string NOT_USER_ADMIN = "No es administrador";
     };
 
     public static class MiddlewareMessage

@@ -5,6 +5,7 @@ using AMS.Application.UseCases.User.Command.CreateUser;
 using AMS.Application.UseCases.User.Command.DeleteUser;
 using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
+using AMS.Application.UseCases.Users.Command.LoginAdmin;
 using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -37,7 +38,7 @@ namespace AMS.Api.Controllers
 
         [Authorize]
         [HasPermission(Permission.ReadMember)]
-        [HttpGet]
+        [HttpGet("users"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<ListUsersResponseDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ListUsers(
             [FromQuery] long idEntidad,
@@ -63,8 +64,18 @@ namespace AMS.Api.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("users"), MapToApiVersion("1.0")]
+        [Authorize]
+        [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("login/admin"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> LoginUserAdmin([FromBody] LoginAdminCommand cmd)
         {
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
