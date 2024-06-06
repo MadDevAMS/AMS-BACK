@@ -29,6 +29,10 @@ namespace AMS.Application.UseCases.Groups.Queries.ListGroups
                     response = await _unitOfWork.GroupRepository.ListGroups(filter);
                     response.Status = (int)ResponseCode.OK;
                     response.Message = ResponseMessage.QUERY_SUCCESS;
+                } else
+                {
+                    response.Status = (int)ResponseCode.BAD_REQUEST;
+                    response.Message = ExceptionMessage.ERROR_PARSE;
                 }
             }
             catch (Exception ex)

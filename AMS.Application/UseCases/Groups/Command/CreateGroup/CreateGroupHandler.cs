@@ -33,7 +33,7 @@ namespace AMS.Application.UseCases.Groups.Command.CreateGroup
                 else
                 {
                     response.Status = (int)ResponseCode.BAD_REQUEST;
-                    response.Message = ResponseMessage.ERROR_PARSE;
+                    response.Message = ExceptionMessage.ERROR_PARSE;
                 }
 
 
