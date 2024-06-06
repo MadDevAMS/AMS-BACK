@@ -25,7 +25,7 @@ namespace AMS.Application.UseCases.Groups.Queries.GetGroup
                     response.Message = ResponseMessage.RESOURCE_NOT_FOUND;
                 } else
                 {
-                    response.Data = await _unitOfWork.GroupRepository.GetGroupByIdAsync(request.IdGroup);
+                    response.Data = group;
                     response.Status = (int)ResponseCode.OK;
                     response.Message = ResponseMessage.QUERY_SUCCESS;
                 }
