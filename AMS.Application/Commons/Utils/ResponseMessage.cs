@@ -62,6 +62,7 @@
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
         public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
+        public const string NOT_USER_ADMIN = "No es administrador";
     };
 
     public static class MiddlewareMessage

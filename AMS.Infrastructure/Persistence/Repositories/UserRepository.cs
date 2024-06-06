@@ -64,8 +64,6 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return result;
         }
 
-
-
         public async Task<long> UserExistAsync(string email)
         {
             return await _context.Users.Where(u => u.Email.Equals(email))
@@ -106,6 +104,39 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entity.AuditDeleteDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<long> IsUserAdminAsync(string email)
+        {
+            return await _context.GroupUsers.Where(gu => gu.User.Email == email
+                    && gu.GroupId == Utils.GROUP_ADMIN_ID)
+                .Select(u => u.UserId)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<UserDetailResponseDto> UserByIdAsync(long id)
+        {
+            var userDetails = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Id == id && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
+                .Select(u => new UserDetailResponseDto()
+                {
+                    Name = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Password = u.Password,
+                    IdEntidad = u.IdEntidad,
+                    Permissions = u.GroupUsers
+                        .SelectMany(ru => ru.Group.GroupPermission)
+                        .Select(rp => rp.Permission.Name)
+                        .Distinct()
+                        .ToList(),
+                    GroupNames = u.GroupUsers
+                        .Select(gu => gu.Group.Name)
+                        .ToList()
+                }).FirstOrDefaultAsync();
+
+            return userDetails!;
         }
     }
 }
