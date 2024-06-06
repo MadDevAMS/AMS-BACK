@@ -20,7 +20,7 @@ namespace AMS.Application.UseCases.Groups.Command.CreateGroup
 
             try
             {
-                var grupoDto = _mapper.Map<GroupCreateDto>(request);
+                var grupoDto = _mapper.Map<GroupsDto>(request);
                 string? idEntidadString = _httpContext.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "IdEntidad")?.Value;
                 if (long.TryParse(idEntidadString, out long idEntidad))
                 {
@@ -33,6 +33,7 @@ namespace AMS.Application.UseCases.Groups.Command.CreateGroup
                 else
                 {
                     response.Status = (int)ResponseCode.BAD_REQUEST;
+                    response.Message = ResponseMessage.ERROR_PARSE;
                 }
 
 

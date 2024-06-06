@@ -63,11 +63,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             return result;
         }
-        public async Task CreateAsync(GroupCreateDto groupDto)
+        public async Task CreateAsync(GroupsDto groupDto)
         {
             var group = new Group()
             {
-                Name = groupDto.Nombre,
+                Name = groupDto.Name,
                 Description = groupDto.Description,
                 EntidadId = groupDto.IdEntidad,
                 State = Utils.ESTADO_ACTIVO,
@@ -99,7 +99,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.Groups.AddAsync(group);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateAsync(GroupUpdateDto group)
+        public async Task UpdateAsync(GroupsDto group)
         {
             var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId);
             var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.GroupId == group.GroupId).ToListAsync();

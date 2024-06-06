@@ -18,9 +18,17 @@ namespace AMS.Application.UseCases.Groups.Queries.GetGroup
 
             try
             {
-                response.Data = await _unitOfWork.GroupRepository.GetGroupByIdAsync(request.IdGroup);
-                response.Status = (int)ResponseCode.OK;
-                response.Message = ResponseMessage.QUERY_SUCCESS;
+                var group = await _unitOfWork.GroupRepository.GetGroupByIdAsync(request.IdGroup);
+                if (group == null) 
+                {
+                    response.Status = (int)ResponseCode.NOT_FOUND;
+                    response.Message = ResponseMessage.RESOURCE_NOT_FOUND;
+                } else
+                {
+                    response.Data = await _unitOfWork.GroupRepository.GetGroupByIdAsync(request.IdGroup);
+                    response.Status = (int)ResponseCode.OK;
+                    response.Message = ResponseMessage.QUERY_SUCCESS;
+                }
             }
             catch (Exception ex)
             {

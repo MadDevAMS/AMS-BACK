@@ -7,7 +7,7 @@ namespace AMS.Application.UseCases.Groups.Command.CreateGroup
     {
         public CreateGroupValidator() 
         {
-            RuleFor(x => x.Nombre)
+            RuleFor(x => x.Name)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 

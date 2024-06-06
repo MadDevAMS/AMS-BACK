@@ -17,6 +17,9 @@
         public const string GROUP_SUCCESS_CREATE = "El grupo se creo correctamente";
         public const string GROUP_SUCCESS_UPDATE = "El grupo se actualizo correctamente";
         public const string GROUP_SUCCESS_DELETE = "El grupo se elimino correctamente";
+        public const string RESOURCE_NOT_FOUND = "Este recurso no ha sido encontrado";
+
+        public const string ERROR_PARSE = "Ha ocurrido un error al intentar parsear un dato";
     }
 
     internal static class ResponseActivosMessage

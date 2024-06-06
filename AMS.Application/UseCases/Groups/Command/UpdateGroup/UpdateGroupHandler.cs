@@ -8,18 +8,18 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Groups.Command.UpdateGroup
 {
-    public class UpdateGroupHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateGroupCommand, BaseResponse<GroupUpdateDto>>
+    public class UpdateGroupHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateGroupCommand, BaseResponse<GroupsDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<BaseResponse<GroupUpdateDto>> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<GroupsDto>> Handle(UpdateGroupCommand request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<GroupUpdateDto>();
+            var response = new BaseResponse<GroupsDto>();
 
             try
             {
-                var group = _mapper.Map<GroupUpdateDto>(request);
+                var group = _mapper.Map<GroupsDto>(request);
                 await _unitOfWork.GroupRepository.UpdateAsync(group);
 
                 response.Status = (int)ResponseCode.OK;

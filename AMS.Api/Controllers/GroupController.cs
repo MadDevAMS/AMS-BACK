@@ -25,7 +25,7 @@ namespace AMS.Api.Controllers
 
         [HttpPut, MapToApiVersion("1.0")]
         [Route("groups")]
-        [ProducesResponseType(typeof(BaseResponse<GroupUpdateDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseResponse<GroupsDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateGroup([FromBody] UpdateGroupCommand command)
         {
             var response = await _mediator.Send(command);
@@ -41,10 +41,12 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpGet("groups/{idGroup:long}"), MapToApiVersion("1.0")]
+        [HttpGet("group"), MapToApiVersion("1.0")]
         [Authorize]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetGroupById([FromRoute] long idGroup)
+        public async Task<IActionResult> GetGroupById(
+            [FromQuery] long idGroup
+        )
         {
             var qry = new GetGroupQuery()
             {

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Groups.Command.UpdateGroup
 {
-    public class UpdateGroupCommand : IRequest<BaseResponse<GroupUpdateDto>>
+    public class UpdateGroupCommand : IRequest<BaseResponse<GroupsDto>>
     {
         public long GroupId { get; set; }
         public string Name { get; set; } = null!;
