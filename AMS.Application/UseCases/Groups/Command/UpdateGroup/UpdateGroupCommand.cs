@@ -2,7 +2,7 @@
 using AMS.Application.Dtos.Groups;
 using MediatR;
 
-namespace AMS.Application.UseCases.Groups.UpdateGroups
+namespace AMS.Application.UseCases.Groups.Command.UpdateGroup
 {
     public class UpdateGroupCommand : IRequest<BaseResponse<GroupsDto>>
     {

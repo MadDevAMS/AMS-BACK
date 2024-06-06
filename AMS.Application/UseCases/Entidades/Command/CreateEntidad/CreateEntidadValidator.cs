@@ -12,7 +12,7 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 
             RuleFor(x => x.RazonSocial)
-                .NotNull().WithMessage(MessageValidator.NOT_NULL)
+                .NotNull().WithMessage(MessageValidator.NOT_NULL) 
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 
             RuleFor(x => x.RUC)

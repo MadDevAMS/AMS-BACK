@@ -3,11 +3,10 @@ using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Utils;
 using AMS.Application.Dtos.Groups;
 using AMS.Application.Interfaces.Persistence;
-using AMS.Application.UseCases.Groups.UpdateGroups;
 using AutoMapper;
 using MediatR;
 
-namespace AMS.Application.UseCases.Groups.UpdateGroup
+namespace AMS.Application.UseCases.Groups.Command.UpdateGroup
 {
     public class UpdateGroupHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateGroupCommand, BaseResponse<GroupsDto>>
     {

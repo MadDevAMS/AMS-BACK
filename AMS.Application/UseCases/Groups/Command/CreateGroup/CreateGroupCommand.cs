@@ -1,13 +1,13 @@
-﻿namespace AMS.Application.Dtos.Groups
+﻿using AMS.Application.Commons.Bases;
+using MediatR;
+
+namespace AMS.Application.UseCases.Groups.Command.CreateGroup
 {
-    public class GroupsDto
+    public class CreateGroupCommand : IRequest<BaseResponse<bool>>
     {
-        public long GroupId { get; set; }
-        public long IdEntidad {  get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public List<long> Permissions { get; set; } = null!;
         public List<long> Users { get; set; } = null!;
-        public int State { get; set; }
     }
 }
