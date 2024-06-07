@@ -7,6 +7,7 @@ using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.LoginAdmin;
 using AMS.Infrastructure.Authentication.Permissions;
+using AMS.Application.UseCases.User.Command.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,14 @@ namespace AMS.Api.Controllers
         {
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommnad cmd)
+        {
+            var repsonse = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, repsonse);
         }
     }
 }

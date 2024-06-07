@@ -63,6 +63,23 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return result;
         }
 
+        public async Task UpdateAsync(User user, bool updateState)
+        {
+            var entity = (await _context.Users.Where(u => u.Id == user.Id).FirstOrDefaultAsync())!;
+
+            if (updateState)
+            {
+                entity.State = user.State;
+            }
+            else
+            {
+                entity.FirstName = user.FirstName;
+                entity.LastName = user.LastName;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<long> UserExistAsync(string email)
         {
             return await _context.Users.Where(u => u.Email.Equals(email))
