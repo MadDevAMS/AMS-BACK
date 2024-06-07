@@ -7,7 +7,6 @@ using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.LoginAdmin;
 using AMS.Application.UseCases.Users.Command.UpdateUser;
-using AMS.Application.UseCases.Users.Queries.GetAuthUser;
 using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -91,16 +90,6 @@ namespace AMS.Api.Controllers
         {
             var repsonse = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, repsonse);
-        }
-
-        [HttpGet("user"), MapToApiVersion("1.0")]
-        [Authorize]
-        [ProducesResponseType(typeof(BaseResponse<>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetInfoAuthUser()
-        {
-            var qry = new GetAuthUserQuery();
-            var response = await _mediator.Send(qry);
-            return StatusCode(StatusCodes.Status200OK, response);
         }
     }
 }
