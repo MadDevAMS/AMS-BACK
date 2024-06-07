@@ -100,6 +100,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     LastName = u.LastName,
                     Email = u.Email,
                     IdEntidad = u.IdEntidad,
+                    Password = u.Password,
                     Permissions = u.GroupUsers
                         .SelectMany(ru => ru.Group.GroupPermission)
                         .Select(rp => rp.Permission.Name)
@@ -142,6 +143,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     LastName = u.LastName,
                     Email = u.Email,
                     IdEntidad = u.IdEntidad,
+                    Password = u.Password,
                     Permissions = u.GroupUsers
                         .SelectMany(ru => ru.Group.GroupPermission)
                         .Select(rp => rp.Permission.Name)
