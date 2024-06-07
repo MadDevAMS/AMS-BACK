@@ -18,7 +18,7 @@ namespace AMS.Infrastructure.Persistence.Context.Configurations
 
             builder.HasOne(u => u.Entidad)
                 .WithMany(e => e.Groups)
-                .HasForeignKey(e => e.EntidadId)
+                .HasForeignKey(e => e.IdEntidad)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Property(x => x.Name)

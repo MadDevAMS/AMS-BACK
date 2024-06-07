@@ -35,7 +35,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task<PaginatorResponse<GroupListDto>> ListGroups(ListGroupFilter filter)
         {
-            var query = _context.Groups.Where(u => u.EntidadId == filter.IdEntidad
+            var query = _context.Groups.Where(u => u.IdEntidad == filter.IdEntidad
                         && (u.AuditDeleteUser == null && u.AuditDeleteDate == null));
 
             var totalRecords = await query.Select(u => u.Id).CountAsync();
@@ -69,7 +69,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 Name = groupDto.Name,
                 Description = groupDto.Description,
-                EntidadId = groupDto.IdEntidad,
+                IdEntidad = groupDto.IdEntidad,
                 State = Utils.ESTADO_ACTIVO,
                 AuditCreateDate = DateTime.Now,
                 AuditCreateUser = Utils.ESTADO_ACTIVO

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AMS.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_Migration : Migration
+    public partial class Initial_Migrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,11 +25,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -46,11 +46,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -69,11 +69,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     IdParent = table.Column<long>(type: "bigint", nullable: false),
                     IdEntidad = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -94,21 +94,21 @@ namespace AMS.Infrastructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntidadId = table.Column<long>(type: "bigint", nullable: true),
+                    IdEntidad = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.GroupId);
                     table.ForeignKey(
-                        name: "FK_Groups_Entidad_EntidadId",
-                        column: x => x.EntidadId,
+                        name: "FK_Groups_Entidad_IdEntidad",
+                        column: x => x.IdEntidad,
                         principalTable: "Entidad",
                         principalColumn: "EntidadId");
                 });
@@ -125,11 +125,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdEntidad = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -153,11 +153,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TipoMaquina = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -179,11 +179,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     GroupId = table.Column<long>(type: "bigint", nullable: false),
                     PermissionId = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -210,11 +210,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     GroupId = table.Column<long>(type: "bigint", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -244,11 +244,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Potencia = table.Column<int>(type: "int", nullable: false),
                     Velocidad = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -274,11 +274,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     AnguloDireccion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     DatosMedicion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -302,11 +302,11 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false),
-                    AuditCreateUser = table.Column<int>(type: "int", nullable: false),
+                    AuditCreateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditCreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AuditUpdateUser = table.Column<int>(type: "int", nullable: true),
+                    AuditUpdateUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditUpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AuditDeleteUser = table.Column<int>(type: "int", nullable: true),
+                    AuditDeleteUser = table.Column<long>(type: "bigint", nullable: true),
                     AuditDeleteDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -340,9 +340,9 @@ namespace AMS.Infrastructure.Persistence.Migrations
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groups_EntidadId",
+                name: "IX_Groups_IdEntidad",
                 table: "Groups",
-                column: "EntidadId");
+                column: "IdEntidad");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupUsers_GroupId",

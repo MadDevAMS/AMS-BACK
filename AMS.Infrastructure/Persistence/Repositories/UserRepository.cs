@@ -1,5 +1,4 @@
-﻿using System.Linq.Dynamic.Core;
-using AMS.Application.Commons.Bases;
+﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Groups;
 using AMS.Application.Dtos.User;

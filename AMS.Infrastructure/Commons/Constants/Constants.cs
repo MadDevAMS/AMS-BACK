@@ -5,7 +5,7 @@
         public const string AmsUser = "AMS/users_pictures";
     }
 
-    internal static class CustomClaims
+    public static class CustomClaims
     {
         public const string Permissions = "Permissions";
         public const string Groups = "Groups";

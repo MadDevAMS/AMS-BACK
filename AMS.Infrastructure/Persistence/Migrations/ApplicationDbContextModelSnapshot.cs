@@ -34,20 +34,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -87,20 +87,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -143,20 +143,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -212,20 +212,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -261,20 +261,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GroupId")
                         .HasColumnType("bigint");
@@ -306,20 +306,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("GroupId")
                         .HasColumnType("bigint");
@@ -351,20 +351,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -406,20 +406,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -458,20 +458,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -507,20 +507,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("DatosMedicion")
                         .IsRequired()
@@ -564,20 +564,20 @@ namespace AMS.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("AuditCreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AuditCreateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditCreateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditDeleteDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditDeleteUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditDeleteUser")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("AuditUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("AuditUpdateUser")
-                        .HasColumnType("int");
+                    b.Property<long?>("AuditUpdateUser")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .IsRequired()
