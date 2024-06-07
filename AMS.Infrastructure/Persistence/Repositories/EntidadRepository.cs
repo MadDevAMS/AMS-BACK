@@ -69,6 +69,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
             }
         }
 
+        public async Task<long> EntidadExistAsync(string ruc)
+        {
+            return await _context.Entidad.Where(e => e.RUC == ruc).Select(e => e.Id).FirstOrDefaultAsync();
+        }
 
         public async Task UpdateAsync(Entidad entidad)
         {

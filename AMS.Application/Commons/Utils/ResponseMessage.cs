@@ -59,6 +59,7 @@
 
     internal static class ExceptionMessage
     {
+        public const string ENTIDAD_EXISTS = "La entidad ya se encuentra registrada";
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
         public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";

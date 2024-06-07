@@ -19,6 +19,24 @@ namespace AMS.Application.UseCases.Entidades.Command.CreateEntidad
 
             try
             {
+                var entidadExists = await _unitOfWork.EntidadRepository.EntidadExistAsync(request.RUC);
+
+                if (entidadExists > 0)
+                {
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = ExceptionMessage.ENTIDAD_EXISTS;
+                    return response;
+                }
+
+                var userExist = await _unitOfWork.UserRepository.UserExistAsync(request.Email);
+
+                if (userExist > 0)
+                {
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = ExceptionMessage.USER_EXISTS;
+                    return response;
+                }
+
                 if (!request.Password.Equals(request.ConfirmPassword))
                 {
                     response.Status = (int)ResponseCode.ACCEPTED;

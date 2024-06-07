@@ -7,5 +7,6 @@ namespace AMS.Application.Interfaces.Persistence
     {
         Task UpdateAsync(Entidad entidad);
         Task CreateAsync(EntidadRegistroDto entidadDto);
+        Task<long> EntidadExistAsync(string ruc);
     }
 }

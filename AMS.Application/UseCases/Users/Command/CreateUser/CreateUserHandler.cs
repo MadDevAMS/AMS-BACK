@@ -32,6 +32,7 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
                     response.Message = ExceptionMessage.USER_EXISTS;
                     return response;
                 }
+
                 if (!request.Password.Equals(request.ConfirmPassword))
                 {
                     response.Status = (int)ResponseCode.CONFLICT;
