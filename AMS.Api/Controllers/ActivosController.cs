@@ -23,6 +23,7 @@ using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.DeletePuntoMonit
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.UpdatePuntoMonitoreo;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Queries.GetPuntoMonitoreoById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.Api.Controllers
@@ -31,6 +32,7 @@ namespace AMS.Api.Controllers
     [Route("api/v{version:apiVersion}/")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class ActivosController : ControllerBase
     {
         private readonly IMediator mediator;

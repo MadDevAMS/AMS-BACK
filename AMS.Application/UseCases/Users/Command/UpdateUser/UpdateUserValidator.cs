@@ -1,7 +1,8 @@
 ﻿using AMS.Application.Commons.Bases;
+using AMS.Application.Commons.Utils;
 using FluentValidation;
 
-namespace AMS.Application.UseCases.User.Command.UpdateUser
+namespace AMS.Application.UseCases.Users.Command.UpdateUser
 {
     public class UpdateUserValidator : AbstractValidator<UpdateUserCommnad>
     {

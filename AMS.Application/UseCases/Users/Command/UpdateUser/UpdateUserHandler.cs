@@ -1,9 +1,10 @@
 ﻿using AMS.Application.Commons.Bases;
+using AMS.Application.Commons.Utils;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
 using MediatR;
 
-namespace AMS.Application.UseCases.User.Command.UpdateUser
+namespace AMS.Application.UseCases.Users.Command.UpdateUser
 {
     public class UpdateUserHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<UpdateUserCommnad, BaseResponse<bool>>
     {
@@ -19,7 +20,7 @@ namespace AMS.Application.UseCases.User.Command.UpdateUser
                 var user = _mapper.Map<Domain.Entities.User>(request);
                 await _unitOfWork.UserRepository.UpdateAsync(user, request.UpdateState);
 
-                response.IsSuccess = true;
+                response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.USER_SUCCESS_UPDATE;
             }
             catch (Exception ex)

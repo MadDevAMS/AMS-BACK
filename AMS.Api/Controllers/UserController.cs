@@ -6,8 +6,8 @@ using AMS.Application.UseCases.User.Command.DeleteUser;
 using AMS.Application.UseCases.User.Command.Login;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.LoginAdmin;
+using AMS.Application.UseCases.Users.Command.UpdateUser;
 using AMS.Infrastructure.Authentication.Permissions;
-using AMS.Application.UseCases.User.Command.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +22,7 @@ namespace AMS.Api.Controllers
         private readonly IMediator _mediator = mediator;
 
         [HttpPost("users"), MapToApiVersion("1.0")]
+        [Authorize]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
@@ -82,7 +83,8 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPut]
+        [HttpPut("users"), MapToApiVersion("1.0")]
+        [Authorize]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommnad cmd)
         {

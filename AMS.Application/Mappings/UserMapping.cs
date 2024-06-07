@@ -1,7 +1,7 @@
 ﻿using AMS.Application.Dtos.Filters;
 using AMS.Application.UseCases.User.Command.CreateUser;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
-using AMS.Application.UseCases.User.Command.UpdateUser;
+using AMS.Application.UseCases.Users.Command.UpdateUser;
 using AMS.Domain.Entities;
 using AutoMapper;
 

@@ -14,6 +14,7 @@ namespace AMS.Api.Controllers
     [Route("api/v{version:apiVersion}/")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class GroupController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -42,7 +43,6 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("group"), MapToApiVersion("1.0")]
-        [Authorize]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetGroupById(
             [FromQuery] long idGroup

@@ -94,6 +94,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 .Where(u => u.Email.Equals(email) && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
                 .Select(u => new UserDetailResponseDto()
                 {
+                    UserId = u.Id,
                     Name = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
@@ -112,11 +113,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return userDetails!;
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(long id, long userId)
         {
             var entity = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id))!;
 
-            entity.AuditDeleteUser = 1;
+            entity.AuditDeleteUser = userId;
             entity.AuditDeleteDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

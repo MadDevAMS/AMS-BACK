@@ -11,4 +11,10 @@
             "SRL"
         ];
     }
+
+    internal static class Claims
+    {
+        public const string ENTIDAD = "IdEntidad";
+        public const string USERID = "IdUser";
+    }
 }

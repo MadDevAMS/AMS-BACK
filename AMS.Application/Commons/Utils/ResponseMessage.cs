@@ -7,6 +7,7 @@
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
 
         public const string USER_SUCCESS_REGISTER = "El usuario se registrado exitosamente";
+        public const string USER_SUCCESS_UPDATE = "El usuario se actualizo exitosamente";
         public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
 
         public const string ENTIDAD_SUCCESS_CREATE = "La Entidad se creo exitosamente, ingrese con su nuevo usuario";

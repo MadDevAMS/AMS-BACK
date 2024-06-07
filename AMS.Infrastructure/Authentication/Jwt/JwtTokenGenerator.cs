@@ -31,6 +31,7 @@ namespace AMS.Infrastructure.Authentication.Jwt
                 new(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
                 new(JwtRegisteredClaimNames.GivenName, user.Name),
                 new(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new(CustomClaims.UserId, user.UserId.ToString()),
                 new(CustomClaims.Entidad, user.IdEntidad.ToString()),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };

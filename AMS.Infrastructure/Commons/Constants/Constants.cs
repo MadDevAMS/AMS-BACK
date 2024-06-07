@@ -10,6 +10,7 @@
         public const string Permissions = "Permissions";
         public const string Groups = "Groups";
         public const string Entidad = "IdEntidad";
+        public const string UserId = "IdUser";
     }
 
     internal static class Utils

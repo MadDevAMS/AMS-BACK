@@ -11,7 +11,7 @@ namespace AMS.Application.Interfaces.Persistence
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
         Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
-        Task DeleteAsync(long id);
+        Task DeleteAsync(long id, long userId);
         Task<long> IsUserAdminAsync(string email);
         Task<UserDetailResponseDto> UserByIdAsync(long id);
         Task UpdateAsync(User user, bool updateState);
