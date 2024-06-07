@@ -156,5 +156,29 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             return userDetails!;
         }
+
+        public async Task<AuthUserDto> AuthUserByIdAsync(long id)
+        {
+            var userDetails = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Id == id && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
+                .Select(u => new AuthUserDto()
+                {
+                    UserId = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    Permissions = u.GroupUsers
+                        .SelectMany(ru => ru.Group.GroupPermission)
+                        .Select(rp => rp.Permission.Name)
+                        .Distinct()
+                        .ToList(),
+                    GroupNames = u.GroupUsers
+                        .Select(gu => gu.Group.Name)
+                        .ToList()
+                }).FirstOrDefaultAsync();
+
+            return userDetails!;
+        }
     }
 }

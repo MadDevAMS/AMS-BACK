@@ -15,5 +15,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task<long> IsUserAdminAsync(string email);
         Task<UserDetailResponseDto> UserByIdAsync(long id);
         Task UpdateAsync(User user, bool updateState);
+        Task<AuthUserDto> AuthUserByIdAsync(long idUser);
     }
 }

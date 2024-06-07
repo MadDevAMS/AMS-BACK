@@ -8,20 +8,20 @@ using Microsoft.AspNetCore.Http;
 
 namespace AMS.Application.UseCases.Users.Queries.GetAuthUser
 {
-    public class GetAuthUserHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContext) : IRequestHandler<GetAuthUserQuery, BaseResponse<UserDetailResponseDto>>
+    public class GetAuthUserHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContext) : IRequestHandler<GetAuthUserQuery, BaseResponse<AuthUserDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
         private readonly IHttpContextAccessor _httpContext = httpContext;
 
-        public async Task<BaseResponse<UserDetailResponseDto>> Handle(GetAuthUserQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<AuthUserDto>> Handle(GetAuthUserQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<UserDetailResponseDto>();
+            var response = new BaseResponse<AuthUserDto>();
 
             try
             {
                 var idUser = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID)!.Value;
-                var user = await _unitOfWork.UserRepository.UserByIdAsync(idUser);
+                var user = await _unitOfWork.UserRepository.AuthUserByIdAsync(idUser);
 
                 if (user == null)
                 {
