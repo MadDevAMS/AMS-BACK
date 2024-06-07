@@ -2,6 +2,7 @@
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Roles;
 using AMS.Application.Interfaces.Persistence;
+using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
 using AMS.Infrastructure.Commons.Commons;
 using AMS.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -12,19 +13,17 @@ namespace AMS.Infrastructure.Persistence.Repositories
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<PaginatorResponse<PermissionsListResponseDto>> ListPermissionAsync(ListPermissionFilter filter)
+        public async Task<PaginatorResponse<PermissionsListResponseDto>> ListPermissionAsync(ListPermissionQuery filter)
         {
-            var query = _context.Permissions.Where(u => u.PermissionId == filter.IdPermission
-                        && (u.Name.Contains(filter.PermissionName) || filter.PermissionName == Utils.EMPTY_STRING)
-                        && (u.State == filter.PermissionState || filter.PermissionState == -1));
+            var query = _context.Permissions.Where(P => P.State == Utils.ESTADO_ACTIVO);
 
             var totalRecords = await query.Select(u => u.PermissionId).CountAsync();
 
             var permissions = await query.Select(u => new PermissionsListResponseDto
             {
-                Id = u.PermissionId,
+                PermissionId = u.PermissionId,
                 Name = u.Name,
-                State = filter.PermissionState
+                Description = u.Description
             })
              // No puedo exportar por alguna razón 
             .OrderBy(u => u.Name)
@@ -41,6 +40,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
               TotalPages = (int)Math.Ceiling(totalRecords / (double)totalRecords)
             };
             return result;
+        }
+
+        public async Task<long> PermissionExistAsync(string PermissionName)
+        {
+            return await _context.Permissions.Where(p => p.Name.Equals(PermissionName))
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
         }
     }
 }

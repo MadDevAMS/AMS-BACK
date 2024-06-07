@@ -1,4 +1,5 @@
 ﻿using AMS.Application.Dtos.GroupPermission;
+using AMS.Application.Dtos.Groups;
 using AMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace AMS.Application.Interfaces.Persistence
 {
     public interface IGroupPermissionRepository
     {
-        Task CreateGroupPermissionsAsync(GroupPermissionRegistroDto groupPermissionResponseDto);
+        Task CreateGroupPermissionsAsync(GroupPermission groupPermission);
     }
 }

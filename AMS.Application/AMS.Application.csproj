@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="UseCases\Entidades\Queries\" />
+    <Folder Include="UseCases\Permisos\Command\" />
   </ItemGroup>
 
   <ItemGroup>

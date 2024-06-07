@@ -12,13 +12,19 @@ namespace AMS.Application.UseCases.GroupPermission.Command.CreateGroupPermission
     {
         public CreateGroupPermissionsValidator()
         {
-            RuleFor(x => x.Groups)
+            
+            RuleFor(x => x.PermissionId)
             .NotNull().WithMessage(MessageValidator.NOT_NULL)
             .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 
-            RuleFor(x => x.Permissions)
+            RuleFor(x => x.GroupId)
             .NotNull().WithMessage(MessageValidator.NOT_NULL)
             .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
+
+            RuleFor(x => x.State)
+            .NotNull().WithMessage(MessageValidator.NOT_NULL)
+            .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
+
 
         }
     }

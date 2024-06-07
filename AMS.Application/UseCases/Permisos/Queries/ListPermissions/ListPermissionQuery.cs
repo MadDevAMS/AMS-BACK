@@ -11,8 +11,8 @@ namespace AMS.Application.UseCases.Permisos.Queries.ListPermissions
 {
     public class ListPermissionQuery : BasePagination, IRequest<PaginatorResponse<PermissionsListResponseDto>>
     {
-        public long IdPermission { get; set; }
-        public string NamePermission { get; set; } = string.Empty;
-        public int StatePermission { get; set; }
+        public long PermissionId { get; set; }
+        public string Name { get; set; } = null!;
+        public int Description { get; set; }
     }
 }

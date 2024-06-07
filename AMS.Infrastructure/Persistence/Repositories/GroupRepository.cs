@@ -10,6 +10,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
     {
         private readonly ApplicationDbContext _context = context;
 
+        public async Task<long> GroupExistAsync(string GroupName)
+        {
+            return await _context.Groups.Where(u => u.Name.Equals(GroupName))
+                .Select(u => u.Id)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task UpdateAsync(GroupsDto group)
         {
             var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId) ?? throw new Exception("Group not found");

@@ -12,26 +12,21 @@ using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
 namespace AMS.Api.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}")]
     [ApiController]
     public class PermissionController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        [Authorize]
-        [HasPermission(Permission.ReadMember)]
-        [HttpGet]
+
+        
+        [HttpGet("permission")]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<PermissionsListResponseDto>>), (int)HttpStatusCode.OK)]
 
-        public async Task<IActionResult> ListPermissions (
-            [FromQuery] long IdPermission,
-            [FromQuery] string? NamePermission,
-            [FromQuery] int StatePermission)
+        public async Task<IActionResult> ListPermissions ()
         {
             var qry = new ListPermissionQuery
             {
-                IdPermission = IdPermission,
-                NamePermission = NamePermission ?? string.Empty,
-                StatePermission = StatePermission
+                
             };
             var response = await _mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);

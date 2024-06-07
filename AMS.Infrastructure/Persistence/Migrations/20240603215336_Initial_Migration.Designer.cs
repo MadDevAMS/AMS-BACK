@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AMS.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240602221303_Add_Busnise_Entities")]
-    partial class Add_Busnise_Entities
+    [Migration("20240603215336_Initial_Migration")]
+    partial class Initial_Migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

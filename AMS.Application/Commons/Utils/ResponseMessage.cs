@@ -10,6 +10,8 @@
         public const string GROUP_UPDATE_SUCCESS = "El grupo se actualizo correctamente";
         public const string LOGIN_SUCCESS = "Inicio de sesion exitoso";
         public const string DELETE_USER_SUCCESS = "El usuario se elimino correctamente";
+        public const string GROUPPERSSION_SUCCESS_CREATED = "El permiso fue asignado al grupo exitosamente";
+        public const string GROUPUSERS_SUCCESS_CREATED = "El usuario fue asignado al grupo existosamente";
     }
 
     internal static class MessageValidator
@@ -31,6 +33,7 @@
         public const string USER_EXISTS = "Ya existe una cuenta con este correo";
         public const string INVALID_CREDENTIALS = "El usuario y/o contrasena es incorrecto.";
         public const string CONFIRM_PASSWORD = "Las contraseñas no coinciden";
+        public const string GROUP_EXISTS = "Ya existe un grupo con este nombre";
     };
 
     public static class MiddlewareMessage

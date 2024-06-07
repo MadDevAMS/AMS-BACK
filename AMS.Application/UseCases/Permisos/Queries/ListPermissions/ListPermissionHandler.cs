@@ -15,8 +15,8 @@ namespace AMS.Application.UseCases.Permisos.Queries.ListPermissions
 {
     public class ListPermissionHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<ListPermissionQuery, PaginatorResponse<PermissionsListResponseDto>>
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper = mapper;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
         public async Task<PaginatorResponse<PermissionsListResponseDto>> Handle(ListPermissionQuery request, CancellationToken cancellationToken)
         {
@@ -24,8 +24,7 @@ namespace AMS.Application.UseCases.Permisos.Queries.ListPermissions
 
             try {
 
-                var filters = _mapper.Map<ListPermissionFilter>(request);
-                response = await _unitOfWork.PermissionRepository.ListPermissionAsync(filters);
+                response = await _unitOfWork.PermissionRepository.ListPermissionAsync(request);
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.QUERY_SUCCESS;
                 

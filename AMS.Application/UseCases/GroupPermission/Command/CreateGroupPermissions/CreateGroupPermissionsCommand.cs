@@ -10,8 +10,9 @@ namespace AMS.Application.UseCases.GroupPermission.Command.CreateGroupPermission
 {
     public class CreateGroupPermissionsCommand : IRequest<BaseResponse<bool>>
     {
-        public List<long> GroupId { get; set; } = new List<long>();
-        public List<long> PermissionId { get; set; } = new List<long>();
+        public long GroupId { get; set; }
+        public long PermissionId { get; set; }
+        public int State { get; set; }
 
     }
 }

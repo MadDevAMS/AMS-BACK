@@ -2,8 +2,8 @@
 {
     public class PermissionsListResponseDto
     {
-        public long Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public int State { get; set; } 
+        public long PermissionId { get; set; }
+        public string Name { get; set; } 
+        public string Description { get; set; }
     }
 }

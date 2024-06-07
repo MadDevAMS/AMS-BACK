@@ -13,6 +13,7 @@ namespace AMS.Infrastructure.Services
         private readonly IPermissionRepository _permission = null!;
         private readonly IGroupRepository _group = null!;
         private readonly IGroupPermissionRepository _groupPermission = null!;
+        private readonly IGroupUserRepository _groupUser = null!;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -23,7 +24,7 @@ namespace AMS.Infrastructure.Services
         public IEntidadRepository EntidadRepository => _entidad ?? new EntidadRepository(_context);
         public IPermissionRepository PermissionRepository => _permission ?? new PermissionRepository(_context);
         public IGroupRepository GroupRepository => _group ?? new GroupRepository(_context);
-
+        public IGroupUserRepository GroupUserRepository => _groupUser ?? new GroupUserRepository(_context);
         public IGroupPermissionRepository GroupPermissionRepository => _groupPermission ?? new GroupPermissionRepository(_context);
 
         public void Dispose()

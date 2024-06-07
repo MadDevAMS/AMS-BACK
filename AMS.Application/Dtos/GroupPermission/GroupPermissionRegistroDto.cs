@@ -8,7 +8,9 @@ namespace AMS.Application.Dtos.GroupPermission
 {
     public class GroupPermissionRegistroDto
     {
-        public List<long> GroupId { get; set; } = new List<long>();   
-        public List<long> PermissionId { get; set; } = new List<long>();
+        public string GroupName { get; set; } = null!;
+
+        public List<long> GroupId { get; set; } = null!;
+        public List<long> PermissionId { get; set; } = null!;
     }
 }
