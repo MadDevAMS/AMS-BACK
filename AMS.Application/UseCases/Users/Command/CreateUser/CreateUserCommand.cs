@@ -11,6 +11,6 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string ConfirmPassword { get; set; } = null!;
-        public List<Group> Groups { get; set; } = null!;
+        public List<long> Groups { get; set; } = null!;
     }
 }

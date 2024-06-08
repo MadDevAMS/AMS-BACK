@@ -33,6 +33,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     GroupId = idGroup,
                     User = entity,
+                    State = Utils.ESTADO_ACTIVO,
                     AuditCreateDate = DateTime.Now,
                     AuditCreateUser = Utils.ESTADO_ACTIVO
                 };
@@ -110,7 +111,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.UserId == entity.Id).ToListAsync();
 
-            var groupsToDelete = currentGroupUsers.Where(cgu => !entity.GroupUsers.Contains(cgu)).ToList();
+            var groupsToDelete = currentGroupUsers.Where(cgu => !user.Groups.Contains(cgu.GroupId)).ToList();
             var groupsToAdd = user.Groups.Where(g => !currentGroupUsers.Any(cgu => cgu.GroupId == g)).Select(g => new GroupUsers
             {
                 GroupId = g,

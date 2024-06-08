@@ -14,6 +14,6 @@ namespace AMS.Application.UseCases.Users.Command.UpdateUser
         public int State { get; set; }
         public bool UpdateState { get; set; }
         public bool UpdatePassword { get; set; }
-        public List<Group> Groups { get; set; } = null!;
+        public List<long> Groups { get; set; } = null!;
     }
 }
