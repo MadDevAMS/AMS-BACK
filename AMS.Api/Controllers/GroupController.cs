@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Groups;
+using AMS.Application.UseCases.Group.Command.DeleteGroup;
 using AMS.Application.UseCases.Groups.Command.CreateGroup;
 using AMS.Application.UseCases.Groups.Command.UpdateGroup;
 using AMS.Application.UseCases.Groups.Queries.GetGroup;
@@ -30,6 +31,15 @@ namespace AMS.Api.Controllers
         public async Task<IActionResult> UpdateGroup([FromBody] UpdateGroupCommand command)
         {
             var response = await _mediator.Send(command);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpDelete("groups"), MapToApiVersion("1.0")]
+        [Authorize]
+        [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> DeleteGroup([FromQuery] DeleteGroupCommand cmd)
+        {
+            var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
         }
 

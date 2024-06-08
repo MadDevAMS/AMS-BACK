@@ -15,6 +15,7 @@
 
     internal static class Utils
     {
+        public const int ESTADO_INACTIVO = 0;
         public const int ESTADO_ACTIVO = 1;
         public const long GROUP_ADMIN_ID = 1;
         public const string EMPTY_STRING = "";

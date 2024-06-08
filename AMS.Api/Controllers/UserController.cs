@@ -8,7 +8,6 @@ using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.LoginAdmin;
 using AMS.Application.UseCases.Users.Command.UpdateUser;
 using AMS.Application.UseCases.Users.Queries.GetAuthUser;
-using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
