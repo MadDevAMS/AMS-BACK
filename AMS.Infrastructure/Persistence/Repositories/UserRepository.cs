@@ -151,6 +151,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Name = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
+                    Password = u.Password,
                     IdEntidad = u.IdEntidad,
                     Password = u.Password,
                     Permissions = u.GroupUsers
@@ -196,6 +197,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Name = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
+                    Password = u.Password,
                     IdEntidad = u.IdEntidad,
                     Password = u.Password,
                     Permissions = u.GroupUsers

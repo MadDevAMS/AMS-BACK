@@ -88,7 +88,7 @@ namespace AMS.Api.Controllers
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
         }
-
+        
         [HttpGet("user"), MapToApiVersion("1.0")]
         [Authorize]
         [ProducesResponseType(typeof(BaseResponse<AuthUserDto>), (int)HttpStatusCode.OK)]
