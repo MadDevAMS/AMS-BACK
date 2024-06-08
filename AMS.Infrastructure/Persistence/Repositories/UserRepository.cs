@@ -153,7 +153,6 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Email = u.Email,
                     Password = u.Password,
                     IdEntidad = u.IdEntidad,
-                    Password = u.Password,
                     Permissions = u.GroupUsers
                         .SelectMany(ru => ru.Group.GroupPermission)
                         .Where(ru => ru.State == Utils.ESTADO_ACTIVO && ru.AuditDeleteUser == null && ru.AuditDeleteDate == null)
@@ -199,7 +198,6 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Email = u.Email,
                     Password = u.Password,
                     IdEntidad = u.IdEntidad,
-                    Password = u.Password,
                     Permissions = u.GroupUsers
                         .SelectMany(ru => ru.Group.GroupPermission)
                         .Where(ru => ru.State == Utils.ESTADO_ACTIVO && ru.AuditDeleteUser == null && ru.AuditDeleteDate == null)
