@@ -45,7 +45,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 GroupId = u.Id,
                 Name = u.Name,
                 Description = u.Description,
-                FechaCreacion = u.AuditCreateDate
+                FechaCreacion = u.AuditCreateDate,
+                Permissions = u.GroupPermission.Select(p => new GroupPermissionListDto()
+                {
+                    Name = p.Permission.Name,
+                    PermissionId = p.PermissionId
+                }).ToList(),
+                Users = u.GroupUsers.Select(u => u.UserId).ToList()
             })
                 .OrderBy(u => u.Name)
                 .Skip((filter.NumPage - 1) * filter.Records)

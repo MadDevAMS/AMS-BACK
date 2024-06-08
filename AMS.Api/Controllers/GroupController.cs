@@ -43,7 +43,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("group"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BaseResponse<GroupByIdDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetGroupById(
             [FromQuery] long idGroup
         )
@@ -58,10 +58,17 @@ namespace AMS.Api.Controllers
 
         [HttpGet("groups"), MapToApiVersion("1.0")]
         [Authorize]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ListGroups()
+        [ProducesResponseType(typeof(BaseResponse<IEnumerable<GroupListDto>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ListGroups(
+            [FromQuery] int numPage,
+            [FromQuery] int records
+        )
         {
-            var qry = new ListGroupsQuery();
+            var qry = new ListGroupsQuery()
+            {
+                NumPage = numPage,
+                Records = records,
+            };
             var response = await _mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }

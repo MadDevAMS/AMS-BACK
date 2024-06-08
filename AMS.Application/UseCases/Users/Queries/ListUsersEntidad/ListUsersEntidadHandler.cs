@@ -5,13 +5,15 @@ using AMS.Application.Dtos.User;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace AMS.Application.UseCases.User.Queries.ListUsersEntidad
 {
-    public class ListUsersEntidadHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<ListUsersEntidadQuery, PaginatorResponse<ListUsersResponseDto>>
+    public class ListUsersEntidadHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContext) : IRequestHandler<ListUsersEntidadQuery, PaginatorResponse<ListUsersResponseDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
+        private readonly IHttpContextAccessor _httpContext = httpContext;
 
         public async Task<PaginatorResponse<ListUsersResponseDto>> Handle(ListUsersEntidadQuery request, CancellationToken cancellationToken)
         {
@@ -20,6 +22,8 @@ namespace AMS.Application.UseCases.User.Queries.ListUsersEntidad
             try
             {
                 var filters = _mapper.Map<ListUserFilter>(request);
+                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD)!.Value;
+                filters.IdEntidad = idEntidad;
                 response = await _unitOfWork.UserRepository.ListUsersAsync(filters);
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.QUERY_SUCCESS;
