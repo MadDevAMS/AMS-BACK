@@ -1,11 +1,10 @@
 ﻿using AMS.Application.Dtos.Excel;
+using Microsoft.AspNetCore.Http;
 
 namespace AMS.Application.Interfaces.Services
 {
     public interface IExcelReader
     {
-        VelocityResponseDto VelocityExcel(Stream file);
-        AccelerationResponseDto AccelerationExcel(Stream file);
-        TemperatureResponseDto TemperatureExcel(Stream file);
+        DataExcelResponseDto MeasurementExcel(IFormFile file);
     }
 }

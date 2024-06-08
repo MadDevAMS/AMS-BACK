@@ -34,11 +34,8 @@ var app = builder.Build();
 
 app.UseCors(cors);
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseMiddleware<CustomAuthorizationMiddleware>();
 

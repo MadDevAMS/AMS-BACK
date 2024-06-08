@@ -1,5 +1,6 @@
 ﻿using AMS.Application.Dtos.Excel;
 using AMS.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AMS.Infrastructure.Services.Excel
@@ -8,22 +9,10 @@ namespace AMS.Infrastructure.Services.Excel
     {
         private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-        public AccelerationResponseDto AccelerationExcel(Stream file)
+        public DataExcelResponseDto MeasurementExcel(IFormFile file)
         {
-            var accelerationReader = _serviceProvider.GetService<AccelerationExcelReader>();
+            var accelerationReader = _serviceProvider.GetService<MeasurementExcelReader>();
             return accelerationReader!.ExecuteExcelReader(file);
-        }
-
-        public TemperatureResponseDto TemperatureExcel(Stream file)
-        {
-            var temperatureReader = _serviceProvider.GetService<TemperatureExcelReader>();
-            return temperatureReader!.ExecuteExcelReader(file);
-        }
-
-        public VelocityResponseDto VelocityExcel(Stream file)
-        {
-            var velocityReader = _serviceProvider.GetService<VelocityExcelReader>();
-            return velocityReader!.ExecuteExcelReader(file);
         }
     }
 }

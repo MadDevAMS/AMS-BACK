@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Activos;
+using AMS.Application.Dtos.Excel;
 using AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas;
 using AMS.Application.UseCases.Activos.Areas.Commands.DeleteAreas;
 using AMS.Application.UseCases.Activos.Areas.Commands.UpdateAreas;
@@ -14,6 +15,7 @@ using AMS.Application.UseCases.Activos.Maquinas.Commands.CreateMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina;
+using AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration;
 using AMS.Application.UseCases.Activos.Metricas.Commands.CreateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.DeleteMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas;
@@ -212,6 +214,22 @@ namespace AMS.Api.Controllers
         {
             var cmd = new DeleteAreasCommand() { Id = idArea };
             var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("metricas/acceleration"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<DataExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AccelerationData([FromForm] ConvertAccelerationCommand cmd)
+        {
+            /*var formCollection = await Request.ReadFormAsync();
+            var file1 = formCollection.Files[0];
+
+            using var ms = new MemoryStream();
+            file1.CopyTo(ms);
+
+            var cmd = new ConvertAccelerationCommand() { File = ms };*/
+            var response = await mediator.Send(cmd);
+
             return StatusCode(StatusCodes.Status200OK, response);
         }
     }
