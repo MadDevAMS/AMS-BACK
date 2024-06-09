@@ -11,12 +11,6 @@
         public string SpotModel { get; set; } = null!;
         public string MachineId { get; set; } = null!;
         public string MachineName { get; set; } = null!;
-        public string BatteryLevel { get; set; } = null!;
-        public string TelemetryInterval { get; set; } = null!;
-        public string IntervalUnit { get; set; } = null!;
-        public string DynamicRange { get; set; } = null!;
-        public string DataSource { get; set; } = null!;
-        public string SpotPath { get; set; } = null!;
         public List<AxisResponseDto> AxisX { get; set; } = new List<AxisResponseDto>();
         public List<AxisResponseDto> AxisY { get; set; } = new List<AxisResponseDto>();
         public List<AxisResponseDto> AxisZ { get; set; } = new List<AxisResponseDto>();

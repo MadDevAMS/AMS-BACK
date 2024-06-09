@@ -25,7 +25,7 @@ namespace AMS.Infrastructure.Services.Excel
                 throw new Exception(WORKSHEET_ERROR);
             }
 
-            string timestamp, value, measurement_type, axis, axis_label, spot_id, spot_dyid, spot_name, spot_type, spot_rpm, spot_power, spot_model, machine_id, machine_name, batery_level, telemetry_interval, interval_unit, dynamic_range_in_g, data_source, spot_path;
+            string timestamp, value, measurement_type, axis, axis_label, spot_id, spot_dyid, spot_name, spot_type, spot_rpm, spot_power, spot_model, machine_id, machine_name;
 
             timestamp = Regex.Replace(headers.First(h => h.Value.Equals(TIMESTAMP)).Address.ToString(), @"([0-9])", string.Empty);
             value = Regex.Replace(headers.First(h => h.Value.Equals(VALUE)).Address.ToString(), @"([0-9])", string.Empty);
@@ -41,12 +41,6 @@ namespace AMS.Infrastructure.Services.Excel
             spot_model = Regex.Replace(headers.First(h => h.Value.Equals(SPOT_MODEL)).Address.ToString(), @"([0-9])", string.Empty);
             machine_id = Regex.Replace(headers.First(h => h.Value.Equals(MACHINE_ID)).Address.ToString(), @"([0-9])", string.Empty);
             machine_name = Regex.Replace(headers.First(h => h.Value.Equals(MACHINE_NAME)).Address.ToString(), @"([0-9])", string.Empty);
-            batery_level = Regex.Replace(headers.First(h => h.Value.Equals(BATTERY_LEVEL)).Address.ToString(), @"([0-9])", string.Empty);
-            telemetry_interval = Regex.Replace(headers.First(h => h.Value.Equals(TELEMETRY_INTERVAL)).Address.ToString(), @"([0-9])", string.Empty);
-            interval_unit = Regex.Replace(headers.First(h => h.Value.Equals(INTERVAL_UNIT)).Address.ToString(), @"([0-9])", string.Empty);
-            dynamic_range_in_g = Regex.Replace(headers.First(h => h.Value.Equals(DYNAMIC_RANGE_IN_G)).Address.ToString(), @"([0-9])", string.Empty);
-            data_source = Regex.Replace(headers.First(h => h.Value.Equals(DATA_SOURCE)).Address.ToString(), @"([0-9])", string.Empty);
-            spot_path = Regex.Replace(headers.First(h => h.Value.Equals(SPOT_PATH)).Address.ToString(), @"([0-9])", string.Empty);
 
             var response = new DataExcelResponseDto
             {
@@ -59,12 +53,6 @@ namespace AMS.Infrastructure.Services.Excel
                 SpotModel = workSheet.Cells[spot_model + 2].Value?.ToString()!,
                 MachineId = workSheet.Cells[machine_id + 2].Value?.ToString()!,
                 MachineName = workSheet.Cells[machine_name + 2].Value?.ToString()!,
-                BatteryLevel = workSheet.Cells[batery_level + 2].Value?.ToString()!,
-                TelemetryInterval = workSheet.Cells[telemetry_interval + 2].Value?.ToString()!,
-                IntervalUnit = workSheet.Cells[interval_unit + 2].Value?.ToString()!,
-                DynamicRange = workSheet.Cells[dynamic_range_in_g + 2].Value?.ToString()!,
-                DataSource = workSheet.Cells[data_source + 2].Value?.ToString()!,
-                SpotPath = workSheet.Cells[spot_path + 2].Value?.ToString()!
             };
 
             for (var row = 2; row <= lastRow; row++)
