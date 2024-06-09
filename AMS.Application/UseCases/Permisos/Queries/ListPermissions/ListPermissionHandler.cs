@@ -19,7 +19,7 @@ namespace AMS.Application.UseCases.Permisos.Queries.ListPermissions
             try
             {
 
-                response = await _unitOfWork.PermissionRepository.ListPermissionAsync(request);
+                response = await _unitOfWork.GroupRepository.ListPermissionAsync(request);
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.QUERY_SUCCESS;
 

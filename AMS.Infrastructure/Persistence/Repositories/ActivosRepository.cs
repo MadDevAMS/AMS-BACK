@@ -198,37 +198,111 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAreaAsync(long idArea)
         {
-            var entity = (await _context.Area.FirstOrDefaultAsync(c => c.Id == idArea))!;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var areas = await _context.Area
+                    .Include(a => a.Maquinas)
+                        .ThenInclude(m => m.Componentes)
+                            .ThenInclude(c => c.PuntosMonitoreo)
+                                .ThenInclude(p => p.Metricas)
+                    .Where(a => a.Id == idArea)
+                    .ToListAsync();
 
-            entity.AuditDeleteUser = 1;
-            entity.AuditDeleteDate = DateTime.Now;
+                foreach (var area in areas)
+                {
+                    foreach (var maquina in area.Maquinas)
+                    {
+                        foreach (var componente in maquina.Componentes)
+                        {
+                            foreach (var punto in componente.PuntosMonitoreo)
+                            {
+                                foreach (var metrica in punto.Metricas)
+                                {
+                                    metrica.AuditDeleteUser = 1;
+                                    metrica.AuditDeleteDate = DateTime.Now;
+                                }
 
-            await _context.SaveChangesAsync();
-        }
+                                punto.AuditDeleteUser = 1;
+                                punto.AuditDeleteDate = DateTime.Now;
+                            }
 
-        public async Task DeleteComponenteAsync(long idComponente)
-        {
-            var entity = (await _context.Componente.FirstOrDefaultAsync(c => c.Id == idComponente))!;
+                            componente.AuditDeleteUser = 1;
+                            componente.AuditDeleteDate = DateTime.Now;
+                        }
 
-            entity.AuditDeleteUser = 1;
-            entity.AuditDeleteDate = DateTime.Now;
+                        maquina.AuditDeleteUser = 1;
+                        maquina.AuditDeleteDate = DateTime.Now;
+                    }
 
-            await _context.SaveChangesAsync();
+                    area.AuditDeleteUser = 1;
+                    area.AuditDeleteDate = DateTime.Now;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task DeleteMaquinaAsync(long idMaquina)
         {
-            var entity = (await _context.Maquina.FirstOrDefaultAsync(c => c.Id == idMaquina))!;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var maquinas = await _context.Maquina
+                    .Include(m => m.Componentes)
+                        .ThenInclude(c => c.PuntosMonitoreo)
+                            .ThenInclude(p => p.Metricas)
+                    .Where(m => m.Id == idMaquina)
+                    .ToListAsync();
 
-            entity.AuditDeleteUser = 1;
-            entity.AuditDeleteDate = DateTime.Now;
+                foreach (var maquina in maquinas)
+                {
+                    foreach (var componente in maquina.Componentes)
+                    {
+                        foreach (var punto in componente.PuntosMonitoreo)
+                        {
+                            foreach (var metrica in punto.Metricas)
+                            {
+                                metrica.AuditDeleteUser = 1;
+                                metrica.AuditDeleteDate = DateTime.Now;
+                            }
 
-            await _context.SaveChangesAsync();
+                            punto.AuditDeleteUser = 1;
+                            punto.AuditDeleteDate = DateTime.Now;
+                        }
+
+                        componente.AuditDeleteUser = 1;
+                        componente.AuditDeleteDate = DateTime.Now;
+                    }
+
+                    maquina.AuditDeleteUser = 1;
+                    maquina.AuditDeleteDate = DateTime.Now;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
 
         public async Task DeleteMetricaAsync(long idMetrica)
         {
-            var entity = (await _context.Metrica.FirstOrDefaultAsync(m => m.Id == idMetrica))!;
+            var entity = await _context.Metrica.FindAsync(idMetrica);
+            if (entity == null)
+            {
+                throw new Exception("Metrica not found");
+            }
 
             entity.AuditDeleteUser = 1;
             entity.AuditDeleteDate = DateTime.Now;
@@ -238,13 +312,75 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task DeletePuntoMonitoreoAsync(long idPunto)
         {
-            var entity = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == idPunto))!;
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var puntos = await _context.PuntoMonitoreo
+                    .Include(p => p.Metricas)
+                    .Where(p => p.Id == idPunto)
+                    .ToListAsync();
 
-            entity.AuditDeleteUser = 1;
-            entity.AuditDeleteDate = DateTime.Now;
+                foreach (var punto in puntos)
+                {
+                    foreach (var metrica in punto.Metricas)
+                    {
+                        metrica.AuditDeleteUser = 1;
+                        metrica.AuditDeleteDate = DateTime.Now;
+                    }
 
-            await _context.SaveChangesAsync();
+                    punto.AuditDeleteUser = 1;
+                    punto.AuditDeleteDate = DateTime.Now;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
+        public async Task DeleteComponenteAsync(long idComponente)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var componentes = await _context.Componente
+                    .Include(c => c.PuntosMonitoreo)
+                        .ThenInclude(p => p.Metricas)
+                    .Where(c => c.Id == idComponente)
+                    .ToListAsync();
+
+                foreach (var componente in componentes)
+                {
+                    foreach (var punto in componente.PuntosMonitoreo)
+                    {
+                        foreach (var metrica in punto.Metricas)
+                        {
+                            metrica.AuditDeleteUser = 1;
+                            metrica.AuditDeleteDate = DateTime.Now;
+                        }
+
+                        punto.AuditDeleteUser = 1;
+                        punto.AuditDeleteDate = DateTime.Now;
+                    }
+
+                    componente.AuditDeleteUser = 1;
+                    componente.AuditDeleteDate = DateTime.Now;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+
 
         public async Task<AreaResponseDto> GetAreaByIdAsync(long idArea)
         {

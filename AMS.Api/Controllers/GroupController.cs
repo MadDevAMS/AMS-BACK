@@ -1,11 +1,13 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Groups;
+using AMS.Application.Dtos.Permissions;
 using AMS.Application.UseCases.Group.Command.DeleteGroup;
 using AMS.Application.UseCases.Groups.Command.CreateGroup;
 using AMS.Application.UseCases.Groups.Command.UpdateGroup;
 using AMS.Application.UseCases.Groups.Queries.GetGroup;
 using AMS.Application.UseCases.Groups.Queries.ListGroups;
+using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +80,24 @@ namespace AMS.Api.Controllers
             {
                 NumPage = numPage,
                 Records = records,
+            };
+            var response = await _mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpGet("permissions"), MapToApiVersion("1.0")]
+        [Authorize]
+        [ProducesResponseType(typeof(BaseResponse<IEnumerable<PermissionsListResponseDto>>), (int)HttpStatusCode.OK)]
+
+        public async Task<IActionResult> ListPermissions(
+            [FromQuery] int numPage,
+            [FromQuery] int records
+        )
+        {
+            var qry = new ListPermissionQuery
+            {
+                NumPage = numPage,
+                Records = records
             };
             var response = await _mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);

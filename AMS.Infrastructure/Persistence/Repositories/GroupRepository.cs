@@ -1,7 +1,9 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Groups;
+using AMS.Application.Dtos.Permissions;
 using AMS.Application.Interfaces.Persistence;
+using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
 using AMS.Domain.Entities;
 using AMS.Infrastructure.Commons.Commons;
 using AMS.Infrastructure.Persistence.Context;
@@ -51,10 +53,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 Permissions = u.GroupPermission
                     .Where(rp => rp.State == Utils.ESTADO_ACTIVO && rp.AuditDeleteUser == null && rp.AuditDeleteDate == null)
                     .Select(p => new GroupPermissionListDto()
-                {
-                    Name = p.Permission.Name,
-                    PermissionId = p.PermissionId
-                }).ToList(),
+                    {
+                        Name = p.Permission.Name,
+                        PermissionId = p.PermissionId
+                    }).ToList(),
                 Users = u.GroupUsers
                     .Where(u => u.State == Utils.ESTADO_ACTIVO && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
                     .Select(u => u.UserId).ToList()
@@ -79,7 +81,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
         {
             var entity = (await _context.Groups.FirstOrDefaultAsync(u => u.Id == id))!;
 
-            foreach(var groupPermission in entity.GroupPermission)
+            foreach (var groupPermission in entity.GroupPermission)
             {
                 groupPermission.State = Utils.ESTADO_INACTIVO;
                 groupPermission.AuditDeleteDate = DateTime.Now;
@@ -110,7 +112,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateDate = DateTime.Now,
                 AuditCreateUser = Utils.ESTADO_ACTIVO
             };
-            foreach(long idPermission in groupDto.Permissions)
+            foreach (long idPermission in groupDto.Permissions)
             {
                 var groupPermission = new GroupPermission()
                 {
@@ -195,5 +197,33 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<PaginatorResponse<PermissionsListResponseDto>> ListPermissionAsync(ListPermissionQuery filter)
+        {
+            var query = _context.Permissions.Where(u => u.State == Utils.ESTADO_ACTIVO);
+
+            var totalRecords = await query.Select(u => u.Id).CountAsync();
+
+            var permissions = await query.Select(u => new PermissionsListResponseDto
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Description = u.Description,
+                State = u.State
+            })
+            .OrderBy(u => u.Name)
+            .Skip((filter.NumPage - 1) * filter.Records)
+            .Take(filter.Records)
+            .ToListAsync();
+
+            var result = new PaginatorResponse<PermissionsListResponseDto>
+            {
+                Data = permissions,
+                TotalRecords = totalRecords,
+                CurrentPage = 1,
+                PageSize = 1,
+                TotalPages = (int)Math.Ceiling(totalRecords / (double)totalRecords)
+            };
+            return result;
+        }
     }
 }

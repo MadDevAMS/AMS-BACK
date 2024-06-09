@@ -1,6 +1,8 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Filters;
 using AMS.Application.Dtos.Groups;
+using AMS.Application.Dtos.Permissions;
+using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
 
 namespace AMS.Application.Interfaces.Persistence
 {
@@ -11,5 +13,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task<GroupByIdDto> GetGroupByIdAsync(long groupId);
         Task DeleteAsync(long id, long idUser);
         Task<PaginatorResponse<GroupListDto>> ListGroups(ListGroupFilter filter);
+        Task<PaginatorResponse<PermissionsListResponseDto>> ListPermissionAsync(ListPermissionQuery filter);
     }
 }
