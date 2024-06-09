@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration
 {
-    public class ConvertAccelerationCommand : IRequest<BaseResponse<DataExcelResponseDto>>
+    public class ConvertExcelDataCommand : IRequest<BaseResponse<DataExcelResponseDto>>
     {
         public IFormFile File { get; set; } = null!;
     }

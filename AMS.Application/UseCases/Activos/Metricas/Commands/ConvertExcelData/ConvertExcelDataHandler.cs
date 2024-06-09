@@ -7,16 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration
 {
-    public class ConvertAccelerationHandler : IRequestHandler<ConvertAccelerationCommand, BaseResponse<DataExcelResponseDto>>
+    public class ConvertExcelDataHandler : IRequestHandler<ConvertExcelDataCommand, BaseResponse<DataExcelResponseDto>>
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ConvertAccelerationHandler(IServiceProvider serviceProvider)
+        public ConvertExcelDataHandler(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<BaseResponse<DataExcelResponseDto>> Handle(ConvertAccelerationCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<DataExcelResponseDto>> Handle(ConvertExcelDataCommand request, CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
             var director = scope.ServiceProvider.GetRequiredService<IExcelReader>();

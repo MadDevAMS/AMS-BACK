@@ -219,19 +219,11 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPost("metricas/acceleration"), MapToApiVersion("1.0")]
+        [HttpPost("metricas/excel"), MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(BaseResponse<DataExcelResponseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AccelerationData([FromForm] ConvertAccelerationCommand cmd)
+        public async Task<IActionResult> AccelerationData([FromForm] ConvertExcelDataCommand cmd)
         {
-            /*var formCollection = await Request.ReadFormAsync();
-            var file1 = formCollection.Files[0];
-
-            using var ms = new MemoryStream();
-            file1.CopyTo(ms);
-
-            var cmd = new ConvertAccelerationCommand() { File = ms };*/
             var response = await mediator.Send(cmd);
-
             return StatusCode(StatusCodes.Status200OK, response);
         }
     }
