@@ -40,6 +40,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 LastName = u.LastName,
                 Email = u.Email,
                 State = u.State,
+                AuditCreateDate = u.AuditCreateDate,
                 Group = u.GroupUsers.Select(g => new GroupListResponseDto
                 {
                     Id = g.GroupId,
