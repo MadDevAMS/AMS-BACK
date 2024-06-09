@@ -7,13 +7,14 @@ namespace AMS.Application.Interfaces.Persistence
 {
     public interface IUserRepository
     {
-        Task CreateAsync(User user);
+        Task CreateAsync(CreateUserDto user);
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
         Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
         Task DeleteAsync(long id, long userId);
         Task<long> IsUserAdminAsync(string email);
         Task<UserDetailResponseDto> UserByIdAsync(long id);
-        Task UpdateAsync(User user, bool updateState);
+        Task UpdateAsync(CreateUserDto user, bool updateState, bool updatePassword);
+        Task<AuthUserDto> AuthUserByIdAsync(long idUser);
     }
 }

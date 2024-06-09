@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Groups.Queries.ListGroups
 {
-    public class ListGroupsQuery: IRequest<PaginatorResponse<GroupListDto>>
+    public class ListGroupsQuery: BasePagination, IRequest<PaginatorResponse<GroupListDto>>
     {
     }
 }

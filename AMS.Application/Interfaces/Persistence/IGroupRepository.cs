@@ -9,6 +9,7 @@ namespace AMS.Application.Interfaces.Persistence
         Task UpdateAsync(GroupsDto group);
         Task CreateAsync(GroupsDto groupDto);
         Task<GroupByIdDto> GetGroupByIdAsync(long groupId);
+        Task DeleteAsync(long id, long idUser);
         Task<PaginatorResponse<GroupListDto>> ListGroups(ListGroupFilter filter);
     }
 }

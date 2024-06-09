@@ -1,8 +1,10 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Utils;
+using AMS.Application.Dtos.User;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
 using MediatR;
+using BC = BCrypt.Net.BCrypt;
 
 namespace AMS.Application.UseCases.Users.Command.UpdateUser
 {
@@ -17,8 +19,16 @@ namespace AMS.Application.UseCases.Users.Command.UpdateUser
 
             try
             {
-                var user = _mapper.Map<Domain.Entities.User>(request);
-                await _unitOfWork.UserRepository.UpdateAsync(user, request.UpdateState);
+                if (request.UpdatePassword && !request.Password.Equals(request.ConfirmPassword))
+                {
+                    response.Status = (int)ResponseCode.CONFLICT;
+                    response.Message = ExceptionMessage.CONFIRM_PASSWORD;
+                    return response;
+                }
+
+                var user = _mapper.Map<CreateUserDto>(request);
+                user.Password = BC.HashPassword(user.Password);
+                await _unitOfWork.UserRepository.UpdateAsync(user, request.UpdateState, request.UpdatePassword);
 
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.USER_SUCCESS_UPDATE;

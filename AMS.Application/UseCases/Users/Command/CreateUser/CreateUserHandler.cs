@@ -1,8 +1,10 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Utils;
+using AMS.Application.Dtos.User;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using BC = BCrypt.Net.BCrypt;
 
 namespace AMS.Application.UseCases.User.Command.CreateUser
@@ -11,11 +13,13 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public CreateUserHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateUserHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         public async Task<BaseResponse<bool>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -40,7 +44,9 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
                     return response;
                 }
 
-                var user = _mapper.Map<Domain.Entities.User>(request);
+                var user = _mapper.Map<CreateUserDto>(request);
+                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD)!.Value;
+                user.IdEntidad = idEntidad;
                 user.Password = BC.HashPassword(user.Password);
                 await _unitOfWork.UserRepository.CreateAsync(user);
 
