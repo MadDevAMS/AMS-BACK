@@ -5,6 +5,7 @@ using AMS.Infrastructure.Authentication.Jwt;
 using AMS.Infrastructure.Authentication.Permissions;
 using AMS.Infrastructure.Persistence.Context;
 using AMS.Infrastructure.Services;
+using AMS.Infrastructure.Services.Excel;
 using AMS.Infrastructure.Services.S3;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,9 @@ namespace AMS.Infrastructure
             services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
             services.AddSingleton<IS3Files, S3Files>();
+
+            services.AddScoped<IExcelReader, ExcelReader>();
+            services.AddScoped<MeasurementExcelReader>();
 
             return services;
         }
