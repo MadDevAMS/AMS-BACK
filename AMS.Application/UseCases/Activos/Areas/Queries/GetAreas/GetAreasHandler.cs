@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Areas.Queries.GetAreas
 {
-    public class GetAreasHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAreasQuery, BaseResponse<AreaResponseDto>>
+    public class GetAreasHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAreasQuery, BaseResponse<AreaDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<BaseResponse<AreaResponseDto>> Handle(GetAreasQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<AreaDto>> Handle(GetAreasQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<AreaResponseDto>();
+            var response = new BaseResponse<AreaDto>();
 
             try
             {

@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.PuntosMonitoreo.Queries.GetPuntoMonitoreoById
 {
-    public class GetPuntoMonitoreoByIdHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetPuntoMonitoreoByIdQuery, BaseResponse<PuntoMonitoreoResponseDto>>
+    public class GetPuntoMonitoreoByIdHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetPuntoMonitoreoByIdQuery, BaseResponse<PuntoMonitoreoDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<BaseResponse<PuntoMonitoreoResponseDto>> Handle(GetPuntoMonitoreoByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<PuntoMonitoreoDto>> Handle(GetPuntoMonitoreoByIdQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<PuntoMonitoreoResponseDto>();
+            var response = new BaseResponse<PuntoMonitoreoDto>();
 
             try
             {

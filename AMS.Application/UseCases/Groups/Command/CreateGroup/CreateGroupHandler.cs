@@ -2,6 +2,7 @@
 using AMS.Application.Commons.Utils;
 using AMS.Application.Dtos.Groups;
 using AMS.Application.Interfaces.Persistence;
+using AMS.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -21,21 +22,22 @@ namespace AMS.Application.UseCases.Groups.Command.CreateGroup
             try
             {
                 var grupoDto = _mapper.Map<GroupsDto>(request);
-                string? idEntidadString = _httpContext.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "IdEntidad")?.Value;
-                if (long.TryParse(idEntidadString, out long idEntidad))
-                {
-                    grupoDto.IdEntidad = idEntidad;
-                    await _unitOfWork.GroupRepository.CreateAsync(grupoDto);
 
-                    response.Status = (int)ResponseCode.CREATED;
-                    response.Message = ResponseMessage.GROUP_SUCCESS_CREATE;
-                }
-                else
+                var userId = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID);
+                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD);
+
+                if (!userId.HasValue || !idEntidad.HasValue)
                 {
-                    response.Status = (int)ResponseCode.BAD_REQUEST;
-                    response.Message = ExceptionMessage.ERROR_PARSE;
+                    response.Status = (int)ResponseCode.UNAUTHORIZED;
+                    response.Message = ExceptionMessage.RESOURCE_NOT_FOUND;
+                    return response;
                 }
 
+                grupoDto.IdEntidad = idEntidad.Value;
+                await _unitOfWork.GroupRepository.CreateAsync(grupoDto, userId.Value);
+
+                response.Status = (int)ResponseCode.CREATED;
+                response.Message = ResponseMessage.GROUP_SUCCESS_CREATE;
 
             }
             catch (Exception ex)

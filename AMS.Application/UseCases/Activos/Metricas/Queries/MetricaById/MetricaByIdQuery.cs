@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Metricas.Queries.MetricaById
 {
-    public class MetricaByIdQuery : IRequest<BaseResponse<MetricasResponseDto>>
+    public class MetricaByIdQuery : IRequest<BaseResponse<MetricasDto>>
     {
         public long Id { get; set; }
     }

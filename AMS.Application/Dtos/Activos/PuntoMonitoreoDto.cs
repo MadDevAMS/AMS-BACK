@@ -1,8 +1,9 @@
 ﻿namespace AMS.Application.Dtos.Activos
 {
-    public class PuntoMonitoreoResponseDto
+    public class PuntoMonitoreoDto
     {
         public long IdPuntoMonitoreo { get; set; }
+        public long IdComponente { get; set; }
         public string Description { get; set; } = null!;
         public string Detail { get; set; } = null!;
         public string DireccionMedicion { get; set; } = null!;

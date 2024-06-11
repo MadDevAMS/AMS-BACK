@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina
 {
-    public class GetMaquinaQuery : IRequest<BaseResponse<MaquinaResponseDto>> 
+    public class GetMaquinaQuery : IRequest<BaseResponse<MaquinaDto>> 
     {
         public long Id { get; set; }
     }

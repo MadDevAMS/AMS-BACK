@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Metricas.Queries.MetricaById
 {
-    public class MetricaByIdHandler(IUnitOfWork unitOfWork) : IRequestHandler<MetricaByIdQuery, BaseResponse<MetricasResponseDto>>
+    public class MetricaByIdHandler(IUnitOfWork unitOfWork) : IRequestHandler<MetricaByIdQuery, BaseResponse<MetricasDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<BaseResponse<MetricasResponseDto>> Handle(MetricaByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<MetricasDto>> Handle(MetricaByIdQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<MetricasResponseDto>();
+            var response = new BaseResponse<MetricasDto>();
 
             try
             {

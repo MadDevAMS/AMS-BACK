@@ -13,7 +13,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 {
     public class UserRepository(ApplicationDbContext context) : BaseRepository(context), IUserRepository
     {
-        public async Task CreateAsync(CreateUserDto user)
+        public async Task CreateAsync(CreateUserDto user, long userId)
         {
             var entity = new User()
             {
@@ -24,10 +24,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 Email = user.Email,
                 State = Utils.ESTADO_ACTIVO,
                 AuditCreateDate = DateTime.Now,
-                AuditCreateUser = Utils.ESTADO_ACTIVO
+                AuditCreateUser = userId
             };
 
-            foreach(long idGroup in user.Groups)
+            foreach (long idGroup in user.Groups)
             {
                 var groupUser = new GroupUsers()
                 {
@@ -35,7 +35,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     User = entity,
                     State = Utils.ESTADO_ACTIVO,
                     AuditCreateDate = DateTime.Now,
-                    AuditCreateUser = Utils.ESTADO_ACTIVO
+                    AuditCreateUser = userId
                 };
                 entity.GroupUsers.Add(groupUser);
             }
@@ -87,7 +87,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return result;
         }
 
-        public async Task UpdateAsync(CreateUserDto user, bool updateState, bool updatePassword)
+        public async Task UpdateAsync(CreateUserDto user, bool updateState, bool updatePassword, long userId)
         {
             var entity = (await _context.Users.Where(u => u.Id == user.Id).FirstOrDefaultAsync())!;
 
@@ -106,7 +106,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 entity.LastName = user.LastName;
             }
 
-            entity.AuditUpdateUser = 1;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.UserId == entity.Id).ToListAsync();
@@ -117,7 +117,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 GroupId = g,
                 UserId = entity.Id,
                 State = 1,
-                AuditCreateUser = 1,
+                AuditCreateUser = userId,
                 AuditCreateDate = DateTime.Now
             }).ToList();
 

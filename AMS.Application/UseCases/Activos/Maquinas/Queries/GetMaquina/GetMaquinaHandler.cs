@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina
 {
-    public class GetMaquinaHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetMaquinaQuery, BaseResponse<MaquinaResponseDto>>
+    public class GetMaquinaHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetMaquinaQuery, BaseResponse<MaquinaDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<BaseResponse<MaquinaResponseDto>> Handle(GetMaquinaQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<MaquinaDto>> Handle(GetMaquinaQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<MaquinaResponseDto>();
+            var response = new BaseResponse<MaquinaDto>();
 
             try
             {

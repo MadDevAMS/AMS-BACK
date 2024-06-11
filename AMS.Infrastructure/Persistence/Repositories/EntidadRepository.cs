@@ -74,7 +74,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return await _context.Entidad.Where(e => e.RUC == ruc).Select(e => e.Id).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(Entidad entidad)
+        public async Task UpdateAsync(Entidad entidad, long userId)
         {
             var entity = (await _context.Entidad.Where(e => e.Id == entidad.Id).FirstOrDefaultAsync())!;
 
@@ -82,7 +82,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entity.Email = entidad.Email;
             entity.Direccion = entidad.Direccion;
             entity.Telefono = entidad.Telefono;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

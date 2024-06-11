@@ -2,12 +2,14 @@
 using AMS.Application.Commons.Utils;
 using AMS.Application.Interfaces.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina
 {
-    public class DeleteMaquinaHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteMaquinaCommmand, BaseResponse<bool>>
+    public class DeleteMaquinaHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContext) : IRequestHandler<DeleteMaquinaCommmand, BaseResponse<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IHttpContextAccessor _httpContext = httpContext;
 
         public async Task<BaseResponse<bool>> Handle(DeleteMaquinaCommmand request, CancellationToken cancellationToken)
         {
@@ -15,7 +17,16 @@ namespace AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina
 
             try
             {
-                await _unitOfWork.ActivosRepository.DeleteMaquinaAsync(request.Id);
+                var userId = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID);
+
+                if (!userId.HasValue)
+                {
+                    response.Status = (int)ResponseCode.UNAUTHORIZED;
+                    response.Message = ExceptionMessage.RESOURCE_NOT_FOUND;
+                    return response;
+                }
+
+                await _unitOfWork.ActivosRepository.DeleteMaquinaAsync(request.Id, userId.Value);
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseActivosMessage.MAQUINA_SUCCESS_DELETE;
             }

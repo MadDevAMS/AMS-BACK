@@ -1,9 +1,10 @@
 ﻿using AMS.Application.Commons.Bases;
+using AMS.Application.Dtos.Activos;
 using MediatR;
 
 namespace AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoMonitoreo
 {
-    public class CreatePuntoMonitoreoCommand : IRequest<BaseResponse<bool>>
+    public class CreatePuntoMonitoreoCommand : IRequest<BaseResponse<PuntoMonitoreoDto>>
     {
         public long IdComponente { get; set; }
         public string Description { get; set; } = null!;

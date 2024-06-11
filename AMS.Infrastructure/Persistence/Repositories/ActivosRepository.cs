@@ -32,13 +32,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 EntidadId = data.First().EntidadId,
                 EntidadName = data.First().EntidadName,
-                Areas = new List<AreaDto>()
+                Areas = new List<AreaFolderDto>()
             };
 
-            var areaDict = new Dictionary<long, AreaDto>();
-            var maquinaDict = new Dictionary<long, MaquinaDto>();
-            var componenteDict = new Dictionary<long, ComponenteDto>();
-            var puntoMonitoreoDict = new Dictionary<long, PuntoMonitoreoDto>();
+            var areaDict = new Dictionary<long, AreaFolderDto>();
+            var maquinaDict = new Dictionary<long, MaquinaFolderDto>();
+            var componenteDict = new Dictionary<long, ComponenteFolderDto>();
+            var puntoMonitoreoDict = new Dictionary<long, PuntoMonitoreoFolderDto>();
 
             foreach (var item in data)
             {
@@ -46,17 +46,17 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     if (!areaDict.ContainsKey(item.AreaId.Value))
                     {
-                        var area = new AreaDto
+                        var area = new AreaFolderDto
                         {
                             AreaId = item.AreaId.Value,
                             AreaName = item.AreaName!,
-                            SubAreas = new List<AreaDto>(),
-                            Maquinas = new List<MaquinaDto>()
+                            SubAreas = new List<AreaFolderDto>(),
+                            Maquinas = new List<MaquinaFolderDto>()
                         };
 
-                        if (item.ParentId.HasValue && areaDict.ContainsKey(item.ParentId.Value))
+                        if (item.ParentAreaId.HasValue && areaDict.ContainsKey(item.ParentAreaId.Value))
                         {
-                            areaDict[item.ParentId.Value].SubAreas.Add(area);
+                            areaDict[item.ParentAreaId.Value].SubAreas.Add(area);
                         }
                         else
                         {
@@ -71,11 +71,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     if (!maquinaDict.ContainsKey(item.MaquinaId.Value))
                     {
-                        var maquina = new MaquinaDto
+                        var maquina = new MaquinaFolderDto
                         {
                             MaquinaId = item.MaquinaId.Value,
                             MaquinaName = item.MaquinaName!,
-                            Componentes = new List<ComponenteDto>()
+                            Componentes = new List<ComponenteFolderDto>()
                         };
 
                         if (item.AreaId.HasValue)
@@ -91,11 +91,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     if (!componenteDict.ContainsKey(item.ComponenteId.Value))
                     {
-                        var componente = new ComponenteDto
+                        var componente = new ComponenteFolderDto
                         {
                             ComponenteId = item.ComponenteId.Value,
                             ComponenteName = item.ComponenteName!,
-                            PuntosMoniteros = new List<PuntoMonitoreoDto>()
+                            PuntosMoniteros = new List<PuntoMonitoreoFolderDto>()
                         };
 
                         if (item.MaquinaId.HasValue)
@@ -111,11 +111,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     if (!puntoMonitoreoDict.ContainsKey(item.PuntoMonitoreoId.Value))
                     {
-                        var puntoMonitoreo = new PuntoMonitoreoDto
+                        var puntoMonitoreo = new PuntoMonitoreoFolderDto
                         {
                             PuntoMonitoreoId = item.PuntoMonitoreoId.Value,
                             PuntoMonitoreoName = item.PuntoMonitoreoName!,
-                            Metricas = new List<MetricaDto>()
+                            Metricas = new List<MetricaFolderDto>()
                         };
 
                         if (item.ComponenteId.HasValue)
@@ -129,10 +129,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
                 if (item.MetricaId.HasValue)
                 {
-                    var metrica = new MetricaDto
+                    var metrica = new MetricaFolderDto
                     {
                         MetricaId = item.MetricaId.Value,
-                        MetricaName = item.MetricaName
+                        MetricaName = item.MetricaName!
                     };
 
                     if (item.PuntoMonitoreoId.HasValue)
@@ -146,57 +146,112 @@ namespace AMS.Infrastructure.Persistence.Repositories
         }
 
 
-        public async Task CreateAreaAsync(Area area)
+        public async Task<AreaDto> CreateAreaAsync(AreaDto area, long userId)
         {
-            area.State = Utils.ESTADO_ACTIVO;
-            area.AuditCreateDate = DateTime.Now;
-            area.AuditCreateUser = 1;
+            var entity = new Area
+            {
+                Name = area.Name,
+                Description = area.Description,
+                IdParent = area.IdParent,
+                IdEntidad = area.IdEntidad,
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateDate = DateTime.Now,
+                AuditCreateUser = userId
+            };
 
             await _context.AddRangeAsync(area);
             await _context.SaveChangesAsync();
+
+            return area;
         }
 
-        public async Task CreateComponenteAsync(Componente componente)
+        public async Task<ComponenteDto> CreateComponenteAsync(ComponenteDto componente, long userId)
         {
-            componente.State = Utils.ESTADO_ACTIVO;
-            componente.AuditCreateDate = DateTime.Now;
-            componente.AuditCreateUser = 1;
-
+            var entity = new Componente()
+            {
+                IdMaquina = componente.IdMaquina,
+                Name = componente.Name,
+                Description = componente.Description,
+                Velocidad = componente.Velocidad,
+                Potencia = componente.Potencia,
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateDate = DateTime.Now,
+                AuditCreateUser = userId,
+            };
             await _context.AddRangeAsync(componente);
             await _context.SaveChangesAsync();
+
+            componente.IdComponente = entity.Id;
+
+            return componente;
         }
 
-        public async Task CreateMaquinaAsync(Maquina maquina)
+        public async Task<MaquinaDto> CreateMaquinaAsync(MaquinaDto maquina, long userId)
         {
-            maquina.State = Utils.ESTADO_ACTIVO;
-            maquina.AuditCreateUser = 1;
-            maquina.AuditCreateDate = DateTime.Now;
+            var entity = new Maquina()
+            {
+                IdArea = maquina.IdArea,
+                Name = maquina.Name,
+                Description = maquina.Description,
+                TipoMaquina = maquina.TipoMaquina,
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateUser = userId,
+                AuditCreateDate = DateTime.Now,
+            };
 
             await _context.AddRangeAsync(maquina);
             await _context.SaveChangesAsync();
+
+            maquina.IdArea = entity.Id;
+
+            return maquina;
         }
 
-        public async Task CreateMetricasAsync(Metrica metrica)
+        public async Task<MetricasDto> CreateMetricasAsync(MetricasDto metrica, long userId)
         {
-            metrica.State = Utils.ESTADO_ACTIVO;
-            metrica.AuditCreateDate = DateTime.Now;
-            metrica.AuditCreateUser = Utils.ESTADO_ACTIVO;
+            var entity = new Metrica()
+            {
+                IdPuntoMonitoreo = metrica.IdPuntoMonitoreo,
+                Name = metrica.Name,
+                Description = metrica.Description,
+                Tipo = metrica.Tipo,
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateDate = DateTime.Now,
+                AuditCreateUser = userId,
+            };
 
             await _context.AddAsync(metrica);
             await _context.SaveChangesAsync();
+
+            metrica.IdMetrica = entity.Id;
+
+            return metrica;
         }
 
-        public async Task CreatePuntoMonitoreoAsync(PuntoMonitoreo punto)
+        public async Task<PuntoMonitoreoDto> CreatePuntoMonitoreoAsync(PuntoMonitoreoDto punto, long userId)
         {
-            punto.State = Utils.ESTADO_ACTIVO;
-            punto.AuditCreateUser = Utils.ESTADO_ACTIVO;
-            punto.AuditCreateDate = DateTime.Now;
+            var entity = new PuntoMonitoreo()
+            {
+                IdComponente = punto.IdComponente,
+                Description = punto.Description,
+                Detail = punto.Detail,
+                DireccionMedicion = punto.DireccionMedicion,
+                AnguloDireccion = punto.AnguloDireccion,
+                DatosMedicion = punto.DatosMedicion,
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateUser = userId,
+                AuditCreateDate = DateTime.Now,
+            };
 
             await _context.AddAsync(punto);
             await _context.SaveChangesAsync();
+
+            punto.IdPuntoMonitoreo = entity.Id;
+
+            return punto;
         }
 
-        public async Task DeleteAreaAsync(long idArea)
+        public async Task DeleteAreaAsync(long idArea, long userId)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -219,23 +274,23 @@ namespace AMS.Infrastructure.Persistence.Repositories
                             {
                                 foreach (var metrica in punto.Metricas)
                                 {
-                                    metrica.AuditDeleteUser = 1;
+                                    metrica.AuditDeleteUser = userId;
                                     metrica.AuditDeleteDate = DateTime.Now;
                                 }
 
-                                punto.AuditDeleteUser = 1;
+                                punto.AuditDeleteUser = userId;
                                 punto.AuditDeleteDate = DateTime.Now;
                             }
 
-                            componente.AuditDeleteUser = 1;
+                            componente.AuditDeleteUser = userId;
                             componente.AuditDeleteDate = DateTime.Now;
                         }
 
-                        maquina.AuditDeleteUser = 1;
+                        maquina.AuditDeleteUser = userId;
                         maquina.AuditDeleteDate = DateTime.Now;
                     }
 
-                    area.AuditDeleteUser = 1;
+                    area.AuditDeleteUser = userId;
                     area.AuditDeleteDate = DateTime.Now;
                 }
 
@@ -249,7 +304,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             }
         }
 
-        public async Task DeleteMaquinaAsync(long idMaquina)
+        public async Task DeleteMaquinaAsync(long idMaquina, long userId)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -269,19 +324,19 @@ namespace AMS.Infrastructure.Persistence.Repositories
                         {
                             foreach (var metrica in punto.Metricas)
                             {
-                                metrica.AuditDeleteUser = 1;
+                                metrica.AuditDeleteUser = userId;
                                 metrica.AuditDeleteDate = DateTime.Now;
                             }
 
-                            punto.AuditDeleteUser = 1;
+                            punto.AuditDeleteUser = userId;
                             punto.AuditDeleteDate = DateTime.Now;
                         }
 
-                        componente.AuditDeleteUser = 1;
+                        componente.AuditDeleteUser = userId;
                         componente.AuditDeleteDate = DateTime.Now;
                     }
 
-                    maquina.AuditDeleteUser = 1;
+                    maquina.AuditDeleteUser = userId;
                     maquina.AuditDeleteDate = DateTime.Now;
                 }
 
@@ -296,7 +351,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
         }
 
 
-        public async Task DeleteMetricaAsync(long idMetrica)
+        public async Task DeleteMetricaAsync(long idMetrica, long userId)
         {
             var entity = await _context.Metrica.FindAsync(idMetrica);
             if (entity == null)
@@ -304,13 +359,13 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 throw new Exception("Metrica not found");
             }
 
-            entity.AuditDeleteUser = 1;
+            entity.AuditDeleteUser = userId;
             entity.AuditDeleteDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePuntoMonitoreoAsync(long idPunto)
+        public async Task DeletePuntoMonitoreoAsync(long idPunto, long userId)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -324,11 +379,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     foreach (var metrica in punto.Metricas)
                     {
-                        metrica.AuditDeleteUser = 1;
+                        metrica.AuditDeleteUser = userId;
                         metrica.AuditDeleteDate = DateTime.Now;
                     }
 
-                    punto.AuditDeleteUser = 1;
+                    punto.AuditDeleteUser = userId;
                     punto.AuditDeleteDate = DateTime.Now;
                 }
 
@@ -342,7 +397,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             }
         }
 
-        public async Task DeleteComponenteAsync(long idComponente)
+        public async Task DeleteComponenteAsync(long idComponente, long userId)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
@@ -359,15 +414,15 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     {
                         foreach (var metrica in punto.Metricas)
                         {
-                            metrica.AuditDeleteUser = 1;
+                            metrica.AuditDeleteUser = userId;
                             metrica.AuditDeleteDate = DateTime.Now;
                         }
 
-                        punto.AuditDeleteUser = 1;
+                        punto.AuditDeleteUser = userId;
                         punto.AuditDeleteDate = DateTime.Now;
                     }
 
-                    componente.AuditDeleteUser = 1;
+                    componente.AuditDeleteUser = userId;
                     componente.AuditDeleteDate = DateTime.Now;
                 }
 
@@ -382,42 +437,40 @@ namespace AMS.Infrastructure.Persistence.Repositories
         }
 
 
-        public async Task<AreaResponseDto> GetAreaByIdAsync(long idArea)
+        public async Task<AreaDto> GetAreaByIdAsync(long idArea)
         {
             var entity = (await _context.Area.FirstOrDefaultAsync(c => c.Id == idArea))!;
 
-            var response = new AreaResponseDto()
+            var response = new AreaDto()
             {
                 Name = entity.Name,
                 Description = entity.Description,
-
             };
 
             return response;
         }
 
-        public async Task<ComponenteResponseDto> GetComponenteByIdAsync(long idComponente)
+        public async Task<ComponenteDto> GetComponenteByIdAsync(long idComponente)
         {
             var entity = (await _context.Componente.FirstOrDefaultAsync(c => c.Id == idComponente))!;
 
-            var response = new ComponenteResponseDto()
+            var response = new ComponenteDto()
             {
                 IdComponente = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 Potencia = entity.Potencia,
                 Velocidad = entity.Velocidad,
-
             };
 
             return response;
         }
 
-        public async Task<MaquinaResponseDto> GetMaquinaByIdAsync(long idMaquina)
+        public async Task<MaquinaDto> GetMaquinaByIdAsync(long idMaquina)
         {
             var entity = (await _context.Maquina.FirstOrDefaultAsync(c => c.Id == idMaquina))!;
 
-            var response = new MaquinaResponseDto()
+            var response = new MaquinaDto()
             {
                 IdMaquina = entity.Id,
                 Name = entity.Name,
@@ -428,11 +481,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return response;
         }
 
-        public async Task<MetricasResponseDto> GetMetricaByIdAsync(long idMetrica)
+        public async Task<MetricasDto> GetMetricaByIdAsync(long idMetrica)
         {
             var entity = (await _context.Metrica.FirstOrDefaultAsync(m => m.Id == idMetrica))!;
 
-            var metricaDto = new MetricasResponseDto()
+            var metricaDto = new MetricasDto()
             {
                 IdMetrica = entity.Id,
                 Name = entity.Name,
@@ -443,11 +496,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return metricaDto;
         }
 
-        public async Task<PuntoMonitoreoResponseDto> GetPuntoMonitoreoByIdAsync(long idPunto)
+        public async Task<PuntoMonitoreoDto> GetPuntoMonitoreoByIdAsync(long idPunto)
         {
             var entity = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == idPunto))!;
 
-            var response = new PuntoMonitoreoResponseDto()
+            var response = new PuntoMonitoreoDto()
             {
                 IdPuntoMonitoreo = entity.Id,
                 Description = entity.Description,
@@ -460,62 +513,69 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return response;
         }
 
-        public async Task UpdateAreaAsync(Area area)
+        public async Task<AreaDto> UpdateAreaAsync(AreaDto area, long userId)
         {
-            var entity = (await _context.Area.FirstOrDefaultAsync(m => m.Id == area.Id))!;
+            var entity = (await _context.Area.FirstOrDefaultAsync(m => m.Id == area.IdArea))!;
 
             entity.Name = area.Name;
             entity.Description = area.Description;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            return area;
         }
 
-        public async Task UpdateComponenteAsync(Componente componente)
+        public async Task<ComponenteDto> UpdateComponenteAsync(ComponenteDto componente, long userId)
         {
-            var entity = (await _context.Componente.FirstOrDefaultAsync(m => m.Id == componente.Id))!;
+            var entity = (await _context.Componente.FirstOrDefaultAsync(m => m.Id == componente.IdComponente))!;
 
             entity.Name = componente.Name;
             entity.Description = componente.Description;
             entity.Potencia = componente.Potencia;
             entity.Velocidad = componente.Velocidad;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            return componente;
         }
 
-        public async Task UpdateMaquinaAsync(Maquina maquina)
+        public async Task<MaquinaDto> UpdateMaquinaAsync(MaquinaDto maquina, long userId)
         {
-            var entity = (await _context.Maquina.FirstOrDefaultAsync(m => m.Id == maquina.Id))!;
+            var entity = (await _context.Maquina.FirstOrDefaultAsync(m => m.Id == maquina.IdMaquina))!;
 
             entity.Name = maquina.Name;
             entity.Description = maquina.Description;
             entity.TipoMaquina = maquina.TipoMaquina;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
 
+            return maquina;
         }
 
-        public async Task UpdateMetricasAsync(Metrica metrica)
+        public async Task<MetricasDto> UpdateMetricasAsync(MetricasDto metrica, long userId)
         {
-            var entity = (await _context.Metrica.FirstOrDefaultAsync(m => m.Id == metrica.Id))!;
+            var entity = (await _context.Metrica.FirstOrDefaultAsync(m => m.Id == metrica.IdMetrica))!;
 
             entity.Name = metrica.Name;
             entity.Description = metrica.Description;
             entity.Tipo = metrica.Tipo;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
+
+            return metrica;
         }
 
-        public async Task UpdatePuntoMonitorioAsync(PuntoMonitoreo punto)
+        public async Task<PuntoMonitoreoDto> UpdatePuntoMonitorioAsync(PuntoMonitoreoDto punto, long userId)
         {
-            var entityUpdate = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == punto.Id))!;
+            var entityUpdate = (await _context.PuntoMonitoreo.FirstOrDefaultAsync(p => p.Id == punto.IdPuntoMonitoreo))!;
 
             entityUpdate.Description = punto.Description;
             entityUpdate.Detail = punto.Detail;
@@ -523,9 +583,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entityUpdate.AnguloDireccion = punto.AnguloDireccion;
             entityUpdate.DatosMedicion = punto.DatosMedicion;
             entityUpdate.AuditUpdateDate = DateTime.Now;
-            entityUpdate.AuditUpdateUser = 1;
+            entityUpdate.AuditUpdateUser = userId;
 
             await _context.SaveChangesAsync();
+
+            return punto;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.UpdatePuntoM
     {
         public UpdatePuntoMonitereoValidator()
         {
-            RuleFor(x => x.Id)
+            RuleFor(x => x.IdPuntoMonitoreo)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 

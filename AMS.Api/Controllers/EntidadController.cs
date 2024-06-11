@@ -2,6 +2,7 @@
 using AMS.Application.Commons.Bases;
 using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
 using AMS.Application.UseCases.Entidades.Command.UpdateEntidad;
+using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace AMS.Api.Controllers
 
         [HttpPut("entidades"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateEntidad([FromBody] UpdateEntidadCommand cmd)
         {
