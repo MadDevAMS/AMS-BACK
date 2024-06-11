@@ -2,7 +2,6 @@
 using AMS.Application.Commons.Utils;
 using AMS.Application.Dtos.Activos;
 using AMS.Application.Interfaces.Persistence;
-using AMS.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,8 +21,9 @@ namespace AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas
             try
             {
                 var userId = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID);
+                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD);
 
-                if (!userId.HasValue)
+                if (!userId.HasValue || !idEntidad.HasValue)
                 {
                     response.Status = (int)ResponseCode.UNAUTHORIZED;
                     response.Message = ExceptionMessage.RESOURCE_NOT_FOUND;
@@ -31,6 +31,8 @@ namespace AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas
                 }
 
                 var area = _mapper.Map<AreaDto>(request);
+                area.IdEntidad = idEntidad.Value;
+
                 var data = await _unitOfWork.ActivosRepository.CreateAreaAsync(area, userId.Value);
 
                 response.Data = data;

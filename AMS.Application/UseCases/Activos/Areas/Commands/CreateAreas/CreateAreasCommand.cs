@@ -9,6 +9,5 @@ namespace AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
         public long IdParent { get; set; }
-        public long IdEntidad { get; set; }
     }
 }
