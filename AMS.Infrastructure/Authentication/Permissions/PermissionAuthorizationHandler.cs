@@ -27,7 +27,7 @@ namespace AMS.Infrastructure.Authentication.Permissions
                 .Select(x => x.Value)
                 .ToHashSet();
 
-            if (permissions.Contains(requirement.Permission))
+            if (permissions.Contains(requirement.Permission) || requirement.Permission == Permission.Admin.ToString())
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;
