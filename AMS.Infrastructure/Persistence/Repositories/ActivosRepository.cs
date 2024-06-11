@@ -54,9 +54,9 @@ namespace AMS.Infrastructure.Persistence.Repositories
                             Maquinas = new List<MaquinaDto>()
                         };
 
-                        if (item.ParentId.HasValue && areaDict.ContainsKey(item.ParentId.Value))
+                        if (item.ParentAreaId.HasValue && areaDict.ContainsKey(item.ParentAreaId.Value))
                         {
-                            areaDict[item.ParentId.Value].SubAreas.Add(area);
+                            areaDict[item.ParentAreaId.Value].SubAreas.Add(area);
                         }
                         else
                         {
