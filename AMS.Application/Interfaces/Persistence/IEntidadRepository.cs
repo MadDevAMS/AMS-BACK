@@ -8,5 +8,6 @@ namespace AMS.Application.Interfaces.Persistence
         Task UpdateAsync(Entidad entidad, long userId);
         Task CreateAsync(EntidadRegistroDto entidadDto);
         Task<long> EntidadExistAsync(string ruc);
+        Task<EntidadDto> GetEntidadAsync(long idEntidad);
     }
 }

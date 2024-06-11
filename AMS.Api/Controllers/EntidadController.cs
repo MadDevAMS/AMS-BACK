@@ -1,7 +1,9 @@
 ﻿using System.Net;
 using AMS.Application.Commons.Bases;
+using AMS.Application.Dtos.Entidad;
 using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
 using AMS.Application.UseCases.Entidades.Command.UpdateEntidad;
+using AMS.Application.UseCases.Entidades.Queries.GetEntidad;
 using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +21,17 @@ namespace AMS.Api.Controllers
         public EntidadController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("entidad"), MapToApiVersion("1.0")]
+        [Authorize]
+        //[HasPermission(Permission.Admin)]
+        [ProducesResponseType(typeof(BaseResponse<EntidadDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetEntidad()
+        {
+            var qry = new GetEntidadQuery();
+            var response = await _mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
         [HttpPut("entidades"), MapToApiVersion("1.0")]
