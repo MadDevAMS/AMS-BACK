@@ -21,7 +21,6 @@ namespace AMS.Infrastructure.Services
         public IUserRepository UserRepository => _user ?? new UserRepository(_context);
         public IEntidadRepository EntidadRepository => _entidad ?? new EntidadRepository(_context);
         public IGroupRepository GroupRepository => _group ?? new GroupRepository(_context);
-
         public IActivosRepository ActivosRepository => _activos ?? new ActivosRepository(_context);
 
         public void Dispose()

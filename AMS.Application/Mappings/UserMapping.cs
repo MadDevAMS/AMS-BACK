@@ -1,4 +1,5 @@
 ﻿using AMS.Application.Dtos.Filters;
+using AMS.Application.Dtos.User;
 using AMS.Application.UseCases.User.Command.CreateUser;
 using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.UpdateUser;
@@ -11,9 +12,9 @@ namespace AMS.Application.Mappings
     {
         public UserMapping()
         {
-            CreateMap<CreateUserCommand, User>();
+            CreateMap<CreateUserCommand, CreateUserDto>();
             CreateMap<ListUsersEntidadQuery, ListUserFilter>();
-            CreateMap<UpdateUserCommnad, User>();
+            CreateMap<UpdateUserCommnad, CreateUserDto>();
         }
     }
 }
