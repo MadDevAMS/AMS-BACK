@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Componentes.Queries.GetComponente
 {
-    public class GetComponenteHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetComponenteQuery, BaseResponse<ComponenteResponseDto>>
+    public class GetComponenteHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetComponenteQuery, BaseResponse<ComponenteDto>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<BaseResponse<ComponenteResponseDto>> Handle(GetComponenteQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<ComponenteDto>> Handle(GetComponenteQuery request, CancellationToken cancellationToken)
         {
-            var response = new BaseResponse<ComponenteResponseDto>();
+            var response = new BaseResponse<ComponenteDto>();
 
             try
             {

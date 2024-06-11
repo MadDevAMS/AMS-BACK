@@ -1,5 +1,6 @@
 ﻿using AMS.Application.Commons.Bases;
 using AMS.Application.Commons.Utils;
+using AMS.Application.Dtos.Groups;
 using AMS.Application.Dtos.User;
 using AMS.Application.Interfaces.Persistence;
 using AutoMapper;
@@ -45,10 +46,22 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
                 }
 
                 var user = _mapper.Map<CreateUserDto>(request);
-                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD)!.Value;
-                user.IdEntidad = idEntidad;
+
+                var grupoDto = _mapper.Map<GroupsDto>(request);
+
+                var userId = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID);
+                var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD);
+
+                if (!userId.HasValue || !idEntidad.HasValue)
+                {
+                    response.Status = (int)ResponseCode.UNAUTHORIZED;
+                    response.Message = ExceptionMessage.RESOURCE_NOT_FOUND;
+                    return response;
+                }
+
+                user.IdEntidad = idEntidad.Value;
                 user.Password = BC.HashPassword(user.Password);
-                await _unitOfWork.UserRepository.CreateAsync(user);
+                await _unitOfWork.UserRepository.CreateAsync(user, userId.Value);
 
                 response.Status = (int)ResponseCode.CREATED;
                 response.Message = ResponseMessage.USER_SUCCESS_REGISTER;

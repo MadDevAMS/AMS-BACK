@@ -8,6 +8,7 @@ using AMS.Application.UseCases.Groups.Command.UpdateGroup;
 using AMS.Application.UseCases.Groups.Queries.GetGroup;
 using AMS.Application.UseCases.Groups.Queries.ListGroups;
 using AMS.Application.UseCases.Permisos.Queries.ListPermissions;
+using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,9 @@ namespace AMS.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut, MapToApiVersion("1.0")]
-        [Route("groups")]
+        [HttpPut("groups"), MapToApiVersion("1.0")]
+        [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<GroupsDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateGroup([FromBody] UpdateGroupCommand command)
         {
@@ -38,6 +40,8 @@ namespace AMS.Api.Controllers
 
         [HttpDelete("groups"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
+
         [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteGroup([FromQuery] DeleteGroupCommand cmd)
         {
@@ -45,8 +49,9 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPost, MapToApiVersion("1.0")]
-        [Route("groups")]
+        [HttpPost("groups"), MapToApiVersion("1.0")]
+        [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateGroup([FromBody] CreateGroupCommand command)
         {
@@ -55,6 +60,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("group"), MapToApiVersion("1.0")]
+        [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<GroupByIdDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetGroupById(
             [FromQuery] long idGroup
@@ -70,6 +77,7 @@ namespace AMS.Api.Controllers
 
         [HttpGet("groups"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<GroupListDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ListGroups(
             [FromQuery] int numPage,
@@ -87,6 +95,7 @@ namespace AMS.Api.Controllers
 
         [HttpGet("permissions"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<PermissionsListResponseDto>>), (int)HttpStatusCode.OK)]
 
         public async Task<IActionResult> ListPermissions(

@@ -24,6 +24,7 @@ using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoMonit
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.DeletePuntoMonitoreo;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.UpdatePuntoMonitoreo;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Queries.GetPuntoMonitoreoById;
+using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,8 +34,8 @@ namespace AMS.Api.Controllers
 
     [Route("api/v{version:apiVersion}/")]
     [ApiController]
-    [ApiVersion("1.0")]
     [Authorize]
+    [ApiVersion("1.0")]
     public class ActivosController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -45,7 +46,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("folder")]
-        [ProducesResponseType(typeof(BaseResponse<MetricasResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerFolder)]
+        [ProducesResponseType(typeof(BaseResponse<FolderResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetFolderEntidad()
         {
             var qry = new GetFolderEntidadQuery();
@@ -54,7 +56,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("metricas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<MetricasResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerMetricas)]
+        [ProducesResponseType(typeof(BaseResponse<MetricasDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetMetricaById([FromQuery] long idMetrica)
         {
             var qry = new MetricaByIdQuery() { Id = idMetrica };
@@ -63,7 +66,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.CrearMetricas)]
+        [ProducesResponseType(typeof(BaseResponse<MetricasDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateMetrica([FromBody] CreateMetricasCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -71,7 +75,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPut("metricas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.ActualizarMetricas)]
+        [ProducesResponseType(typeof(BaseResponse<MetricasDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateMetricca([FromBody] UpdateMetricasCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -79,6 +84,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpDelete("metricas"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.EliminarMetricas)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteMetrica([FromQuery] DeleteMetricaCommand cmd)
         {
@@ -87,7 +93,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("puntosMonitoreo"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<PuntoMonitoreoResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerPuntos)]
+        [ProducesResponseType(typeof(BaseResponse<PuntoMonitoreoDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetPuntoMonitoreoById([FromQuery] long idPunto)
         {
             var qry = new GetPuntoMonitoreoByIdQuery() { Id = idPunto };
@@ -96,7 +103,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("puntosMonitoreo"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.CrearPuntos)]
+        [ProducesResponseType(typeof(BaseResponse<PuntoMonitoreoDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreatePuntoMonitoreo([FromBody] CreatePuntoMonitoreoCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -104,7 +112,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPut("puntosMonitoreo"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.ActualizarPuntos)]
+        [ProducesResponseType(typeof(BaseResponse<PuntoMonitoreoDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdatePuntoMonitoreo([FromBody] UpdatePuntoMonitoreoCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -112,6 +121,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpDelete("puntosMonitoreo"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.EliminarPuntos)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeletePuntoMonitoreo([FromQuery] DeletePuntoMonitoreoCommand cmd)
         {
@@ -120,7 +130,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("componentes"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<ComponenteResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerComponentes)]
+        [ProducesResponseType(typeof(BaseResponse<ComponenteDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetComponenteById([FromQuery] long idComponente)
         {
             var qry = new GetComponenteQuery { Id = idComponente };
@@ -129,7 +140,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("componentes"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.CrearComponentes)]
+        [ProducesResponseType(typeof(BaseResponse<ComponenteDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateComponente([FromBody] CreateComponenteCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -137,7 +149,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPut("componentes"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.ActualizarComponentes)]
+        [ProducesResponseType(typeof(BaseResponse<ComponenteDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateComponente([FromBody] UpdateComponenteCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -145,6 +158,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpDelete("componentes"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.EliminarComponentes)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteComponente([FromQuery] DeleteComponenteCommand cmd)
         {
@@ -153,7 +167,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("maquinas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<MaquinaResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerMaquinas)]
+        [ProducesResponseType(typeof(BaseResponse<MaquinaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetMaquinaById([FromQuery] long idMaquina)
         {
             var qry = new GetMaquinaQuery() { Id = idMaquina };
@@ -162,7 +177,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("maquinas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.CrearMaquinas)]
+        [ProducesResponseType(typeof(BaseResponse<MaquinaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateMaquina([FromBody] CreateMaquinaCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -170,7 +186,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPut("maquinas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.ActualizarMaquinas)]
+        [ProducesResponseType(typeof(BaseResponse<MaquinaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateMaquina([FromBody] UpdateMaquinaCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -178,6 +195,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpDelete("maquinas"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.EliminarMaquinas)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteMaquina([FromQuery] DeleteMaquinaCommmand cmd)
         {
@@ -186,7 +204,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("areas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<MaquinaResponseDto>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.LeerArea)]
+        [ProducesResponseType(typeof(BaseResponse<AreaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAreaById([FromQuery] long idArea)
         {
             var qry = new GetAreasQuery() { Id = idArea };
@@ -195,7 +214,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("areas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.CrearArea)]
+        [ProducesResponseType(typeof(BaseResponse<AreaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateArea([FromBody] CreateAreasCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -203,7 +223,8 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPut("areas"), MapToApiVersion("1.0")]
-        [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
+        [HasPermission(Permission.ActualizarArea)]
+        [ProducesResponseType(typeof(BaseResponse<AreaDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateArea([FromBody] UpdateAreasCommand cmd)
         {
             var response = await mediator.Send(cmd);
@@ -211,6 +232,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpDelete("areas"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.EliminarArea)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteArea([FromQuery] long idArea)
         {
@@ -220,6 +242,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/excel"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<DataExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AccelerationData([FromForm] ConvertExcelDataCommand cmd)
         {

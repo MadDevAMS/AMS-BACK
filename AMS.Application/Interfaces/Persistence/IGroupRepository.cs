@@ -8,8 +8,8 @@ namespace AMS.Application.Interfaces.Persistence
 {
     public interface IGroupRepository
     {
-        Task UpdateAsync(GroupsDto group);
-        Task CreateAsync(GroupsDto groupDto);
+        Task UpdateAsync(GroupsDto group, long userId);
+        Task CreateAsync(GroupsDto groupDto, long userId);
         Task<GroupByIdDto> GetGroupByIdAsync(long groupId);
         Task DeleteAsync(long id, long idUser);
         Task<PaginatorResponse<GroupListDto>> ListGroups(ListGroupFilter filter);

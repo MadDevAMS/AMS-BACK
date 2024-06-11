@@ -74,7 +74,26 @@ namespace AMS.Infrastructure.Persistence.Repositories
             return await _context.Entidad.Where(e => e.RUC == ruc).Select(e => e.Id).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(Entidad entidad)
+        public async Task<EntidadDto> GetEntidadAsync(long idEntidad)
+        {
+            var entity = (await _context.Entidad.FirstOrDefaultAsync(e => e.Id == idEntidad))!;
+
+            var response = new EntidadDto
+            {
+                Nombre = entity.Nombre,
+                RazonSocial = entity.RazonSocial,
+                RUC = entity.RUC,
+                Telefono = entity.Telefono,
+                Email = entity.Email,
+                Direccion = Utils.EMPTY_STRING,
+                Image = Utils.EMPTY_STRING,
+                State = Utils.ESTADO_ACTIVO,
+            };
+
+            return response;
+        }
+
+        public async Task UpdateAsync(Entidad entidad, long userId)
         {
             var entity = (await _context.Entidad.Where(e => e.Id == entidad.Id).FirstOrDefaultAsync())!;
 
@@ -82,7 +101,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entity.Email = entidad.Email;
             entity.Direccion = entidad.Direccion;
             entity.Telefono = entidad.Telefono;
-            entity.AuditUpdateUser = Utils.ESTADO_ACTIVO;
+            entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

@@ -24,5 +24,11 @@
         ActualizarMetricas = 20,
         EliminarMetricas = 21,
         ActualizarEntidad = 22,
+        LeerFolder = 23,
+        CrearArea = 24,
+        LeerArea = 25,
+        ActualizarArea = 26,
+        EliminarArea = 27,
+        ProcesarDatosExcel = 28,
     }
 }

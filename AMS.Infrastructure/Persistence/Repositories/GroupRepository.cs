@@ -101,7 +101,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             await _context.SaveChangesAsync();
         }
-        public async Task CreateAsync(GroupsDto groupDto)
+        public async Task CreateAsync(GroupsDto groupDto, long userId)
         {
             var group = new Group()
             {
@@ -110,7 +110,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 IdEntidad = groupDto.IdEntidad,
                 State = Utils.ESTADO_ACTIVO,
                 AuditCreateDate = DateTime.Now,
-                AuditCreateUser = Utils.ESTADO_ACTIVO
+                AuditCreateUser = userId,
             };
             foreach (long idPermission in groupDto.Permissions)
             {
@@ -137,7 +137,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.Groups.AddAsync(group);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateAsync(GroupsDto group)
+        public async Task UpdateAsync(GroupsDto group, long userId)
         {
             var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId);
             var currentGroupUsers = await _context.GroupUsers
@@ -152,7 +152,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entityUpdate.Name = group.Name;
             entityUpdate.Description = group.Description;
             entityUpdate.State = group.State;
-            entityUpdate.AuditUpdateUser = 1;
+            entityUpdate.AuditUpdateUser = userId;
             entityUpdate.AuditUpdateDate = DateTime.Now;
 
             var usersToDelete = currentGroupUsers.Where(cgu => !group.Users.Contains(cgu.UserId)).ToList();

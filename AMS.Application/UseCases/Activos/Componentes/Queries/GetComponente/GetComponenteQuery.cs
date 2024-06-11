@@ -4,7 +4,7 @@ using MediatR;
 
 namespace AMS.Application.UseCases.Activos.Componentes.Queries.GetComponente
 {
-    public class GetComponenteQuery : IRequest<BaseResponse<ComponenteResponseDto>>
+    public class GetComponenteQuery : IRequest<BaseResponse<ComponenteDto>>
     {
         public long Id { get; set; }
     }

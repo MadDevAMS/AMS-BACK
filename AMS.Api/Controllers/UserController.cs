@@ -8,6 +8,7 @@ using AMS.Application.UseCases.User.Queries.ListUsersEntidad;
 using AMS.Application.UseCases.Users.Command.LoginAdmin;
 using AMS.Application.UseCases.Users.Command.UpdateUser;
 using AMS.Application.UseCases.Users.Queries.GetAuthUser;
+using AMS.Infrastructure.Authentication.Permissions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace AMS.Api.Controllers
 
         [HttpPost("users"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand cmd)
         {
@@ -38,8 +40,9 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [Authorize]
         [HttpGet("users"), MapToApiVersion("1.0")]
+        [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<ListUsersResponseDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ListUsers(
             [FromQuery] string? userName,
@@ -65,6 +68,7 @@ namespace AMS.Api.Controllers
 
         [HttpDelete("users"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserCommand cmd)
         {
@@ -82,6 +86,7 @@ namespace AMS.Api.Controllers
 
         [HttpPut("users"), MapToApiVersion("1.0")]
         [Authorize]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommnad cmd)
         {

@@ -8,7 +8,7 @@ namespace AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas
         public UpdateMetricasValidator()
         {
 
-            RuleFor(x => x.Id)
+            RuleFor(x => x.IdMetrica)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)
                 .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using AMS.Application.Dtos.Activos;
 using AMS.Application.UseCases.Activos.Areas.Commands.CreateAreas;
 using AMS.Application.UseCases.Activos.Areas.Commands.UpdateAreas;
 using AMS.Application.UseCases.Activos.Componentes.Commands.CreateComponente;
@@ -9,7 +9,6 @@ using AMS.Application.UseCases.Activos.Metricas.Commands.CreateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoMonitoreo;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.UpdatePuntoMonitoreo;
-using AMS.Domain.Entities;
 using AutoMapper;
 
 namespace AMS.Application.Mappings
@@ -18,20 +17,20 @@ namespace AMS.Application.Mappings
     {
         public ActivosMapping()
         {
-            CreateMap<CreateMetricasCommand, Metrica>();
-            CreateMap<UpdateMetricasCommand, Metrica>();
+            CreateMap<CreateMetricasCommand, MetricasDto>();
+            CreateMap<UpdateMetricasCommand, MetricasDto>();
 
-            CreateMap<CreatePuntoMonitoreoCommand, PuntoMonitoreo>();
-            CreateMap<UpdatePuntoMonitoreoCommand, PuntoMonitoreo>();
+            CreateMap<CreatePuntoMonitoreoCommand, PuntoMonitoreoDto>();
+            CreateMap<UpdatePuntoMonitoreoCommand, PuntoMonitoreoDto>();
 
-            CreateMap<CreateComponenteCommand, Componente>();
-            CreateMap<UpdateComponenteCommand, Componente>();
+            CreateMap<CreateComponenteCommand, ComponenteDto>();
+            CreateMap<UpdateComponenteCommand, ComponenteDto>();
 
-            CreateMap<CreateMaquinaCommand, Maquina>();
-            CreateMap<UpdateMaquinaCommand, Maquina>();
+            CreateMap<CreateMaquinaCommand, MaquinaDto>();
+            CreateMap<UpdateMaquinaCommand, MaquinaDto>();
 
-            CreateMap<CreateAreasCommand, Area>();
-            CreateMap<UpdateAreasCommand, Area>();
+            CreateMap<CreateAreasCommand, AreaDto>();
+            CreateMap<UpdateAreasCommand, AreaDto>();
 
         }
     }
