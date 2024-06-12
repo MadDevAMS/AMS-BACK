@@ -18,7 +18,9 @@ using AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina;
 using AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration;
 using AMS.Application.UseCases.Activos.Metricas.Commands.CreateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.DeleteMetricas;
+using AMS.Application.UseCases.Activos.Metricas.Commands.TemperatureExcelData;
 using AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas;
+using AMS.Application.UseCases.Activos.Metricas.Commands.VelocityExcelData;
 using AMS.Application.UseCases.Activos.Metricas.Queries.MetricaById;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoMonitoreo;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.DeletePuntoMonitoreo;
@@ -34,7 +36,7 @@ namespace AMS.Api.Controllers
 
     [Route("api/v{version:apiVersion}/")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     public class ActivosController : ControllerBase
     {
@@ -68,7 +70,7 @@ namespace AMS.Api.Controllers
         [HttpPost("metricas"), MapToApiVersion("1.0")]
         [HasPermission(Permission.CrearMetricas)]
         [ProducesResponseType(typeof(BaseResponse<MetricasDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CreateMetrica([FromBody] CreateMetricasCommand cmd)
+        public async Task<IActionResult> CreateMetrica([FromBody] VelocityExcelCommand cmd)
         {
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
@@ -77,7 +79,7 @@ namespace AMS.Api.Controllers
         [HttpPut("metricas"), MapToApiVersion("1.0")]
         [HasPermission(Permission.ActualizarMetricas)]
         [ProducesResponseType(typeof(BaseResponse<MetricasDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateMetricca([FromBody] UpdateMetricasCommand cmd)
+        public async Task<IActionResult> UpdateMetricca([FromBody] TemperaturaExcelCommand cmd)
         {
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
@@ -241,10 +243,28 @@ namespace AMS.Api.Controllers
             return StatusCode(StatusCodes.Status200OK, response);
         }
 
-        [HttpPost("metricas/excel"), MapToApiVersion("1.0")]
-        [HasPermission(Permission.ProcesarDatosExcel)]
-        [ProducesResponseType(typeof(BaseResponse<DataExcelResponseDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AccelerationData([FromForm] ConvertExcelDataCommand cmd)
+        [HttpPost("metricas/aceleracion"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<AccelerationExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AccelerationData([FromForm] AcceleratioExcelCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("metricas/velocidad"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<VelocityExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> VelocidadData([FromForm] VelocityExcelCommand cmd)
+        {
+            var response = await mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("metricas/temperatura"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> TemperaturaData([FromForm] TemperaturaExcelCommand cmd)
         {
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);

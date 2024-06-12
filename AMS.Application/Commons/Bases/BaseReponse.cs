@@ -2,7 +2,7 @@
 
 namespace AMS.Application.Commons.Bases
 {
-    public class BaseResponse<T> : IRequest
+    public class BaseResponse<T>
     {
         public int Status{ get; set; }
         public T? Data { get; set; }

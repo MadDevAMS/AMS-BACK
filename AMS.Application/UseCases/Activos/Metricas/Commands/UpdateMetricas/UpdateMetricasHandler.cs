@@ -2,7 +2,6 @@
 using AMS.Application.Commons.Utils;
 using AMS.Application.Dtos.Activos;
 using AMS.Application.Interfaces.Persistence;
-using AMS.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;

@@ -17,4 +17,11 @@
         public const string ENTIDAD = "IdEntidad";
         public const string USERID = "IdUser";
     }
+
+    internal static class MeasurementType
+    {
+        public const int ACCELERATION = 1;
+        public const int VELOCITY = 2;
+        public const int TEMPERATURE = 3;
+    }
 }
