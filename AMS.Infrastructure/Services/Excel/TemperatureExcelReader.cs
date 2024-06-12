@@ -7,7 +7,7 @@ using static AMS.Infrastructure.Commons.Commons.ExcelResources;
 
 namespace AMS.Infrastructure.Services.Excel
 {
-    public class TemperatureExcelReader : ExcelRegister<TemperatureExcelResponseDto>
+    public class TemperatureExcelReader : ExcelBuilder<TemperatureExcelResponseDto>
     {
         public override TemperatureExcelResponseDto ExecuteExcelReader(IFormFile file)
         {
