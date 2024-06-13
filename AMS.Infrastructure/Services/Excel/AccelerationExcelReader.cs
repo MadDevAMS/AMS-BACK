@@ -39,7 +39,7 @@ namespace AMS.Infrastructure.Services.Excel
 
                 var timeStamp = workSheet.Cells[headerAddresses[TIMESTAMP] + row].Value?.ToString()!;
                 var valueData = float.Parse(workSheet.Cells[headerAddresses[VALUE] + row].Value?.ToString()!);
-                var axisData = workSheet.Cells[headerAddresses[VALUE] + row].Value?.ToString()!;
+                var axisData = workSheet.Cells[headerAddresses[AXIS] + row].Value?.ToString()!;
 
                 switch (axisData)
                 {

@@ -8,6 +8,5 @@ namespace AMS.Application.UseCases.Activos.Metricas.Commands.VelocityExcelData
     public class VelocityExcelCommand : IRequest<BaseResponse<VelocityExcelResponseDto>>
     {
         public IFormFile File { get; set; } = null!;
-        public long MeasurementType { get; set; }
     }
 }
