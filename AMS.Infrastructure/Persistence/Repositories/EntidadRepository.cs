@@ -80,6 +80,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             var response = new EntidadDto
             {
+                Id = entity.Id,
                 Nombre = entity.Nombre,
                 RazonSocial = entity.RazonSocial,
                 RUC = entity.RUC,

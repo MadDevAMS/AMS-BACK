@@ -2,6 +2,7 @@
 {
     public class EntidadDto
     {
+        public long Id {  get; set; }
         public string Nombre { get; set; } = null!;
         public string RazonSocial { get; set; } = null!;
         public string RUC { get; set; } = null!;
