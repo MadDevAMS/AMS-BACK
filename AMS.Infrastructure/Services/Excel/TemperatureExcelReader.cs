@@ -1,16 +1,17 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using AMS.Application.Dtos.Excel;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using static AMS.Infrastructure.Commons.Commons.ExcelResources;
 
+
 namespace AMS.Infrastructure.Services.Excel
 {
-    public class MeasurementExcelReader : ExcelRegister<DataExcelResponseDto>
+    public class TemperatureExcelReader : ExcelBuilder<TemperatureExcelResponseDto>
     {
-        public override DataExcelResponseDto ExecuteExcelReader(IFormFile file)
+        public override TemperatureExcelResponseDto ExecuteExcelReader(IFormFile file)
         {
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var excelPackage = new ExcelPackage(file.OpenReadStream());
             var workSheet = excelPackage.Workbook.Worksheets[0] ?? throw new Exception(WORKSHEET_ERROR);
@@ -42,7 +43,7 @@ namespace AMS.Infrastructure.Services.Excel
             machine_id = Regex.Replace(headers.First(h => h.Value.Equals(MACHINE_ID)).Address.ToString(), @"([0-9])", string.Empty);
             machine_name = Regex.Replace(headers.First(h => h.Value.Equals(MACHINE_NAME)).Address.ToString(), @"([0-9])", string.Empty);
 
-            var response = new DataExcelResponseDto
+            var response = new TemperatureExcelResponseDto
             {
                 MeasurementType = workSheet.Cells[measurement_type + 2].Value?.ToString()!,
                 SpotId = workSheet.Cells[spot_id + 2].Value?.ToString()!,
@@ -60,25 +61,10 @@ namespace AMS.Infrastructure.Services.Excel
                 if (!workSheet.Cells[row, 1, row, workSheet.Dimension.End.Column].Any(c => c.Text != "")) break;
 
                 var timeStamp = workSheet.Cells[timestamp + row].Value?.ToString()!;
-                var valueData = workSheet.Cells[value + row].Value?.ToString()!;
-                var axisData = workSheet.Cells[axis + row].Value?.ToString()!;
-                var axisDataLabel = workSheet.Cells[axis_label + row].Value?.ToString()!;
+                var valueData = float.Parse(workSheet.Cells[value + row].Value?.ToString()!);
 
-                var data = new AxisResponseDto
-                {
-                    TimeStamp = DateTimeOffset.Parse(timeStamp),
-                    Value = valueData,
-                    Axis = axisData,
-                    AxisLabel = axisDataLabel
-                };
-
-                switch (axisData)
-                {
-                    case AXIS_X: response.AxisX.Add(data); break;
-                    case AXIS_Y: response.AxisY.Add(data); break;
-                    case AXIS_Z: response.AxisZ.Add(data); break;
-                    default: break;
-                }
+                response.Values.Add(valueData);
+                response.TimeStamp.Add(DateTimeOffset.Parse(timeStamp));
             }
 
             return response;

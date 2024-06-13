@@ -20,7 +20,7 @@ namespace AMS.Infrastructure.Services.S3
             {
                 BucketName = fileS3Dto.BuckName,
                 Key = key,
-                InputStream = fileS3Dto.InputStream,
+                InputStream = fileS3Dto.InputStream!.OpenReadStream(),
                 ContentType = fileS3Dto.ContentType
             };
 

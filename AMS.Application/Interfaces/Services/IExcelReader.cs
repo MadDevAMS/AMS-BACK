@@ -5,6 +5,8 @@ namespace AMS.Application.Interfaces.Services
 {
     public interface IExcelReader
     {
-        DataExcelResponseDto MeasurementExcel(IFormFile file);
+        AccelerationExcelResponseDto AccelerationExcel(IFormFile file);
+        TemperatureExcelResponseDto TemperatureExcel(IFormFile file);
+        VelocityExcelResponseDto VelocityExcel(IFormFile file);
     }
 }

@@ -35,7 +35,9 @@ namespace AMS.Infrastructure
             services.AddSingleton<IS3Files, S3Files>();
 
             services.AddScoped<IExcelReader, ExcelReader>();
-            services.AddScoped<MeasurementExcelReader>();
+            services.AddScoped<AccelerationExcelReader>();
+            services.AddScoped<VelocitExcelReader>();
+            services.AddScoped<TemperatureExcelReader>();
 
             return services;
         }

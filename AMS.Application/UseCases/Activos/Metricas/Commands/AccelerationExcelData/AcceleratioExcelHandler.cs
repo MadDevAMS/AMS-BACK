@@ -7,25 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration
 {
-    public class ConvertExcelDataHandler : IRequestHandler<ConvertExcelDataCommand, BaseResponse<DataExcelResponseDto>>
+    public class AcceleratioExcelHandler : IRequestHandler<AcceleratioExcelCommand, BaseResponse<AccelerationExcelResponseDto>>
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public ConvertExcelDataHandler(IServiceProvider serviceProvider)
+        public AcceleratioExcelHandler(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<BaseResponse<DataExcelResponseDto>> Handle(ConvertExcelDataCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<AccelerationExcelResponseDto>> Handle(AcceleratioExcelCommand request, CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
             var director = scope.ServiceProvider.GetRequiredService<IExcelReader>();
 
-            var response = new BaseResponse<DataExcelResponseDto>();
-
+            var response = new BaseResponse<AccelerationExcelResponseDto>();
             try
             {
-                var data = director.MeasurementExcel(request.File);
+                var data = director.AccelerationExcel(request.File);
+
                 response.Data = data;
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.QUERY_SUCCESS;
@@ -34,6 +34,7 @@ namespace AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration
             {
                 response.Message += ex.Message;
             }
+
             return response;
         }
     }
