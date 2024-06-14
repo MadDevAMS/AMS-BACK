@@ -47,8 +47,6 @@ namespace AMS.Application.UseCases.User.Command.CreateUser
 
                 var user = _mapper.Map<CreateUserDto>(request);
 
-                var grupoDto = _mapper.Map<GroupsDto>(request);
-
                 var userId = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID);
                 var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD);
 
