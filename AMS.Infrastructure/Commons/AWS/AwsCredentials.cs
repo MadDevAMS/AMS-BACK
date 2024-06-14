@@ -2,7 +2,7 @@
 {
     public class AwsCredentials
     {
-        public const string AwsPK = "";
-        public const string AwsSK = "";
+        public const string AwsPK = "AKIA2UC3CT3UIWN5OWWW";
+        public const string AwsSK = "/pB+3ofLDtOtl0LvpTfdZ++G1omZvjWwAw2G3Saq";
     }
 }
