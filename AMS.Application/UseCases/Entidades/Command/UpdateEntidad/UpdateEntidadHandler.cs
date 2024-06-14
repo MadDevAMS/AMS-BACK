@@ -37,7 +37,7 @@ namespace AMS.Application.UseCases.Entidades.Command.UpdateEntidad
 
                 if (request.File is not null)
                 {
-                    var prefix = $"Entidad-{idEntidad}";
+                    var prefix = $"Entidad-{idEntidad}/Pictures";
 
                     var result = await HandleFileUpload(request.File, prefix);
 

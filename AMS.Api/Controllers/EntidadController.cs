@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AMS.Application;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Entidad;
 using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
@@ -49,6 +50,15 @@ namespace AMS.Api.Controllers
         public async Task<IActionResult> CreateEntidad([FromBody] CreateEntidadCommand cmd)
         {
             var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpGet("entidad/archivos"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<IEnumerable<S3ObjectDto>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetFilesEntidad()
+        {
+            var qry = new GetFilesMetricasQuery();
+            var response = await _mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }
     }

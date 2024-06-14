@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using AMS.Application;
 using AMS.Application.Dtos.S3;
 using AMS.Application.Interfaces.Services;
 using AMS.Infrastructure.Commons.AWS;
@@ -69,6 +70,34 @@ namespace AMS.Infrastructure.Services.S3
             };
 
             return await _amazonS3Client.GetPreSignedURLAsync(request);
+        }
+
+        public async Task<IEnumerable<S3ObjectDto>> GetFilesEntidadAsync(string bucketName, string prefix)
+        {
+
+            var request = new ListObjectsV2Request()
+            {
+                BucketName = bucketName,
+                Prefix = prefix
+            };
+            var result = await _amazonS3Client.ListObjectsV2Async(request);
+            var s3Objects = result.S3Objects.Select(s =>
+            {
+                var urlRequest = new GetPreSignedUrlRequest()
+                {
+                    BucketName = bucketName,
+                    Key = s.Key,
+                    Expires = DateTime.UtcNow.AddDays(1)
+                };
+                return new S3ObjectDto()
+                {
+                    Name = s.Key.ToString(),
+                    PresigneUrl = _amazonS3Client.GetPreSignedURL(urlRequest),
+                    Size = s.Size.ToString()
+                };
+            });
+
+            return s3Objects;
         }
     }
 }
