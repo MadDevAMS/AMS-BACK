@@ -25,7 +25,7 @@ namespace AMS.Api.Controllers
 
         [HttpGet("entidad"), MapToApiVersion("1.0")]
         [Authorize]
-        //[HasPermission(Permission.Admin)]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<EntidadDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEntidad()
         {
@@ -38,7 +38,7 @@ namespace AMS.Api.Controllers
         [Authorize]
         [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateEntidad([FromBody] UpdateEntidadCommand cmd)
+        public async Task<IActionResult> UpdateEntidad([FromForm] UpdateEntidadCommand cmd)
         {
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);

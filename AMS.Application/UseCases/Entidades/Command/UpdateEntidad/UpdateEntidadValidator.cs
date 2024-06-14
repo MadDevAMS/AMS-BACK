@@ -7,9 +7,6 @@ namespace AMS.Application.UseCases.Entidades.Command.UpdateEntidad
     {
         public UpdateEntidadValidator()
         {
-            RuleFor(x => x.Image)
-                    .NotNull().WithMessage(MessageValidator.NOT_NULL)
-                    .NotEmpty().WithMessage(MessageValidator.NOT_EMPTY);
 
             RuleFor(x => x.Direccion)
                 .NotNull().WithMessage(MessageValidator.NOT_NULL)

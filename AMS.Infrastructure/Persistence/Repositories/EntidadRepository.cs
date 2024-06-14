@@ -86,8 +86,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 RUC = entity.RUC,
                 Telefono = entity.Telefono,
                 Email = entity.Email,
-                Direccion = Utils.EMPTY_STRING,
-                Image = Utils.EMPTY_STRING,
+                Direccion = entity.Direccion,
+                Image = entity.Image,
                 State = Utils.ESTADO_ACTIVO,
             };
 
@@ -98,7 +98,11 @@ namespace AMS.Infrastructure.Persistence.Repositories
         {
             var entity = (await _context.Entidad.Where(e => e.Id == entidad.Id).FirstOrDefaultAsync())!;
 
-            entity.Image = entidad.Image;
+            if (entidad.Image is not null)
+            {
+                entity.Image = entidad.Image;
+            }
+
             entity.Email = entidad.Email;
             entity.Direccion = entidad.Direccion;
             entity.Telefono = entidad.Telefono;

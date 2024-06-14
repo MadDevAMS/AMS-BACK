@@ -1,11 +1,6 @@
 ﻿namespace AMS.Infrastructure.Commons.Commons
 {
-    internal static class FolderS3
-    {
-        public const string AmsUser = "AMS/users_pictures";
-    }
-
-    public static class CustomClaims
+    internal static class CustomClaims
     {
         public const string Permissions = "Permissions";
         public const string Groups = "Groups";
