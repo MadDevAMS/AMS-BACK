@@ -159,8 +159,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateUser = userId
             };
 
-            await _context.AddRangeAsync(area);
+            await _context.AddRangeAsync(entity);
             await _context.SaveChangesAsync();
+
+            area.IdArea = entity.Id;
 
             return area;
         }
@@ -178,7 +180,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateDate = DateTime.Now,
                 AuditCreateUser = userId,
             };
-            await _context.AddRangeAsync(componente);
+            await _context.AddRangeAsync(entity);
             await _context.SaveChangesAsync();
 
             componente.IdComponente = entity.Id;
@@ -199,10 +201,10 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateDate = DateTime.Now,
             };
 
-            await _context.AddRangeAsync(maquina);
+            await _context.AddRangeAsync(entity);
             await _context.SaveChangesAsync();
 
-            maquina.IdArea = entity.Id;
+            maquina.IdMaquina = entity.Id;
 
             return maquina;
         }
@@ -220,7 +222,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateUser = userId,
             };
 
-            await _context.AddAsync(metrica);
+            await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
 
             metrica.IdMetrica = entity.Id;
@@ -243,7 +245,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateDate = DateTime.Now,
             };
 
-            await _context.AddAsync(punto);
+            await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
 
             punto.IdPuntoMonitoreo = entity.Id;

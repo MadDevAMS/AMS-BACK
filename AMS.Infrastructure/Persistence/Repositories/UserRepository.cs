@@ -46,7 +46,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter)
         {
-            var query = _context.Users.Where(u => u.IdEntidad == filter.IdEntidad
+            var query = _context.Users.Where(u => u.Id != filter.IdUserQuery
+                    && u.IdEntidad == filter.IdEntidad
                     && (u.FirstName.Contains(filter.UserName) || filter.UserName == Utils.EMPTY_STRING)
                     && (u.Email.Contains(filter.UserEmail) || filter.UserEmail == Utils.EMPTY_STRING)
                     && (u.State == filter.State || filter.State == -1)
