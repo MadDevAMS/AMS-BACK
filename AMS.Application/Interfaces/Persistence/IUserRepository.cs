@@ -9,7 +9,7 @@ namespace AMS.Application.Interfaces.Persistence
         Task CreateAsync(CreateUserDto user, long userId);
         Task<long> UserExistAsync(string email);
         Task<UserDetailResponseDto> UserByEmailAsync(string email);
-        Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter);
+        Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter, long idUser);
         Task DeleteAsync(long id, long userId);
         Task<long> IsUserAdminAsync(string email);
         Task<UserDetailResponseDto> UserByIdAsync(long id);

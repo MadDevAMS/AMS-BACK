@@ -61,8 +61,8 @@ namespace AMS.Api.Controllers
                 NumPage = numPage,
                 Records = records
             };
-            var repsonse = await _mediator.Send(qry);
-            return StatusCode(StatusCodes.Status200OK, repsonse);
+            var response = await _mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
         }
 
 

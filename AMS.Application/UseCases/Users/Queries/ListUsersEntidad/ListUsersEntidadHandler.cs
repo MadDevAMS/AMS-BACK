@@ -23,8 +23,9 @@ namespace AMS.Application.UseCases.User.Queries.ListUsersEntidad
             {
                 var filters = _mapper.Map<ListUserFilter>(request);
                 var idEntidad = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.ENTIDAD)!.Value;
+                var idUser = Functions.GetUserOrEntidadIdFromClaims(_httpContext, Claims.USERID)!.Value;
                 filters.IdEntidad = idEntidad;
-                response = await _unitOfWork.UserRepository.ListUsersAsync(filters);
+                response = await _unitOfWork.UserRepository.ListUsersAsync(filters, idUser);
                 response.Status = (int)ResponseCode.OK;
                 response.Message = ResponseMessage.QUERY_SUCCESS;
 

@@ -86,8 +86,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 RUC = entity.RUC,
                 Telefono = entity.Telefono,
                 Email = entity.Email,
-                Direccion = Utils.EMPTY_STRING,
-                Image = Utils.EMPTY_STRING,
+                Direccion = entity.Direccion,
+                Image = entity.Image,
                 State = Utils.ESTADO_ACTIVO,
             };
 
