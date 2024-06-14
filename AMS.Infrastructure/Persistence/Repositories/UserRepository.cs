@@ -44,9 +44,9 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter, long idUser)
+        public async Task<PaginatorResponse<ListUsersResponseDto>> ListUsersAsync(ListUserFilter filter)
         {
-            var query = _context.Users.Where(u => u.Id != idUser 
+            var query = _context.Users.Where(u => u.Id != filter.IdUserQuery
                     && u.IdEntidad == filter.IdEntidad
                     && (u.FirstName.Contains(filter.UserName) || filter.UserName == Utils.EMPTY_STRING)
                     && (u.Email.Contains(filter.UserEmail) || filter.UserEmail == Utils.EMPTY_STRING)
