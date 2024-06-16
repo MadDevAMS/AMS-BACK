@@ -10,5 +10,6 @@ namespace AMS.Application.Interfaces.Services
         Task<bool> DeleteFileAsync(FileS3Dto fileS3Dto);
         Task<string> GetFileAsync(string bucketName, string prefix, string fileName);
         Task<IEnumerable<S3ObjectDto>> GetFilesEntidadAsync(string bucketName, string prefix);
+        Task<MemoryStream> GetFileMemoryStreamAsync(string bucketName, string key);
     }
 }

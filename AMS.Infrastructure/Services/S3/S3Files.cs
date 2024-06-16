@@ -99,5 +99,21 @@ namespace AMS.Infrastructure.Services.S3
 
             return s3Objects;
         }
+
+        public async Task<MemoryStream> GetFileMemoryStreamAsync(string bucketName, string key)
+        {
+            var request = new GetObjectRequest
+            {
+                BucketName = bucketName,
+                Key = key
+            };
+
+            using var response = await _amazonS3Client.GetObjectAsync(request);
+            var memoryStream = new MemoryStream();
+            await response.ResponseStream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+
+            return memoryStream;
+        }
     }
 }

@@ -39,6 +39,10 @@ namespace AMS.Infrastructure
             services.AddScoped<VelocitExcelReader>();
             services.AddScoped<TemperatureExcelReader>();
 
+            services.AddScoped<AccelarationExcelMemory>();
+            services.AddScoped<VelocityExcelMemory>();
+            services.AddScoped<TemperatureExcelMemory>();
+
             return services;
         }
     }

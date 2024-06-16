@@ -43,7 +43,7 @@ namespace AMS.Application.UseCases.Activos.Metricas.Commands.TemperatureExcelDat
 
                 if (request.File is not null)
                 {
-                    var prefix = $"Entidad-{idEntidad}/Temperatures";
+                    var prefix = $"Entidad-{idEntidad}/Metrics/Temperatures";
 
                     bool saveFile = await _s3Files.UploadFileAsync(BucketNames.Entidades, prefix, request.File);
 

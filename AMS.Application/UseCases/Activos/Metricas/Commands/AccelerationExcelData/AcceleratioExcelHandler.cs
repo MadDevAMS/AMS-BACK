@@ -40,9 +40,9 @@ namespace AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration
 
                 if (request.File is not null)
                 {
-                    var prefix = $"Entidad-{idEntidad}/Accelerations";
+                    var prefix = $"Entidad-{idEntidad}/Metrics/Accelerations";
 
-                    bool saveFile = await _s3Files.UploadFileAsync(BucketNames.ExcelMetricas, prefix, request.File);
+                    bool saveFile = await _s3Files.UploadFileAsync(BucketNames.Entidades, prefix, request.File);
 
                     if (!saveFile)
                     {

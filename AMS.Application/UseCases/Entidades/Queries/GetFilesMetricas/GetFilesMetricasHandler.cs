@@ -26,7 +26,7 @@ public class GetFilesMetricasHandler(IS3Files s3Files, IHttpContextAccessor http
                 return response;
             }
 
-            var prefix = $"Entidad-{idEntidad}/Temperature";
+            var prefix = $"Entidad-{idEntidad}/Metrics";
             var data = await _s3Files.GetFilesEntidadAsync(BucketNames.Entidades, prefix);
 
             response.Data = data;

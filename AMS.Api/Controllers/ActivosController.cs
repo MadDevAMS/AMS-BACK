@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AMS.Application;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Activos;
 using AMS.Application.Dtos.Excel;
@@ -36,7 +37,7 @@ namespace AMS.Api.Controllers
 
     [Route("api/v{version:apiVersion}/")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     public class ActivosController : ControllerBase
     {
@@ -269,5 +270,33 @@ namespace AMS.Api.Controllers
             var response = await mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
         }
+
+        [HttpPost("metricas/s3/acceleration"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAccelerationDataS3([FromForm] GetAccelerationS3Query qry)
+        {
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("metricas/s3/velocity"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVelocityDataS3([FromForm] GetVelocityS3Query qry)
+        {
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost("metricas/s3/temperatura"), MapToApiVersion("1.0")]
+        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetTemperatureDataS3([FromForm] GetTemperatureS3Query qry)
+        {
+            var response = await mediator.Send(qry);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
     }
 }

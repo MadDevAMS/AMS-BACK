@@ -14,17 +14,33 @@ namespace AMS.Infrastructure.Services.Excel
             var accelerationReader = _serviceProvider.GetService<AccelerationExcelReader>();
             return accelerationReader!.ExecuteExcelReader(file);
         }
+        public VelocityExcelResponseDto VelocityExcel(IFormFile file)
+        {
+            var velocityReader = _serviceProvider.GetService<VelocitExcelReader>();
+            return velocityReader!.ExecuteExcelReader(file);
+        }
 
         public TemperatureExcelResponseDto TemperatureExcel(IFormFile file)
         {
             var temperatureReader = _serviceProvider.GetService<TemperatureExcelReader>();
             return temperatureReader!.ExecuteExcelReader(file);
         }
-
-        public VelocityExcelResponseDto VelocityExcel(IFormFile file)
+        public AccelerationExcelResponseDto AccelerationExcelMemoryStream(MemoryStream file)
         {
-            var velocityReader = _serviceProvider.GetService<VelocitExcelReader>();
-            return velocityReader!.ExecuteExcelReader(file);
+            var accelerationReader = _serviceProvider.GetService<AccelarationExcelMemory>();
+            return accelerationReader!.ExecuteExcelReaderMemory(file);
+        }
+
+        public TemperatureExcelResponseDto TemperatureExcelMemoryStream(MemoryStream file)
+        {
+            var temperatureReader = _serviceProvider.GetService<TemperatureExcelMemory>();
+            return temperatureReader!.ExecuteExcelReaderMemory(file);
+        }
+
+        public VelocityExcelResponseDto VelocityExcelMemoryStream(MemoryStream file)
+        {
+            var velocityReader = _serviceProvider.GetService<VelocityExcelMemory>();
+            return velocityReader!.ExecuteExcelReaderMemory(file);
         }
     }
 }
