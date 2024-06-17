@@ -24,6 +24,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Persistence\Migrations\" />
+	  <Folder Include="Services/Excel/FormFile/" />
 	</ItemGroup>
 
 </Project>

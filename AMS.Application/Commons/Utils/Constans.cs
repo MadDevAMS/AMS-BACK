@@ -24,4 +24,9 @@
         public const int VELOCITY = 2;
         public const int TEMPERATURE = 3;
     }
+    internal static class BucketNames
+    {
+        public const string Entidades = "test-adriano";//AMSEntidadesPictures
+        public const string ExcelMetricas = "test-metricas";//AMSMetricasEntidades
+    }
 }

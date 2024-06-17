@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AMS.Application;
 using AMS.Application.Commons.Bases;
 using AMS.Application.Dtos.Entidad;
 using AMS.Application.UseCases.Entidades.Command.CreateEntidad;
@@ -25,7 +26,7 @@ namespace AMS.Api.Controllers
 
         [HttpGet("entidad"), MapToApiVersion("1.0")]
         [Authorize]
-        //[HasPermission(Permission.Admin)]
+        [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<EntidadDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetEntidad()
         {
@@ -38,7 +39,7 @@ namespace AMS.Api.Controllers
         [Authorize]
         [HasPermission(Permission.Admin)]
         [ProducesResponseType(typeof(BaseResponse<bool>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateEntidad([FromBody] UpdateEntidadCommand cmd)
+        public async Task<IActionResult> UpdateEntidad([FromForm] UpdateEntidadCommand cmd)
         {
             var response = await _mediator.Send(cmd);
             return StatusCode(StatusCodes.Status200OK, response);
@@ -49,6 +50,15 @@ namespace AMS.Api.Controllers
         public async Task<IActionResult> CreateEntidad([FromBody] CreateEntidadCommand cmd)
         {
             var response = await _mediator.Send(cmd);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpGet("entidad/archivos"), MapToApiVersion("1.0")]
+        [ProducesResponseType(typeof(BaseResponse<IEnumerable<S3ObjectDto>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetFilesEntidad()
+        {
+            var qry = new GetFilesMetricasQuery();
+            var response = await _mediator.Send(qry);
             return StatusCode(StatusCodes.Status200OK, response);
         }
     }
