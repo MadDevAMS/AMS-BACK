@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using static AMS.Infrastructure.Commons.Commons.ExcelResources;
 
-
-namespace AMS.Infrastructure.Services.Excel
+namespace AMS.Infrastructure.Services.Excel.FormFile
 {
-    public class VelocitExcelReader : ExcelBuilder<VelocityExcelResponseDto>
+    public class AccelerationExcelReader : ExcelBuilder<AccelerationExcelResponseDto>
     {
-        public override VelocityExcelResponseDto ExecuteExcelReader(IFormFile file)
+        public override AccelerationExcelResponseDto ExecuteExcelReader(IFormFile file)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var excelPackage = new ExcelPackage(file.OpenReadStream());
@@ -19,7 +18,7 @@ namespace AMS.Infrastructure.Services.Excel
             var lastRow = workSheet.Dimension.End.Row;
             var headerAddresses = GetHeadersExcel(headers);
 
-            var response = new VelocityExcelResponseDto
+            var response = new AccelerationExcelResponseDto
             {
                 MeasurementType = workSheet.Cells[headerAddresses[MEASUREMENT_TYPE] + 2].Value?.ToString()!,
                 SpotId = workSheet.Cells[headerAddresses[SPOT_ID] + 2].Value?.ToString()!,
@@ -29,7 +28,7 @@ namespace AMS.Infrastructure.Services.Excel
                 SpotRpm = workSheet.Cells[headerAddresses[SPOT_RPM] + 2].Value?.ToString()!,
                 SpotModel = workSheet.Cells[headerAddresses[SPOT_MODEL] + 2].Value?.ToString()!,
                 MachineId = workSheet.Cells[headerAddresses[MACHINE_ID] + 2].Value?.ToString()!,
-                MachineName = workSheet.Cells[headerAddresses[MACHINE_NAME] + 2].Value?.ToString()
+                MachineName = workSheet.Cells[headerAddresses[MACHINE_NAME] + 2].Value?.ToString()!
             };
 
             float axisx = 0, axisy = 0, axisz = 0;

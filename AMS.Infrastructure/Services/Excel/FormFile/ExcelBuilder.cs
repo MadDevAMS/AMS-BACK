@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 
-namespace AMS.Infrastructure.Services.Excel
+namespace AMS.Infrastructure.Services.Excel.FormFile
 {
     public abstract class ExcelBuilder<T>
     {

@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using static AMS.Infrastructure.Commons.Commons.ExcelResources;
 
-namespace AMS.Infrastructure.Services.Excel
+
+namespace AMS.Infrastructure.Services.Excel.FormFile
 {
-    public class AccelerationExcelReader : ExcelBuilder<AccelerationExcelResponseDto>
+    public class TemperatureExcelReader : ExcelBuilder<TemperatureExcelResponseDto>
     {
-        public override AccelerationExcelResponseDto ExecuteExcelReader(IFormFile file)
+        public override TemperatureExcelResponseDto ExecuteExcelReader(IFormFile file)
         {
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var excelPackage = new ExcelPackage(file.OpenReadStream());
             var workSheet = excelPackage.Workbook.Worksheets[0] ?? throw new Exception(WORKSHEET_ERROR);
@@ -18,7 +20,7 @@ namespace AMS.Infrastructure.Services.Excel
             var lastRow = workSheet.Dimension.End.Row;
             var headerAddresses = GetHeadersExcel(headers);
 
-            var response = new AccelerationExcelResponseDto
+            var response = new TemperatureExcelResponseDto
             {
                 MeasurementType = workSheet.Cells[headerAddresses[MEASUREMENT_TYPE] + 2].Value?.ToString()!,
                 SpotId = workSheet.Cells[headerAddresses[SPOT_ID] + 2].Value?.ToString()!,
@@ -31,38 +33,16 @@ namespace AMS.Infrastructure.Services.Excel
                 MachineName = workSheet.Cells[headerAddresses[MACHINE_NAME] + 2].Value?.ToString()!
             };
 
-            float axisx = 0, axisy = 0, axisz = 0;
-
             for (var row = 2; row <= lastRow; row++)
             {
                 if (!workSheet.Cells[row, 1, row, workSheet.Dimension.End.Column].Any(c => c.Text != "")) break;
 
                 var timeStamp = workSheet.Cells[headerAddresses[TIMESTAMP] + row].Value?.ToString()!;
                 var valueData = float.Parse(workSheet.Cells[headerAddresses[VALUE] + row].Value?.ToString()!);
-                var axisData = workSheet.Cells[headerAddresses[AXIS] + row].Value?.ToString()!;
 
-                switch (axisData)
-                {
-                    case AXIS_X:
-                        axisx += valueData;
-                        response.AxisX.Add(valueData);
-                        response.TimeStamp.Add(DateTimeOffset.Parse(timeStamp));
-                        break;
-                    case AXIS_Y:
-                        axisy += valueData;
-                        response.AxisY.Add(valueData);
-                        break;
-                    case AXIS_Z:
-                        axisz += valueData;
-                        response.AxisZ.Add(valueData);
-                        break;
-                    default: break;
-                }
+                response.Values.Add(valueData);
+                response.TimeStamp.Add(DateTimeOffset.Parse(timeStamp));
             }
-
-            float rms = (float)Math.Sqrt((axisx * axisx + axisy * axisy + axisz * axisz) / 3);
-
-            response.Rms = rms;
 
             return response;
         }
