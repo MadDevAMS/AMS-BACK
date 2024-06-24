@@ -10,6 +10,6 @@ namespace AMS.Application.Dtos.User
         public string Email { get; set; } = null!;
         public int State { get; set; }
         public DateTime AuditCreateDate { get; set; }
-        public List<GroupListResponseDto> Group { get; set; } = null!;
+        public List<GroupListDto> Group { get; set; } = null!;
     }
 }

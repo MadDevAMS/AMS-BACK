@@ -54,6 +54,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpGet("entidad/archivos"), MapToApiVersion("1.0")]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<IEnumerable<S3ObjectDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetFilesEntidad()
         {
