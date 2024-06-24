@@ -65,10 +65,29 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 AuditCreateDate = u.AuditCreateDate,
                 Group = u.GroupUsers
                 .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
-                .Select(g => new GroupListResponseDto
+                .Select(g => new GroupListDto
                 {
-                    Id = g.GroupId,
+                    GroupId = g.GroupId,
                     Name = g.Group.Name,
+                    Description = g.Group.Description,
+                    FechaCreacion = g.Group.AuditCreateDate,
+                    Permissions = g.Group.GroupPermission
+                    .Where(rp => rp.State == Utils.ESTADO_ACTIVO && rp.AuditDeleteUser == null && rp.AuditDeleteDate == null)
+                    .Select(p => new GroupPermissionListDto()
+                    {
+                        Name = p.Permission.Name,
+                        Description = p.Permission.Description,
+                        PermissionId = p.PermissionId
+                    }).ToList(),
+                    Users = g.Group.GroupUsers
+                    .Where(u => u.State == Utils.ESTADO_ACTIVO && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
+                    .Select(u => new GroupUsersListDto()
+                    {
+                        Id = u.UserId,
+                        FirstName = u.User.FirstName,
+                        LastName = u.User.LastName,
+                        Email = u.User.Email
+                    }).ToList()
                 }).ToList()
             })
             .OrderBy(u => u.FirstName)
