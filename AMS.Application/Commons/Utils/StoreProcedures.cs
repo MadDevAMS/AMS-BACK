@@ -2,6 +2,6 @@
 {
     public static class StoreProcedures
     {
-        public const string SP_GET_FOLDER_BY_ENTIDAD = "GetFolderById2";
+        public const string SP_GET_FOLDER_BY_ENTIDAD = "Get_Folder_By_Entidad";
     }
 }
