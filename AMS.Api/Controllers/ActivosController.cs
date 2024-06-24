@@ -17,10 +17,8 @@ using AMS.Application.UseCases.Activos.Maquinas.Commands.DeleteMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Commands.UpdateMaquina;
 using AMS.Application.UseCases.Activos.Maquinas.Queries.GetMaquina;
 using AMS.Application.UseCases.Activos.Metricas.Commands.ConvertAcceleration;
-using AMS.Application.UseCases.Activos.Metricas.Commands.CreateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.DeleteMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.TemperatureExcelData;
-using AMS.Application.UseCases.Activos.Metricas.Commands.UpdateMetricas;
 using AMS.Application.UseCases.Activos.Metricas.Commands.VelocityExcelData;
 using AMS.Application.UseCases.Activos.Metricas.Queries.MetricaById;
 using AMS.Application.UseCases.Activos.PuntosMonitoreo.Commands.CreatePuntoMonitoreo;
@@ -245,7 +243,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/aceleracion"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<AccelerationExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AccelerationData([FromForm] AcceleratioExcelCommand cmd)
         {
@@ -254,7 +252,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/velocidad"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<VelocityExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> VelocidadData([FromForm] VelocityExcelCommand cmd)
         {
@@ -263,7 +261,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/temperatura"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> TemperaturaData([FromForm] TemperaturaExcelCommand cmd)
         {
@@ -272,7 +270,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/s3/acceleration"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAccelerationDataS3([FromForm] GetAccelerationS3Query qry)
         {
@@ -281,7 +279,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/s3/velocity"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetVelocityDataS3([FromForm] GetVelocityS3Query qry)
         {
@@ -290,7 +288,7 @@ namespace AMS.Api.Controllers
         }
 
         [HttpPost("metricas/s3/temperatura"), MapToApiVersion("1.0")]
-        //[HasPermission(Permission.ProcesarDatosExcel)]
+        [HasPermission(Permission.ProcesarDatosExcel)]
         [ProducesResponseType(typeof(BaseResponse<TemperatureExcelResponseDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetTemperatureDataS3([FromForm] GetTemperatureS3Query qry)
         {

@@ -84,6 +84,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             return result;
         }
+
         public async Task DeleteAsync(long id, long userId)
         {
             var entity = (await _context.Groups.FirstOrDefaultAsync(u => u.Id == id))!;
@@ -144,6 +145,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
             await _context.Groups.AddAsync(group);
             await _context.SaveChangesAsync();
         }
+
         public async Task UpdateAsync(GroupsDto group, long userId)
         {
             var entityUpdate = await _context.Groups.FirstOrDefaultAsync(g => g.Id == group.GroupId);
@@ -200,7 +202,6 @@ namespace AMS.Infrastructure.Persistence.Repositories
             }
 
             await _context.GroupPermission.AddRangeAsync(permissionsToAdd);
-
             await _context.SaveChangesAsync();
         }
 

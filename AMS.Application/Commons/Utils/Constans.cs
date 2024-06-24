@@ -26,7 +26,6 @@
     }
     internal static class BucketNames
     {
-        public const string Entidades = "test-adriano";//AMSEntidadesPictures
-        public const string ExcelMetricas = "test-metricas";//AMSMetricasEntidades
+        public const string Entidades = "dev-ams-api-bucket ";//ams-bucket-api
     }
 }
