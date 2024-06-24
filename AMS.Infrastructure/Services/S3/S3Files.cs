@@ -11,7 +11,7 @@ namespace AMS.Infrastructure.Services.S3
     public class S3Files : IS3Files
     {
         private readonly AmazonS3Client _amazonS3Client = new(AwsCredentials.AwsPublicKey, AwsCredentials.AwsSecretKey,
-            Amazon.RegionEndpoint.USEast1);
+            Amazon.RegionEndpoint.USWest2);
 
         public async Task<bool> UploadFileAsync(string bucketName, string prefix, IFormFile file)
         {
