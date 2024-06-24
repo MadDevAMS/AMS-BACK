@@ -55,11 +55,18 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     .Select(p => new GroupPermissionListDto()
                     {
                         Name = p.Permission.Name,
+                        Description = p.Permission.Description,
                         PermissionId = p.PermissionId
                     }).ToList(),
                 Users = u.GroupUsers
                     .Where(u => u.State == Utils.ESTADO_ACTIVO && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
-                    .Select(u => u.UserId).ToList()
+                    .Select(u => new GroupUsersListDto()
+                    {
+                        Id = u.UserId,
+                        FirstName = u.User.FirstName,
+                        LastName = u.User.LastName,
+                        Email = u.User.Email
+                    }).ToList()
             })
                 .OrderBy(u => u.Name)
                 .Skip((filter.NumPage - 1) * filter.Records)
