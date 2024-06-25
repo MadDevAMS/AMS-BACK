@@ -9,15 +9,15 @@ namespace AMS.Api.Authentication
         {
             var openApi = new OpenApiInfo
             {
-                Title = "POS API",
+                Title = "AMS API",
                 Version = "v1",
-                Description = "Punto de Venta API 2023",
+                Description = "AMS dotnet api 2024",
                 TermsOfService = new Uri("http://opensource.org/licenses/NIT"),
                 Contact = new OpenApiContact
                 {
-                    Name = "Adriano I.E.R.L",
+                    Name = "madcat I.E.R.L",
                     Email = "adriano.gongora.juarez@tecsup.edu.pe",
-                    Url = new Uri("https://sirtech.com.pe")
+                    Url = new Uri("https://ams.madcat.one")
                 },
                 License = new OpenApiLicense
                 {
