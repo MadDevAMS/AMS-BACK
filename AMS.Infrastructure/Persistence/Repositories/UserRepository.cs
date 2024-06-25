@@ -50,7 +50,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     && u.IdEntidad == filter.IdEntidad
                     && (u.FirstName.Contains(filter.UserName) || filter.UserName == Utils.EMPTY_STRING)
                     && (u.Email.Contains(filter.UserEmail) || filter.UserEmail == Utils.EMPTY_STRING)
-                    && (u.State == filter.State || filter.State == -1)
+                    && (u.State == filter.State || filter.State == Utils.SIN_FILTRO)
                     && (u.AuditDeleteUser == null && u.AuditDeleteDate == null));
 
             var totalRecords = await query.Select(u => u.Id).CountAsync();
@@ -149,7 +149,6 @@ namespace AMS.Infrastructure.Persistence.Repositories
             }
 
             await _context.GroupUsers.AddRangeAsync(groupsToAdd);
-
             await _context.SaveChangesAsync();
         }
 
