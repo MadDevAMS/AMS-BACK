@@ -8,7 +8,7 @@ namespace AMS.Infrastructure.Services
 {
     public abstract class BaseRepository(ApplicationDbContext context)
     {
-        protected readonly string _connectionString = context.Database.GetConnectionString();
+        protected readonly string _connectionString = context.Database.GetConnectionString()!;
         protected readonly ApplicationDbContext _context = context;
 
         protected int Execute(string sp, DynamicParameters? parms, CommandType commandType = CommandType.StoredProcedure)
@@ -26,7 +26,7 @@ namespace AMS.Infrastructure.Services
         protected T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
             using IDbConnection db = new SqlConnection(_connectionString);
-            return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+            return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault()!;
         }
 
         protected async Task<int> ExecuteAsync(string sp, DynamicParameters? parms, CommandType commandType = CommandType.StoredProcedure)
@@ -47,7 +47,7 @@ namespace AMS.Infrastructure.Services
         {
             using IDbConnection db = new SqlConnection(_connectionString);
             var response = await db.QueryAsync<T>(sp, parms, commandType: commandType);
-            return response.FirstOrDefault();
+            return response.FirstOrDefault()!;
         }
 
         protected async Task<(IEnumerable<T1>, IEnumerable<T2>)> GetAllMultipleAsync<T1, T2>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)

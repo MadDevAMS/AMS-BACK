@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="appsettings.Development.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AMS.Api\AMS.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Activos\Areas\Command\" />
+    <Folder Include="Activos\Areas\Queries\" />
+    <Folder Include="Activos\Componentes\Commands\" />
+    <Folder Include="Activos\Componentes\Queries\" />
+    <Folder Include="Activos\Folder\Commands\" />
+    <Folder Include="Activos\Folder\Queries\" />
+    <Folder Include="Activos\Maquinas\Commands\" />
+    <Folder Include="Activos\Maquinas\Queries\" />
+    <Folder Include="Activos\Metricas\Commands\" />
+    <Folder Include="Activos\Metricas\Queries\" />
+    <Folder Include="Activos\PuntosMonitoreo\Commands\" />
+    <Folder Include="Activos\PuntosMonitoreo\Queries\" />
+    <Folder Include="Entidades\Commands\" />
+    <Folder Include="Entidades\Queries\" />
+    <Folder Include="Groups\Commands\" />
+    <Folder Include="Groups\Queries\" />
+    <Folder Include="Users\Commands\LoginTest\" />
+    <Folder Include="Users\Commands\LoginAdminTest\" />
+    <Folder Include="Users\Commands\UpdateUserTest\" />
+    <Folder Include="Users\Queries\" />
+  </ItemGroup>
+
+</Project>
