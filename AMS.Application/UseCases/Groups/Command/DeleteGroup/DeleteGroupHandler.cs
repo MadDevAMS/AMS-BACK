@@ -28,7 +28,7 @@ namespace AMS.Application.UseCases.Group.Command.DeleteGroup
 
                 await _unitOfWork.GroupRepository.DeleteAsync(request.Id, userId.Value);
                 response.Status = (int)ResponseCode.OK;
-                response.Message = ResponseMessage.DELETE_USER_SUCCESS;
+                response.Message = ResponseMessage.GROUP_SUCCESS_DELETE;
             }
             catch (Exception ex)
             {
