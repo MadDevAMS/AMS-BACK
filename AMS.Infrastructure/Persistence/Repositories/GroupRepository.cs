@@ -87,7 +87,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(long id, long userId)
         {
-            var entity = (await _context.Groups.FirstOrDefaultAsync(u => u.Id == id))!;
+            var entity = (await _context.Groups.Include(g => g.GroupPermission).Include(g => g.GroupUsers).FirstOrDefaultAsync(u => u.Id == id))!;
 
             foreach (var groupPermission in entity.GroupPermission)
             {
@@ -227,8 +227,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 Data = permissions,
                 TotalRecords = totalRecords,
-                CurrentPage = 1,
-                PageSize = 1,
+                CurrentPage = filter.NumPage,
+                PageSize = filter.Records,
                 TotalPages = (int)Math.Ceiling(totalRecords / (double)totalRecords)
             };
             return result;

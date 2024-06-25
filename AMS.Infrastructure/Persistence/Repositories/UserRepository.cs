@@ -129,7 +129,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
             entity.AuditUpdateUser = userId;
             entity.AuditUpdateDate = DateTime.Now;
 
-            var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.UserId == entity.Id).ToListAsync();
+            var currentGroupUsers = await _context.GroupUsers.Where(gu => gu.UserId == entity.Id
+                && gu.AuditDeleteDate == null && gu.AuditDeleteUser == null).ToListAsync();
 
             var groupsToDelete = currentGroupUsers.Where(cgu => !user.Groups.Contains(cgu.GroupId)).ToList();
             var groupsToAdd = user.Groups.Where(g => !currentGroupUsers.Any(cgu => cgu.GroupId == g)).Select(g => new GroupUsers
@@ -190,7 +191,14 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
         public async Task DeleteAsync(long id, long userId)
         {
-            var entity = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id))!;
+            var entity = (await _context.Users.Include(g => g.GroupUsers).FirstOrDefaultAsync(u => u.Id == id))!;
+
+            foreach (var groupUser in entity.GroupUsers)
+            {
+                groupUser.State = Utils.ESTADO_INACTIVO;
+                groupUser.AuditDeleteDate = DateTime.Now;
+                groupUser.AuditDeleteUser = userId;
+            }
 
             entity.AuditDeleteUser = userId;
             entity.AuditDeleteDate = DateTime.Now;
