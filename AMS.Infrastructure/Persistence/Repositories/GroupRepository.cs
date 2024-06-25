@@ -177,8 +177,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 UserId = u,
                 State = Utils.ESTADO_ACTIVO,
                 AuditCreateUser = userId,
-                AuditCreateDate = DateTime.Now
-            });
+                AuditCreateDate = DateTime.Now,
+            }).ToList();
 
             foreach (var user in usersToDelete)
             {
@@ -233,8 +233,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 Data = permissions,
                 TotalRecords = totalRecords,
-                CurrentPage = 1,
-                PageSize = 1,
+                CurrentPage = filter.NumPage,
+                PageSize = filter.Records,
                 TotalPages = (int)Math.Ceiling(totalRecords / (double)totalRecords)
             };
             return result;
