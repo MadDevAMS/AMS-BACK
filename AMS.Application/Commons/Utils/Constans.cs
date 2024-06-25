@@ -26,6 +26,6 @@
     }
     internal static class BucketNames
     {
-        public const string Entidades = "dev-ams-api-bucket";//ams-bucket-api
+        public const string Entidades = "ams-bucket-api";
     }
 }
