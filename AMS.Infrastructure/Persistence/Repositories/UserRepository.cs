@@ -137,15 +137,15 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 GroupId = g,
                 UserId = entity.Id,
-                State = 1,
+                State = Utils.ESTADO_ACTIVO,
                 AuditCreateUser = userId,
                 AuditCreateDate = DateTime.Now
             }).ToList();
 
             foreach (var group in groupsToDelete)
             {
-                group.State = 0;
-                group.AuditDeleteUser = 1;
+                group.State = Utils.ESTADO_INACTIVO;
+                group.AuditDeleteUser = userId;
                 group.AuditDeleteDate = DateTime.Now;
             }
 

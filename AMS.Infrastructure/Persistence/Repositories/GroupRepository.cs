@@ -127,7 +127,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Group = group,
                     PermissionId = idPermission,
                     State = Utils.ESTADO_ACTIVO,
-                    AuditCreateDate = DateTime.Now
+                    AuditCreateDate = DateTime.Now,
+                    AuditCreateUser = userId,
                 };
                 group.GroupPermission.Add(groupPermission);
             }
@@ -138,7 +139,8 @@ namespace AMS.Infrastructure.Persistence.Repositories
                     Group = group,
                     UserId = idUser,
                     State = Utils.ESTADO_ACTIVO,
-                    AuditCreateDate = DateTime.Now
+                    AuditCreateDate = DateTime.Now,
+                    AuditCreateUser = userId,
                 };
                 group.GroupUsers.Add(groupUser);
             }
@@ -169,15 +171,15 @@ namespace AMS.Infrastructure.Persistence.Repositories
             {
                 GroupId = group.GroupId,
                 UserId = u,
-                State = 1,
-                AuditCreateUser = 1,
-                AuditCreateDate = DateTime.Now
+                State = Utils.ESTADO_ACTIVO,
+                AuditCreateUser = userId,
+                AuditCreateDate = DateTime.Now,
             }).ToList();
 
             foreach (var user in usersToDelete)
             {
-                user.State = 0;
-                user.AuditDeleteUser = 1;
+                user.State = Utils.ESTADO_INACTIVO;
+                user.AuditDeleteUser = userId;
                 user.AuditDeleteDate = DateTime.Now;
             }
 
@@ -189,15 +191,15 @@ namespace AMS.Infrastructure.Persistence.Repositories
                 {
                     GroupId = group.GroupId,
                     PermissionId = p,
-                    State = 1,
-                    AuditCreateUser = 1,
+                    State = Utils.ESTADO_ACTIVO,
+                    AuditCreateUser = userId,
                     AuditCreateDate = DateTime.Now
                 }).ToList();
 
             foreach (var permission in permissionsToDelete)
             {
-                permission.State = 0;
-                permission.AuditDeleteUser = 1;
+                permission.State = Utils.ESTADO_INACTIVO;
+                permission.AuditDeleteUser = userId;
                 permission.AuditDeleteDate = DateTime.Now;
             }
 
