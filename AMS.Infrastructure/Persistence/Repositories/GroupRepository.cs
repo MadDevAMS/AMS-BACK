@@ -202,7 +202,7 @@ namespace AMS.Infrastructure.Persistence.Repositories
 
             foreach (var permission in permissionsToDelete)
             {
-                permission.State = Utils.ESTADO_ACTIVO;
+                permission.State = Utils.ESTADO_INACTIVO;
                 permission.AuditDeleteUser = userId;
                 permission.AuditDeleteDate = DateTime.Now;
             }
