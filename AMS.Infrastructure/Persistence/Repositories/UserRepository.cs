@@ -223,24 +223,30 @@ namespace AMS.Infrastructure.Persistence.Repositories
             var userDetails = await _context.Users
                 .AsNoTracking()
                 .Where(u => u.Id == id && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
-                .Select(u => new UserDetailResponseDto()
+                    .Include(u => u.GroupUsers)
+                    .ThenInclude(gu => gu.Group)
+                        .ThenInclude(g => g.GroupPermission)
+                            .ThenInclude(gp => gp.Permission)
+                .Select(u => new UserDetailResponseDto
                 {
+                    UserId = u.Id,
                     Name = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
                     Password = u.Password,
                     IdEntidad = u.IdEntidad,
                     Permissions = u.GroupUsers
-                        .SelectMany(ru => ru.Group.GroupPermission)
-                        .Where(ru => ru.State == Utils.ESTADO_ACTIVO && ru.AuditDeleteUser == null && ru.AuditDeleteDate == null)
-                        .Select(rp => rp.Permission.Name)
-                        .Distinct()
+                        .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
+                        .SelectMany(gu => gu.Group.GroupPermission)
+                        .Where(gp => gp.State == Utils.ESTADO_ACTIVO && gp.AuditDeleteUser == null && gp.AuditDeleteDate == null)
+                        .Select(gp => gp.Permission.Name)
                         .ToList(),
                     GroupNames = u.GroupUsers
                         .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
                         .Select(gu => gu.Group.Name)
                         .ToList()
-                }).FirstOrDefaultAsync();
+                })
+                .FirstOrDefaultAsync();
 
             return userDetails!;
         }
@@ -250,23 +256,27 @@ namespace AMS.Infrastructure.Persistence.Repositories
             var userDetails = await _context.Users
                 .AsNoTracking()
                 .Where(u => u.Id == id && u.State == 1 && u.AuditDeleteUser == null && u.AuditDeleteDate == null)
-                .Select(u => new AuthUserDto()
-                {
-                    UserId = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    Permissions = u.GroupUsers
-                        .SelectMany(ru => ru.Group.GroupPermission)
-                        .Where(ru => ru.State == Utils.ESTADO_ACTIVO && ru.AuditDeleteUser == null && ru.AuditDeleteDate == null)
-                        .Select(rp => rp.Permission.Name)
-                        .Distinct()
-                        .ToList(),
-                    GroupNames = u.GroupUsers
-                        .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
-                        .Select(gu => gu.Group.Name)
-                        .ToList()
-                }).FirstOrDefaultAsync();
+                .Include(u => u.GroupUsers)
+                .ThenInclude(gu => gu.Group)
+                    .ThenInclude(g => g.GroupPermission)
+                        .ThenInclude(gp => gp.Permission)
+            .Select(u => new AuthUserDto
+            {
+                UserId = u.Id,
+                LastName = u.LastName,
+                Email = u.Email,
+                Permissions = u.GroupUsers
+                    .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
+                    .SelectMany(gu => gu.Group.GroupPermission)
+                    .Where(gp => gp.State == Utils.ESTADO_ACTIVO && gp.AuditDeleteUser == null && gp.AuditDeleteDate == null)
+                    .Select(gp => gp.Permission.Name)
+                    .ToList(),
+                GroupNames = u.GroupUsers
+                    .Where(gu => gu.State == Utils.ESTADO_ACTIVO && gu.AuditDeleteUser == null && gu.AuditDeleteDate == null)
+                    .Select(gu => gu.Group.Name)
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
 
             return userDetails!;
         }
