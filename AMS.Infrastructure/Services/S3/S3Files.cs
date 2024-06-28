@@ -87,7 +87,7 @@ namespace AMS.Infrastructure.Services.S3
                 {
                     BucketName = bucketName,
                     Key = s.Key,
-                    Expires = DateTime.UtcNow.AddDays(1)
+                    Expires = DateTime.UtcNow.AddDays(90)
                 };
                 return new S3ObjectDto()
                 {
